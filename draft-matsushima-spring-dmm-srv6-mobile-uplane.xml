@@ -71,7 +71,7 @@
       underlying layer awareness and flexibility to deploy user-plane
       functions that enables optimizing data-path for applications. Network
       slicing and an interworking way between SRv6 and existing mobile
-      user-plane is also discussed in this document. </t>
+      user-plane are also discussed in this document. </t>
 
     </abstract>
   </front>
@@ -252,8 +252,12 @@
                 3GPP term. The applicable SRv6 functions for the access
                 nodes are following:</t>
                 
-                <t hangText="UL:">T.Insert, or T.Encaps</t>
-                <t hangText="DL:">End.X, or End.DX2/4</t>
+                <t>
+                    <list style="hanging">
+                        <t hangText="UL:">T.Insert, or T.Encaps</t>
+                        <t hangText="DL:">End.X, or End.DX2/4</t>
+                    </list>
+                </t>
                 
                 <t>In uplink, an endpoint of an access node segment does
                 T.Insert process for the receiving packets from mobile node
@@ -283,8 +287,12 @@
                 applicable SRv6 functions for the layer-2 anchor are
                 following: </t>
                 
-                <t hangText="UL:">End, or End.B6</t>
-                <t hangText="DL:">Same as UL</t>
+                <t>
+                    <list style="hanging">
+                        <t hangText="UL:">End, or End.B6</t>
+                        <t hangText="DL:">Same as UL</t>
+                    </list>
+                </t>
                 
                 <t>In uplink, an endpoint of a L2 anchor segment does End
                 process for the packets when the active segment represents
@@ -309,8 +317,12 @@
                 anchor.  The applicable SRv6 functions for the layer-3
                 anchor are following:</t>
                 
-                <t hangText="UL:">End.T, End.DT4, or End.DX2</t>
-                <t hangText="DL:">T.Insert, or T.Encaps</t>
+                <t>
+                    <list style="hanging">
+                        <t hangText="UL:">End.T, End.DT4, or End.DX2</t>
+                        <t hangText="DL:">T.Insert, or T.Encaps</t>
+                    </list>
+                </t>
                 
                 <t>In uplink, an endpoint of a L3 anchor segment does End.T
                 process for the packets when the active segment represents
