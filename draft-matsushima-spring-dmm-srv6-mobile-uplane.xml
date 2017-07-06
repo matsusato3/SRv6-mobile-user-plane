@@ -193,7 +193,7 @@
         interworking between existing access node and SRv6 anchor segment,
         or SRv6 access node segment and existing anchor node.</t>
         
-        <t>Existing mobile user-plane with IPv6 underly is expected to be
+        <t>Existing mobile user-plane with IPv6 underlay is expected to be
         widely deployed. As IPv6 network should be interoperable with SRv6
         enabled network and SRv6 endpoints can be accommodated on it,
         interworking with existing IPv6 network is out of scope of this
@@ -336,7 +336,7 @@
                 ENH indicates layer-2 type, the endpoint does End.DX2
                 process for it.</t>
                 
-                <t>In uplink, an endpoint of an L3 anchor segment does
+                <t>In downlink, an endpoint of a L3 anchor segment does
                 T.Insert process for the packets when the IPv6 flow of
                 packets matched to the policy bound to the segment. When
                 the matched flow is IPv4, or other types, the endpoint does
@@ -457,7 +457,7 @@
         sharing same prefix through those SIDs within the slice could be a
         straightforward way. SIDs in a network slice may include other type
         of functions in addition to the mobile user-plane functions
-        described in this document, and underly integration to meet SLA and
+        described in this document, and underlay integration to meet SLA and
         quality requirements.</t>
         
         <t>While network slicing has been discussed in the IETF and other
