@@ -141,10 +141,10 @@
         
         <t><xref target="fig_srv6-uplane"/> shows mobile user-plane
         functions which are connected through SRv6 enabled IPv6 networks.
-        In the [ref.fig-srv6-userplane], an mobile node (MN) connects to an
-        SRv6 endpoint serving access node role for the MN. When the
-        endpoint receives packets from the MN, it pushes SRH to the
-        packets. The segment list in the SRH indicates the rest of
+        In the <xref target="fig_srv6-uplane"/>, an mobile node (MN)
+        connects to an SRv6 endpoint serving access node role for the MN.
+        When the endpoint receives packets from the MN, it pushes SRH to
+        the packets. The segment list in the SRH indicates the rest of
         user-plane segments which are L2 and L3 anchors respectively. Then
         the endpoint send the packets to the SRv6 enabled IPv6 network. In
         opposite direction, when an SRv6 endpoint serving L3 anchor role
