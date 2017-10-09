@@ -1,4 +1,4 @@
-# SRv6-mobile-user-plane
+# Segment Routing IPv6 for Mobile User-Plane
 ## Abstract
 
    This document discusses the applicability of SRv6 (Segment Routing
