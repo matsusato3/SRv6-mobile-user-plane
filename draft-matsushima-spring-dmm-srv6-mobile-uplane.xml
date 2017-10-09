@@ -27,7 +27,7 @@
   <?rfc strict="yes" ?>
 
   <front>
-    <title abbrev="SRv6-mobile-uplane">SRv6 for Mobile User-Plane</title>
+    <title abbrev="SRv6-mobile-uplane">Segment Routing IPv6 for Mobile User-Plane</title>
 
      <author fullname="Satoru Matsushima" initials="S." surname="Matsushima">
       <organization abbrev="SoftBank">SoftBank</organization>
