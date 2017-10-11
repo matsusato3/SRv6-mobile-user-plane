@@ -142,14 +142,14 @@
         <t><xref target="fig_srv6-uplane"/> shows mobile user-plane
         functions which are connected through SRv6 enabled IPv6 networks.
         In the <xref target="fig_srv6-uplane"/>, an mobile node (MN)
-        connects to an SRv6 endpoint serving access node role for the MN.
+        connects to an SRv6 endpoint serving access point role for the MN.
         When the endpoint receives packets from the MN, it pushes SRH to
         the packets. The segment list in the SRH indicates the rest of
         user-plane segments which are L2 and L3 anchors respectively. Then
         the endpoint send the packets to the SRv6 enabled IPv6 network. In
         opposite direction, when an SRv6 endpoint serving L3 anchor role
         for the MN receives packets to it, the endpoint push SRH consist of
-        the L2 anchor and access node segments to the packets.</t>
+        the L2 anchor and access point segments to the packets.</t>
 
         <t>
             <figure anchor="fig_srv6-uplane" title="Mobile User-plane with SRv6">
@@ -165,7 +165,7 @@
                                O------O                              
              User-plan            ||           User-plan             
    [MN]      Function        _____||_____      Function             
-     |     <Access Node>    /            \    <L3 Anchor>            
+     |     <Access Point>   /            \    <L3 Anchor>            
   ___v___     O------O     /              \     O------O     ________
  /  Radio \   | SRv6 |    /      SRv6      \    | SRv6 |    /        \ 
 /  Access  \==| End  |===/      enabled     \===| End  |===/ Service  \
@@ -190,8 +190,8 @@
         existing IPv4 mobile user-plane, which is defined in <xref
         target="RFC5213"/> and <xref target="TS.29281"/>. An SRv6 segment
         in the endpoint represents interworking function which enables
-        interworking between existing access node and SRv6 anchor segment,
-        or SRv6 access node segment and existing anchor node.</t>
+        interworking between existing access point and SRv6 anchor segment,
+        or SRv6 access point segment and existing anchor node.</t>
         
         <t>Existing mobile user-plane with IPv6 underlay is expected to be
         widely deployed. As IPv6 network should be interoperable with SRv6
@@ -217,8 +217,8 @@
       [MN]           \________/    O------O    \________/    O------O 
        |             //                                         ||    
     ___v____    O------O                                     ___||__  
-   / Radio  \   |      |                                    / Radio  \ 
-  /  Access  \==|Access|                            [MN]~~~/  Access  \
+   / Radio  \   |Access|                                    / Radio  \ 
+  /  Access  \==|Point |                            [MN]~~~/  Access  \
   \    NW    /  |Node  |                                   \    NW    /
    \________/   O------O                                    \________/ 
          
@@ -244,11 +244,11 @@
         from mobile node to the correspondent node, and downlink (DL) from
         the correspondent node to mobile node.</t>
 
-            <section anchor="access" title="Access Node Segment">
+            <section anchor="access" title="Access Point Segment">
             
                 <t>Access node segment provides SRv6 endpoint the role to
                 which mobile node is connected directly. eNodeB could be
-                referenced as an entity implementing the access node in
+                referenced as an entity implementing the access point in
                 3GPP term. The applicable SRv6 functions for the access
                 nodes are following:</t>
                 
@@ -259,7 +259,7 @@
                     </list>
                 </t>
                 
-                <t>In uplink, an endpoint of an access node segment does
+                <t>In uplink, an endpoint of an access point segment does
                 T.Insert process for the receiving packets from mobile node
                 when the packets matched to the policy bound to the segment
                 in case IPv6 is the outer header of the packet. When the
