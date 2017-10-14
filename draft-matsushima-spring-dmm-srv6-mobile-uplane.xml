@@ -58,6 +58,34 @@
       </address>
     </author>
 
+    <author fullname="Miya Kohno" initials="M." surname="Kohno">
+      <organization abbrev="Cisco Systems, Inc.">Cisco Systems, Inc.</organization>
+      <address>
+        <postal>
+          <street></street>
+          <city></city>
+          <region></region>
+          <code></code>
+          <country>Japan</country>
+        </postal>
+        <email>mkohno@cisco.com</email>
+      </address>
+    </author>
+
+    <author fullname="Daniel Voyer" initials="D." surname="Voyer">
+      <organization abbrev="Bell Canada">Bell Canada</organization>
+      <address>
+        <postal>
+          <street></street>
+          <city></city>
+          <region></region>
+          <code></code>
+          <country>Canada</country>
+        </postal>
+        <email>daniel.voyer@bell.ca</email>
+      </address>
+    </author>
+
     <date year="2017" />
 
     <workgroup>SPRING and DMM</workgroup>
