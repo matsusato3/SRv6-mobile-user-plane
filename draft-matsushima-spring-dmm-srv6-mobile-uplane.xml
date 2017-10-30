@@ -183,7 +183,7 @@
             <figure anchor="fig_srv6-uplane" title="Mobile User-plane with SRv6">
             <artwork align="center"><![CDATA[
 
-                               User-plan                             
+                               User-plane                            
                                Function                              
                               <L2 Anchor>                            
                                O------O                              
@@ -191,7 +191,7 @@
                                | End  |                              
                                | Point|                              
                                O------O                              
-             User-plan            ||           User-plan             
+             User-plane           ||           User-plane            
    [MN]      Function        _____||_____      Function             
      |     <Access Point>   /            \    <L3 Anchor>            
   ___v___     O------O     /              \     O------O     ________
@@ -235,7 +235,7 @@
     ________                                                 _______  
    /        \    O------O                                   /       \ 
   / Service  \===|L2/L3 |                                  / Service \
-  \    NW    /   |Anchor|         User-plan                \    NW   /
+  \    NW    /   |Anchor|         User-plane               \    NW   /
    \________/    |Node  |         Function                  \_______/ 
                  O------O       <Interworking>                  ||    
                      \\_______     O------O     ________     O------O 
