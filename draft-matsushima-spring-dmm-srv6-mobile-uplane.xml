@@ -12,7 +12,7 @@
     "http://xml.resource.org/public/rfc/bibxml3/reference.I-D.ietf-dmm-fpc-cpdp.xml">
 
 ]>
-<rfc category="std" docName="draft-matsushima-spring-dmm-srv6-mobile-uplane-02"
+<rfc category="std" docName="draft-matsushima-spring-dmm-srv6-mobile-uplane-03"
      ipr="trust200902">
   <?xml-stylesheet type='text/xsl' href='rfc2629.xslt' ?>
 
@@ -354,23 +354,23 @@
                         destine to "D::1" from a mobile node "S::1", it
                         does T.Insert process for the receiving packets to
                         push a SRH with SID list (A2::1, D::1) and sets SL=1.
-                        The access point node update DA to "A2::1" which
-                        indicates the UL L2-Anchor SID and forward the packet. </t>
+                        The access point node update DA to next UL L2-anchor 
+                        SID "A2::1" which the SL indicates and forward the packet. </t>
                         
                         <t>The L2-anchor node of "A2::1" segment does
                         End.B6 process for the receiving packet according
                         to the segment. The node updates DA to next UL L3-anchor
-                        segment "A3::1" associated with "A2::1". In this
-                        basic use case, just one UL L3-anchor SID with SL=0 is
+                        SID "A3::1" bound to "A2::1" and forward the packet.
+                        In this basic use case, just one UL L3-anchor SID with SL=0 is
                         enough to do it so that there is no need
                         to push another SRH to the packet in that PSP
                         (Penultimate Segment Pop) operation. </t>
                         
                         <t>The L3-anchor node of "A3::1" segment does End.T
                         process for the receiving packet according to the
-                        SRH that the node updates DA to D::1, decrement SL
-                        and lookup IPv6 table associated with "A3::1". In
-                        this basic use case, decremented SL is 0 so that
+                        segment. The node decrement SL to 0, updates DA to D::1 
+                        which the SL indicates and lookup IPv6 table associated with "A3::1". In
+                        this basic use case, the decremented SL is 0 so that
                         the node does PSP operation of popped out the SRH
                         from the packet and forward it. </t>
                     </section>
@@ -389,13 +389,13 @@
                         destine to "S::1" from a correspondant node "D::1", it
                         does T.Insert process for the receiving packets to
                         push a SRH with SID list (A2::2, S::1) and sets SL=1.
-                        The access point node update DA to "A2::2" which
-                        indicates the DL L2-Anchor SID and forward the packet. </t>
+                        The L3-anchor node update DA to next DL L2-anchor SID "A2::2" which the SL
+                        indicates and forward the packet. </t>
                         
                         <t>The L2-anchor node of "A2::2" segment does
                         End.B6 process for the receiving packet according
                         to the segment. The node updates DA to next DL access point
-                        segment "A1::2" associated with "A2::2". In this
+                        segment "A1::2" bound to "A2::2" and forward the packet. In this
                         basic use case, just one DL access point SID with SL=0 is
                         enough to do it so that there is no need
                         to push another SRH to the packet in that PSP
@@ -403,12 +403,12 @@
                         
                         <t>The access point node of "A1::2" segment does
                         End.X process for the receiving packet according to
-                        the SRH that the node updates DA to S::1, decrement
-                        SL and forward the packet to the mobile node
-                        through its associated radio channel. In this basic
-                        use case, decremented SL is 0 so that the node does
-                        PSP operation of popped out the SRH from the packet
-                        and forward it. </t>
+                        the segment. The node decrement SL to 0, updates DA to S::1
+                        which the SL indicates and forward the packet to the mobile node 
+                        of "S::1" through radio channel associated with "A1::2". In this basic
+                        use case, the decremented SL is 0 so that the node does
+                        PSP operation of popped out the SRH from the packet prior 
+                        to forward it. </t>
 
                     </section>
     
@@ -432,31 +432,28 @@
                         
                         <t> <list style="hanging"> 
                         <t hangText="Access Point:">T.Insert</t>
-                        <t hangText="L2-Anchor:">End.B6</t>
+                        <t hangText="L2-Anchor:">End</t>
                         <t hangText="L3-Anchor:">End.T</t>
                         </list> </t>
                         
                         <t>When the access point node receives a packet
                         destine to "D::1" from a mobile node "S::1", it
                         does T.Insert process for the receiving packets to
-                        push a SRH with SID list (AG20::, D::1) and sets SL=1.
-                        The access point node update DA to "AG20::" which
-                        indicates aggregated UL L2-Anchor SID and forward the packet. </t>
+                        push a SRH with SID list (A20::, A30::, D::1) and sets SL=2.
+                        The access point node update DA to next aggregated UL L2-anchor 
+                        SID "A20::" which the SL indicates and forward the packet. </t>
                         
-                        <t>The aggregated L2-anchor node of "AG20::" segment does
-                        End.B6 process for the receiving packet according
-                        to the segment. The node updates DA to aggregated UL L3-anchor
-                        segment "AG30::" associated with "AG20::". In this
-                        basic use case, just one UL L3-anchor SID with SL=0 is
-                        enough to do it so that there is no need
-                        to push another SRH to the packet in that PSP
-                        (Penultimate Segment Pop) operation. </t>
+                        <t>The aggregated L2-anchor node of "A20::" segment does
+                        End process for the receiving packet according
+                        to the segment. The node decrement SL to 1, updates DA to next
+                        aggregated UL L3-anchor SID "A30::" which the SL indicates and 
+                        forward the packet. </t>
                         
-                        <t>The aggregated L3-anchor node of "AG30::" segment does End.T
+                        <t>The aggregated L3-anchor node of "A30::" segment does End.T
                         process for the receiving packet according to the
-                        SRH that the node updates DA to D::1, decrement SL
-                        and lookup IPv6 table associated with "AG30::". In
-                        this basic use case, decremented SL is 0 so that
+                        segment. The node decrement SL to 0, updates DA to D::1 which the SL
+                        indicates and lookup IPv6 table associated with "A30::". In
+                        this basic use case, the decremented SL is 0 so that
                         the node does PSP operation of popped out the SRH
                         from the packet and forward it. </t>
                     </section>
@@ -467,31 +464,28 @@
                         
                         <t> <list style="hanging"> 
                         <t hangText="L3-Anchor:">T.Insert</t>
-                        <t hangText="L2-Anchor:">End.B6</t>
-                        <t hangText="Access Point:">End.X</t>
+                        <t hangText="L2-Anchor:">End</t>
+                        <t hangText="Access Point:">End.T</t>
                         </list> </t>
                         
                         <t>When the L3-anchor node receives a packet
                         destine to "S::1" from a correspondant node "D::1", it
                         does T.Insert process for the receiving packets to
-                        push a SRH with SID list (AG21::, S::1) and sets SL=1.
-                        The access point node update DA to "AG21::2" which
-                        indicates the aggregated DL L2-Anchor SID and forward the packet. </t>
+                        push a SRH with SID list (A21::, A31::, S::1) and sets SL=1.
+                        The access point node update DA to next DL L2-anchor SID "A21::2" which
+                        indicates and forward the packet. </t>
                         
-                        <t>The aggregated L2-anchor node of "AG21::" segment does
-                        End.B6 process for the receiving packet according
-                        to the segment. The node updates DA to aggregated DL access point
-                        segment "AG11::" associated with "AG21::". In this
-                        basic use case, just one aggregated DL access point SID with SL=0 is
-                        enough to do it so that there is no need
-                        to push another SRH to the packet in that PSP
-                        (Penultimate Segment Pop) operation. </t>
+                        <t>The aggregated L2-anchor node of "A21::" segment does
+                        End process for the receiving packet according
+                        to the segment. The node decrement SL to 1, updates DA to next 
+                        aggregated DL access point SID "A11::" which the SL indicates
+                        and forward the packet. </t>
                         
-                        <t>The aggregated access point node of "AG11::" segment does
-                        End.X process for the receiving packet according to
-                        the SRH that the node updates DA to S::1, decrement
-                        SL and forward the packet to the mobile node
-                        through its associated radio channel. In this basic
+                        <t>The aggregated access point node of "A11::" segment does
+                        End.T process for the receiving packet according to
+                        the segment. The node decrement SL to 0, updates DA to "S::1" which 
+                        the SL indicates, and forward the packet to the mobile node
+                        through its associated radio channel with "S::1". In this basic
                         use case, decremented SL is 0 so that the node does
                         PSP operation of popped out the SRH from the packet
                         and forward it. </t>
