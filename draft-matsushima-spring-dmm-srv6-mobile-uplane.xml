@@ -407,8 +407,8 @@
                         which the SL indicates and forward the packet to the mobile node 
                         of "S::1" through radio channel associated with "A1::2". In this basic
                         use case, the decremented SL is 0 so that the node does
-                        PSP operation of popped out the SRH from the packet prior 
-                        to forward it. </t>
+                        PSP operation of popped out the SRH from the packet and 
+                        forward it. </t>
 
                     </section>
     
