@@ -465,15 +465,15 @@
                         <t> <list style="hanging"> 
                         <t hangText="L3-Anchor:">T.Insert</t>
                         <t hangText="L2-Anchor:">End</t>
-                        <t hangText="Access Point:">End.T</t>
+                        <t hangText="Access Point:">End</t>
                         </list> </t>
                         
                         <t>When the L3-anchor node receives a packet
                         destine to "S::1" from a correspondant node "D::1", it
                         does T.Insert process for the receiving packets to
                         push a SRH with SID list (A21::, A31::, S::1) and sets SL=1.
-                        The access point node update DA to next DL L2-anchor SID "A21::2" which
-                        indicates and forward the packet. </t>
+                        The access point node update DA to next aggregated DL L2-anchor
+                        SID "A21::2" which indicates and forward the packet. </t>
                         
                         <t>The aggregated L2-anchor node of "A21::" segment does
                         End process for the receiving packet according
@@ -482,7 +482,7 @@
                         and forward the packet. </t>
                         
                         <t>The aggregated access point node of "A11::" segment does
-                        End.T process for the receiving packet according to
+                        End process for the receiving packet according to
                         the segment. The node decrement SL to 0, updates DA to "S::1" which 
                         the SL indicates, and forward the packet to the mobile node
                         through its associated radio channel with "S::1". In this basic
