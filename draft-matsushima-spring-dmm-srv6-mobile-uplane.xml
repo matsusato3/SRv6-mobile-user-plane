@@ -463,7 +463,7 @@
                         <t>When the L3-anchor node receives a packet
                         destine to "S::1" from a correspondant node "D::1", it
                         does T.Insert process for the receiving packets to
-                        push a SRH with SID list &lt;A2::, A1::, S::1&gt; with SL=1.
+                        push a SRH with SID list &lt;A2::, A1::, S::1&gt; with SL=2.
                         The L3-anchor node update DA to next aggregated DL L2-anchor
                         SID "A2::" which indicates and forward the packet. </t>
                         
