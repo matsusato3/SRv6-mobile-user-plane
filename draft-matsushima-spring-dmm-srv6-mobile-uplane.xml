@@ -24,7 +24,7 @@
 
   <?rfc sortrefs="yes"?>
   <?rfc compact="yes" ?>
-  <?rfc subcompact="no" ?>
+  <?rfc subcompact="yes" ?>
   <?rfc iprnotified="no" ?>
 
   <?rfc strict="yes" ?>
@@ -353,9 +353,9 @@
                 title="Stateless Interworking SID Encoding">
                 <artwork align="center"><![CDATA[
 
-+----------------------+------+-------+-------+
-|Locater of interwork  |  DA  |  SA   | Tun-ID|
-+----------------------+------+-------+-------+
++----------------------+-------+-------+-------+
+|    IW-IPv6-Prefix    |IPv4DA |IPv4SA |TUN-ID |
++----------------------+-------+-------+-------+
         128-a-b-c          a      b       c
 
                   ]]></artwork>
@@ -363,50 +363,90 @@
               </figure>
             </t>
             
+
             <t>Stateless interworking function introduce following 
             SRv6 end function and transit behavior. </t>
 
             <t>
-                <list style="hanging">
-                    <t hangText="End.TM">End point function with encapsulation for mapped tunnel</t>
-                    <t hangText="T.Tmap">Transit behavior with tunnel decapsulation and mapping an SRv6 Policy</t>
+                <list style="hanging" hangIndent="24">
+                    <t hangText="End.TM: ">End point function with encapsulation for mapped tunnel</t>
+                    <t hangText="T.Tmap: ">Transit behavior with tunnel decapsulation and mapping an SRv6 Policy</t>
                 </list>
             </t>
             
+            
+            <t>Stateless interworking function is associated with the
+           following mandatory parameters:</t>
+           
+            <t><list style="hanging" hangIndent="24">
+                <t hangText="IW-IPv4-Prefix: ">IPv4 prefix representing network of
+                SRv6 user-plane for legacy mobile user-plane</t>
+                <t hangText="IW-IPv6-Prefix: ">IPv6 prefix representing network of
+                legacy mobile user-plane for SRv6 user-plane</t>
+                <t hangText="TUN-PROTO: ">Tunnel protocol type, such as GTP-U or
+                GRE for PMIP</t>
+            </list></t>
+ 
+            
             <section anchor="end.tm" title="End.TM: End point function with encapsulation for mapped tunnel">
+            
+                <t>The "End point to encapsulate for mapped tunnel" function (End.TM for short)
+                is used to the direction from SRv6 user-plane to legacy user-plane network.</t>
+            
+                <t> When interworking node N receives a packet destined to S and S is a local
+                End.TM SID, N does:</t>
 
-                <t>In SRv6 to existing network direction, an endpoint
-                of interworking allocates End.TM function to a SID
-                prefix, say "T0::". When the endpoint receives packet
-                and the active segment of the packet indicates that SID
-                prefix, the endpoint does End.TM process that pops the
-                SRH of the SID, and then the endpoint encaps the
-                payload with the encoded information in the SID which
-                are tunnel identifier of tunnel header, source and
-                destination IPv4 address of IPv4 header described in
-                <xref target="fig_interwork-sid"/>. Then the endpoint
-                send out the packet to the existing network along with
-                its routing policy.</t>
+                <figure><artwork align="left"><![CDATA[
+1. IF NH=SRH & SL > 0 THEN                   
+2.    decrement SL                               
+3.    update the IPv6 DA with SRH[SL]            
+4.    push header of TUN-PROTO with tunnel ID from S            ;; Ref1
+5.    push outer IPv4 header with SA, DA from S  
+6. ELSE                                          
+7.    Drop the packet                            
+                  ]]></artwork></figure>
+
+                <t>Ref1: TUN-PROTO indicates target tunnel type.</t>
+
+ 
                     
             </section>
             
             <section anchor="T.Tmap" title="T.Tmap: Transit behavior with tunnel decapsulation and mapping an SRv6 Policy">
-                    
-                <t>In existing network to SRv6 network direction,
-                existing network allocates IPv4 address spaces routed
-                to interworking SRv6 network. SRv6 network allocates a
-                domain-wise SID prefix for interworking segments, say
-                "T1::". When a SRv6 endpoint connects to existing
-                network receives packet destined to the allocated IPv4
-                address, the endpoint does T.Tmap behavior that decaps
-                outer IPv4 and tunnel header, and then pushs an SRH
-                with the SID which consists of the allocated
-                SID prefix "T1::", source and destination
-                addresses, and tunnel identifier as described in <xref
-                target="fig_interwork-sid"/>. Then the endpoint send
-                out the packet to the SRv6 network along with its
-                routing policy.</t>
-                    
+            
+                <t>The "Transit with tunnel decapsulation and map to an
+                SRv6 policy" function (T.Tmap for short) is used to the
+                direction from legacy user-plane to SRv6 user-plane
+                network.</t>
+
+
+                <t>When interworking node N receives a packet destined to a IW-IPv4-Prefix,  N does:</t>
+   
+                <figure><artwork align="left"><![CDATA[
+1.   IF P.PLOAD == TUN-PROTO & T.PLOAD == IPv6 THEN    ;; Ref1, Ref1bis
+2.      pop the outer IPv4 header and tunnel headers                   
+3.      copy IPv4 DA, SA, TUN-ID to form SID B with IW-IPv6-Prefix     
+4.      insert the SRH (D, B; SL=1)                    ;; Ref2, Ref2bis
+5.      set the IPv6 DA = B                                            
+6.      forward along the shortest path to B                           
+7.   ELSE                                                              
+8.      Drop the packet                                                
+                  ]]></artwork></figure>
+                
+                <t>Ref1: P.PLOAD and T.PLOAD represent payload protocol of
+                the receiving packet, and payload protocol of the tunnel
+                respectively.</t>
+
+                <t>Ref1bis: First nibble of payload is used to determine
+                payload protocol in GTP-U case due to it has no payload
+                protocol indicator in the header.</t>
+
+                <t>Ref2: The received IPv6 DA is placed as last SID of the inserted SRH.</t>
+
+                <t>Ref2bis: The SRH is inserted before any other IPv6 Routing Extension
+                Header.</t>
+
+
             </section>
 
 <!--                
@@ -452,7 +492,7 @@
 +----------------------+----------+-----------+
 | Locater of rate-limit| group-id | limit-rate|
 +----------------------+----------+-----------+
-      128-i-j            i          j
+          128-i-j            i          j
 
                   ]]></artwork>
                 <postamble></postamble>
@@ -507,7 +547,7 @@
                                         push a SRH with SID list &lt;A2::1, D::1&gt; with SL=1.
                                         The access point node update DA to next UL L2-anchor 
                                         SID "A2::1" which the SL indicates and forward the packet. </t>
-                                    </list>
+                                    </list><vspace />
                                 </t>
                                 <t hangText="Layer-2 Anchor:">
                                     <list>
@@ -519,7 +559,7 @@
                                         enough to do it so that there is no need
                                         to push another SRH to the packet in that PSP
                                         (Penultimate Segment Pop) operation. </t>
-                                    </list>
+                                    </list><vspace />
                                 </t>
                                 <t hangText="Layer-3 Anchor:">
                                     <list>
@@ -545,7 +585,7 @@
 
                         <t>
                             <list style="hanging">
-                                <t hangText="Access Point:">
+                                <t hangText="Layer-3 Anchor:">
                                     <list>
                                         <t>When the L3-anchor node receives a packet
                                         destine to "S::1" from a correspondent node "D::1", it
@@ -553,7 +593,7 @@
                                         push a SRH with SID list &lt;A2::2, S::1&gt; with SL=1.
                                         The L3-anchor node update DA to next DL L2-anchor SID "A2::2" which the SL
                                         indicates and forward the packet. </t>
-                                    </list>
+                                    </list><vspace />
                                 </t>
                                 <t hangText="Layer-2 Anchor:">
                                     <list>
@@ -565,9 +605,9 @@
                                         enough to do it so that there is no need
                                         to push another SRH to the packet in that PSP
                                         (Penultimate Segment Pop) operation. </t>
-                                    </list>
+                                    </list><vspace />
                                 </t>
-                                <t hangText="Layer-3 Anchor:">
+                                <t hangText="Access Point:">
                                     <list>
                                         <t>The access point node of "A1::1" segment does
                                         End.X process for the receiving packet according to
@@ -621,7 +661,7 @@
                                         push a SRH with SID list &lt;A2::, A3::, D::1&gt; with SL=2.
                                         The access point node update DA to next aggregated UL L2-anchor 
                                         SID "A2::" which the SL indicates and forward the packet. </t>
-                                    </list>
+                                    </list><vspace />
                                 </t>
                                 <t hangText="Layer-2 Anchor:">
                                     <list>
@@ -630,7 +670,7 @@
                                         to the SRH. The node decrement SL to 1, updates DA to next
                                         aggregated UL L3-anchor SID "A3::" which the SL indicates and 
                                         forward the packet. </t>
-                                    </list>
+                                    </list><vspace />
                                 </t>
                                 <t hangText="Layer-3 Anchor:">
                                     <list>
@@ -656,7 +696,7 @@
 
                         <t>
                             <list style="hanging">
-                                <t hangText="Access Point:">
+                                <t hangText="Layer-3 Anchor:">
                                     <list>
                                         <t>When the L3-anchor node receives a packet
                                         destine to "S::1" from a correspondent node "D::1", it
@@ -664,7 +704,7 @@
                                         push a SRH with SID list &lt;A2::, A1::, S::1&gt; with SL=2.
                                         The L3-anchor node update DA to next aggregated DL L2-anchor
                                         SID "A2::" which indicates and forward the packet. </t>
-                                    </list>
+                                    </list><vspace />
                                 </t>
                                 <t hangText="Layer-2 Anchor:">
                                     <list>
@@ -673,9 +713,9 @@
                                         to the SRH. The node decrement SL to 1, updates DA to next 
                                         aggregated DL access point SID "A1::" which the SL indicates
                                         and forward the packet. </t>
-                                    </list>
+                                    </list><vspace />
                                 </t>
-                                <t hangText="Layer-3 Anchor:">
+                                <t hangText="Access Point:">
                                     <list>
                                         <t>The aggregated access point node of "A1::" segment does
                                         End process for the receiving packet according to
@@ -694,8 +734,146 @@
     
                 </section>
 
-                <section anchor="interwork" title="Stateless Interworking with Legacy Access Networks">
+                <section anchor="stateless-iwf-access" title="Stateless Interworking with Legacy Access Network">
+
+                    <t>This section describes an use case where user-plane
+                    functions are interworking in stateless between SRv6
+                    and legacy access networks. Here stateless means that
+                    there's no need to be aware any states of mobility
+                    sessions in the node. </t>
                     
+                    <t>As some types of interworking scenarios could be
+                    considered, we will describe other cases in the future
+                    versions of this document.</t>
+                    
+                    <section title="Uplink: Lagacy Access to SRv6">
+                        
+                        <t><list style="hanging">
+                            <t hangText="Legacy Access Point:">
+                                <list>
+                                    <t>When a legacy access point node
+                                    receives a packet destined to "D::1"
+                                    from a mobile node "S::1" through
+                                    associated radio channel, it does
+                                    tunnel encapsulation with the tunneling
+                                    parameters, IPv4 DA, SA and tunnel
+                                    header with ID, and sends out the
+                                    packet to the network. </t>
+                                </list>
+                            </t>
+                        </list></t>
+
+                        <t><list style="hanging">
+                            <t hangText="Stateless Interworking:">
+                                <list>
+                                    <t>The stateless interworking node of
+                                    corresponding to the IPv4 DA does
+                                    T.Tmap process for the receiving packet
+                                    to pop the tunnel headers and push a
+                                    SRH to the packet. The SRH consists of SIDs &lt;B1,
+                                    D::1&gt; with SL=1, where "B1" encodes
+                                    IW-IPv6-Prefix, tunnel IPv4 DA, SA and
+                                    TUN-ID in it as <xref
+                                    target="fig_interwork-sid"/> defined.
+                                    The stateless interworking node updates
+                                    DA to "B1" and forward the packet. 
+                                    SA of the packet must be kept as "S::1".</t>
+                                </list>
+                            </t>
+                        </list></t>
+                        
+                        <t><list style="hanging">
+                            <t hangText="Layer-2 or Layer-3 Anchor:">
+                                <list>
+                                    <t>The receiving node of the packet destine to B1
+                                    would be Layer-2 anchor, or Layer-3 anchor node.
+                                    Which type of anchor function is bound to 
+                                    B1 depends on operational policy.</t>
+                                </list>
+                                <list>
+                                    <t>In case of B1 to an L2-anchor node,
+                                    the L2-anchor node does End.B6 process
+                                    for the receiving packet as same as
+                                    previous section.</t>
+                                </list>
+                                <list>
+                                    <t>In case of B1 to an L3-anchor node,
+                                    the L3-anchor node does End.T process
+                                    for the receiving packet as same as
+                                    previous section.</t>
+                                </list>
+                            </t>
+                        </list></t>
+
+                    </section>
+                    
+                    <section title="Downlink: SRv6 to Legacy Access">
+
+                        <t><list style="hanging">
+                            <t hangText="Layer-2 or Layer-3 Anchor:">
+                                <list>
+                                    <t>In case of an L3-anchor node
+                                    receives a packet destine to S::1 from the
+                                    correspondent node "D::1", and
+                                    stateless interworking SID is bound to
+                                    the next segment of S::1 , the
+                                    L3-anchor node does T.Insert process
+                                    for the receiving packet to push a SRH
+                                    with SID list &lt;B2::, S::1&gt; with
+                                    SL=1, where "B2" which encodes
+                                    IW-IPv6-Prefix, tunnel IPv4 DA, SA and
+                                    TUN-ID in it as <xref
+                                    target="fig_interwork-sid"/> defined.
+                                    The L3-anchor node updates DA to "B2"
+                                    and forward the packet.</t>
+                                </list>
+                                <list>
+                                    <t>In case of an L2-anchor node receives a packet
+                                    destine to SID "A2::B2" and the SID is bound to "B2",
+                                    the L2-anchor node does End.B6 process
+                                    for the receiving packet as same as
+                                    previous section. The node updates DA to
+                                    B2 and forward the packet.</t>
+                                </list>
+                            </t>
+                        </list></t>
+
+                        <t><list style="hanging">
+                            <t hangText="Stateless Interworking:">
+                                <list>
+                                    <t>The stateless interworking node of
+                                    "B2" End.TM process for the receiving
+                                    packet according to the SRH. The node
+                                    decrement SL to 0, updates DA to "D::1"
+                                    which the SL indicates, push IPv4 and
+                                    tunnel headers with IPv4 DA, SA and
+                                    TUN-ID extracted from "B2", and forward
+                                    the packet to the legacy network. </t>
+                                </list>
+                                <list>
+                                    <t> In this use case, decremented SL is
+                                    0 so that the node does PSP operation
+                                    of popped out the SRH from the packet
+                                    and forward it.</t>
+                                </list>
+                            </t>
+                        </list></t>
+                        
+                        <t><list style="hanging">
+                            <t hangText="Legacy Access Point:">
+                                <list>
+                                    <t> The legacy access point node of the
+                                    IPv4 DA does tunnel termination process
+                                    for the receiving packet according to
+                                    the tunnel header. The node pop the
+                                    IPv4 and tunnel header and forward the
+                                    packet to the mobile node through radio
+                                    channel associated with the tunnel.</t>
+                                </list>
+                            </t>
+                        </list></t>
+                    
+                    </section>
 
                 </section>
 
@@ -805,10 +983,10 @@
         
             <t>In case of stateless interworking, SID allocating entity needs
             to be aware SID prefix which interworking SRv6 endpoint and SRv6
-            domain allocate discussed in <xref target="interwork"/>. The mobile
+            domain allocate discussed in <xref target="stateless_iw_func"/>. The mobile
             control-plane also need to allocate tunnel endpoint IPv4 address to
             which corresponding interworking segment destined from existing
-            user-plane that is also discussed in <xref target="interwork"/>.</t>
+            user-plane that is also discussed in <xref target="stateless_iw_func"/>.</t>
         
         </section>
         
