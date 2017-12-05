@@ -14,7 +14,7 @@
 ]>
 <?xml-stylesheet type='text/xsl' href='rfc2629.xslt' ?>
 
-<rfc category="std" docName="draft-matsushima-spring-dmm-srv6-mobile-uplane-03"
+<rfc category="std" docName="draft-ietf-dmm-srv6-mobile-uplane-00"
      ipr="trust200902">
   <?xml-stylesheet type='text/xsl' href='rfc2629.xslt' ?>
 
@@ -88,6 +88,22 @@
         <email>daniel.voyer@bell.ca</email>
       </address>
     </author>
+
+    <author fullname="Charles E. Perkins" initials="C.E." surname="Perkins">
+       <organization abbrev="Futurewei">Futurewei Inc. </organization>
+       <address>
+         <postal>
+           <street>2330 Central Expressway</street>
+           <city>Santa Clara</city>
+           <code>95050</code>
+           <region>CA</region>
+           <country>USA</country>
+         </postal>
+         <phone>+1-408-330-4586</phone>
+         <email>charliep@computer.org</email>
+       </address>
+    </author>
+
 
     <date year="2017" />
 
