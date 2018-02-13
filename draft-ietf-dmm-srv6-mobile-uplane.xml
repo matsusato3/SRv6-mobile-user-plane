@@ -105,7 +105,7 @@
     </author>
 
 
-    <date year="2017" />
+    <date year="2018" />
 
     <workgroup>DMM Working Group</workgroup>
 
@@ -1094,6 +1094,7 @@
 
             <t>If the control- and user-plane entities need to employ
             existing user-plane control protocols in between, such as PFCP
+            <xref target="TS.29244"/>
             for example, it may be required not to impact that protocol. In
             this case, the control-plane entity only is allowed to signal
             SID in a tunnel endpoint IPv6 address field. </t>
@@ -1178,9 +1179,19 @@
                 Protocol User Plane (GTPv1-U)</title>
                 <author surname="3GPP" fullname="3GPP">
                 </author>
-                <date month="September" year="2011" />
+                <date month="December" year="2017" />
             </front>
-            <seriesInfo name="3GPP TS 29.281" value="10.3.0" />
+            <seriesInfo name="3GPP TS 29.281" value="15.1.0" />
+        </reference>
+        <reference anchor="TS.29244">
+            <front>
+                <title>Interface between the Control Plane
+                and the User Plane Nodes</title>
+                <author surname="3GPP" fullname="3GPP">
+                </author>
+                <date month="December" year="2017" />
+            </front>
+            <seriesInfo name="3GPP TS 29.244" value="15.0.0" />
         </reference>
     </references>
 
