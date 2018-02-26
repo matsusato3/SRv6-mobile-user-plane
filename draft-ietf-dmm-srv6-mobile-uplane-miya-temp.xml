@@ -130,11 +130,11 @@
       and the network programming nature of SRv6 will accomplish the mobile
       user-plane functions quite straightforwardly. The statelessness and 
       the ability to control underlying layer will be even more beneficial 
-      to the mobile user-plane, in terms of providing flexiblity and SLA 
+      to the mobile user-plane, in terms of providing flexibility and SLA 
       control for various applications. It also simplifies the network 
       architecture by eliminating the necessity of tunnels, such as GTP, 
       Mac-in-Mac, MPLS, and so on. In addition, Segment Routing can provide 
-      an ehnanced method for network slicing, which will also be briefly touhed 
+      an enhanced method for network slicing, which will also be briefly touched 
       by this document.  </t>
 
     </abstract>
@@ -458,7 +458,7 @@
                and GTP TEID T. </t>
          
                <t>[Uplink]
-               <list style='hangout'>
+               <list style='hanging'>
                <t> gNB_out : (gNB, B) (GTP: TEID T) (A,Z) -> Interface N3 unchanged </t> 
                <t> IWF_out : (IWF, S1) (U2::1, S1; SL=1) (A,Z)  -> New END.GTP.UP </t>
                <t> S1_out  : (IWF, C1) (U2::1, C1; SL=1) (A,Z) </t>
@@ -468,11 +468,11 @@
                </t>
 
                <t>[Downlink]
-               <list style='hangout'>
+               <list style='hanging'>
                <t> UPF2_in : (Z,A) -> UPF2 maps A with SID list [C1, S1, IWF::TEID, gNB] </t>
                <t> UPF2_out: (U2::1, C1) (gNB, IWF::TEID, S1; SL=3) (Z,A) -> T.Encaps.Reduced </t>
          		<t> C1_out  : (U2::1, S1) (gNB, S1; SL=2) (Z,A) </t>
-         		<t> S1_out  : (U2::1, IWF::TEID) (gNB, IWS::TEID, S1, SL=1) (Z,A) </t>
+         		<t> S1_out  : (U2::1, IWF::TEID) (gNB, IWF::TEID, S1, SL=1) (Z,A) </t>
          		<t> gNB_out : (Z,A) </t>
          		</list>
          		</t>
@@ -521,6 +521,9 @@
         <t>This documents focuse on the dataplane behavior. The control planes
         could be based on the existing 3GPP based signaling, LISP/ILSR, DNS/reverse 
         DNS lookup, MFA, etc., and to be discussed further. </t>
+
+        <t>It's notable that SRv6's netwrok programming nature allows a 
+        flexible and dynamic anchor placement. </t>
         
 
     </section>
