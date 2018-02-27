@@ -75,6 +75,20 @@
       </address>
     </author>
 
+    <author fullname="Pablo Camarillo" initials="P." surname="Camarillo">
+      <organization abbrev="Cisco Systems, Inc.">Cisco Systems, Inc.</organization>
+      <address>
+        <postal>
+          <street></street>
+          <city></city>
+          <region></region>
+          <code></code>
+          <country>Spain</country>
+        </postal>
+        <email>pcamaril@cisco.com</email>
+      </address>
+    </author>
+    
     <author fullname="Daniel Voyer" initials="D." surname="Voyer">
       <organization abbrev="Bell Canada">Bell Canada</organization>
       <address>
@@ -112,13 +126,16 @@
     <abstract>
 
       <t>This document discusses the applicability of SRv6 (Segment Routing
-      IPv6) to user-plane of mobile networks that SRv6 source routing
-      capability with its programmability can fulfill the user-plane
-      functions, such as access and anchor functions. It takes advantage of
-      underlying layer awareness and flexibility to deploy user-plane
-      functions that enables optimizing data-path for applications. Network
-      slicing and an interworking way between SRv6 and existing mobile
-      user-plane are also discussed in this document. </t>
+      IPv6) to user-plane of mobile networks. The source routing capability 
+      and the network programming nature of SRv6 will accomplish the mobile
+      user-plane functions quite straightforwardly. The statelessness and 
+      the ability to control underlying layer will be even more beneficial 
+      to the mobile user-plane, in terms of providing flexibility and SLA 
+      control for various applications. It also simplifies the network 
+      architecture by eliminating the necessity of tunnels, such as GTP, 
+      Mac-in-Mac, MPLS, and so on. In addition, Segment Routing can provide 
+      an enhanced method for network slicing, which will also be briefly touched 
+      by this document.  </t>
 
     </abstract>
   </front>
@@ -148,7 +165,7 @@
         
         <t>All segment routing and SRv6 network programming terms are
         defined in <xref target="I-D.ietf-spring-segment-routing"/> and
-        "<xref target="I-D.filsfils-spring-srv6-network-programming"/>.</t>
+        <xref target="I-D.filsfils-spring-srv6-network-programming"/>.</t>
 
     </section>
 
@@ -180,847 +197,337 @@
 
     
     </section>
-    
-    <section anchor="uplane" title="Mobile User-Plane">
-        <t>This section describes using SRv6 for user-plane of mobile
-        networks, and clarifies mobile user-plane functions to which SRv6
-        endpoints applied.</t>
-        
-        <t><xref target="fig_srv6-uplane"/> shows mobile user-plane
-        functions which are connected through IPv6-only networks.
-        In the <xref target="fig_srv6-uplane"/>, an mobile node (MN)
-        connects to an SRv6 endpoint serving access point role for the MN.
-        When the endpoint receives packets from the MN, it pushes SRH to
-        the packets. The segment list in the SRH indicates the rest of
-        user-plane segments which are L2 and L3 anchors respectively. Then
-        the endpoint send the packets to the IPv6 network. In the
-        opposite direction, when an SRv6 endpoint serving L3 anchor role
-        for the MN receives packets to it, the endpoint push SRH consist of
-        the L2 anchor and access point segments to the packets.</t>
 
+
+    <section anchor="scenarios" title="Reference Architecture and Deployment Scenarios">
+ 
+        <t>This section describes a referene architecture and possile deployment
+        scenarios.</t>
+        
+        <t><xref target="fig_ref-arch"/> shows a reference architecture, based
+        on 5G packet core architecture  <xref target="TS.23501"/>.
+?
+        
+        <list style='symbols'>
+        <t> UE  : User Equipment </t>
+        <t> gNB : gNodeB </t>
+        <t> UPF : User Plane Function </t>
+        <t> SMF : Session Management Function </t>
+        <t> AMF : Access and Mobility Management Function </t>
+        <t> DN  : Data Network e.g. operator services, Internet access </t>
+         </list>
+
+	   </t>
         <t>
-            <figure anchor="fig_srv6-uplane" title="Mobile User-plane with SRv6">
+            <figure anchor="fig_ref-arch" title="Reference Architecture">
             <artwork align="center"><![CDATA[
 
-                               User-plane                            
-                               Function                              
-                              <L2 Anchor>                            
-                               O------O                              
-                               | SRv6 |                              
-                               | End  |                              
-                               | Point|                              
-                               O------O                              
-             User-plane           ||           User-plane            
-   [MN]      Function        _____||_____      Function             
-     |     <Access Point>   /            \    <L3 Anchor>            
-  ___v___     O------O     /              \     O------O     ________
- /  Radio \   | SRv6 |    /                \    | SRv6 |    /        \ 
-/  Access  \==| End  |===/     IPv6-Only    \===| End  |===/ Service  \
-\    NW    /  | Point|   \      Network     /   | Point|   \    NW    /
- \________/   O------O    \                /    O------O    \________/ 
-                           \              /                             
-                            \____________/                            
+                       
+                                  +-----+                              
+                                  | AMF |                                                                                    
+                                  +-----+  
+                                /    | [N11]  
+                         [N2]  /  +-----+                              
+                       +------/   | SMF |                                                                                    
+                      /           +-----+                                          
+                     /              / \  
+                    /              /   \  [N4]
+                   /              /     \                    ________
+                  /              /       \                  /        \
+  +--+      +-----+ [N3] +------+  [N9]  +------+  [N6]    /          \                   
+  |UE|------| gNB |------| UPF1 |--------| UPF2 |--------- \    DN    /                                                                             
+  +--+      +-----+      +------+        +------+           \________/
+
 
               ]]></artwork>
             <postamble></postamble>
           </figure>
         </t>
         
-        <t>An SRv6 segment represents those each function, such as Access
-        Point, Layer-2 (L2) Anchor and Layer-3 (L3) Anchor. This makes
-        mobile networks highly flexible to deploy any user-plane functions
-        to which nodes in user flow basis. An SRv6 segment can represent a
-        set of flows in any granularity of aggregation even though it is
-        just for a single flow.</t>
-        
-        <t><xref target="fig_interwork"/> shows that an SRv6 endpoint
-        connecting existing IPv4 mobile user-plane, as defined in <xref
-        target="RFC5213"/> and <xref target="TS.29281"/>. An SRv6 segment
-        in the endpoint represents an interworking function which enables
-        interworking between an existing access point and SRv6 anchor segment,
-        or a SRv6 access point segment and an existing anchor node.</t>
-        
-        <t>Existing mobile user-plane with IPv6 underlay is expected to be
-        widely deployed. Since IPv6 network should be interoperable with SRv6
-        endpoints can be accommodated on it, interworking with existing
-        IPv6 network is out of scope of this document.</t>
+        <t>A session from an UE gets assigned to an UPF. Sometimes more than 
+        one UPF can be used for providing a certain kind of richer service 
+        functions. UE gets its IP address from the DHCP block of its UPF. 
+        The UPF advertises the IP address block towards the Internet ensuring 
+        that return traffic is routed to the right UPF. </t>
+
+        <t>The deployment of SRv6 to the mobile dataplane will happen in phases,
+        so this document assumes the following two scenarios. </t>
+
+         <section anchor="scenario1" title="Scenario1 : SRv6 on N3 and N9">
+
+            <t>In this scenario, it is assumed that both gNB and UPF are SRv6
+            nodes, thus SRv6 can be supported both on N3 and N9.</t>
+
+            <t><xref target="fig_scenario1"/> shows scenario1. </t>
 
         <t>
-            <figure anchor="fig_interwork" 
-            title=" Interworking with Existing Mobile Networks">
+            <figure anchor="fig_scenario1" title="Scenario 1">
             <artwork align="center"><![CDATA[
+            
+                                                             ________
+                    SRv6           SRv6                     /        \
+  +--+      +-----+ [N3] +------+  [N9]  +------+  [N6]    /          \                   
+  |UE|------| gNB |------| UPF1 |--------| UPF2 |--------- \    DN    /                                                                             
+  +--+      +-----+      +------+        +------+           \________/
+           SRv6 node     SRv6 node       SRv6 node
 
-    ________                                                 _______  
-   /        \    O------O                                   /       \ 
-  / Service  \===|L2/L3 |                                  / Service \
-  \    NW    /   |Anchor|         User-plane               \    NW   /
-   \________/    |Node  |         Function                  \_______/ 
-                 O------O       <Interworking>                  ||    
-                     \\_______     O------O     ________     O------O 
-                     /        \    | SRv6 |    /        \    | SRv6 | 
-                    / Existing \===| End  |===/ IPv6-Only\===| End  | 
-                    \  IPv4 NW /   | Point|   \  Network /   | Point| 
-      [MN]           \________/    O------O    \________/    O------O 
-       |             //                                         ||    
-    ___v____    O------O                                     ___||__  
-   / Radio  \   |Access|                                    / Radio  \ 
-  /  Access  \==|Point |                            [MN]~~~/  Access  \
-  \    NW    /  |Node  |                                   \    NW    /
-   \________/   O------O                                    \________/ 
-         
-         
-         
-         
               ]]></artwork>
             <postamble></postamble>
           </figure>
         </t>
-        
-        <t>Detail about SRv6 segments representing user-plane functions
+                    
+        </section>
+
+        <section anchor="scenario2" title="Scenario2 : IPv4 GTP on N3 and SRv6 on N9">
+
+            <t>In this scenario, it is assumed that gNB does not support
+            SRv6. It just supports GTP encapsulation based on IPv4. Hence, 
+            SRv6 node interfacing with gNB should provide an interworking 
+            function (IWF) between GTP and SRv6.</t>
+
+            <t><xref target="fig_scenario2"/> shows scenario2, IPv4 GTP on N3 and SRv6 on N9. </t>
+
+        <t>
+            <figure anchor="fig_scenario2" title="Scenario 2">
+            <artwork align="center"><![CDATA[
+            
+                                                             ________
+                  IPv4 GTP         SRv6                     /        \
+  +--+      +-----+ [N3] +------+  [N9]  +------+  [N6]    /          \                   
+  |UE|------| gNB |------| UPF1 |--------| UPF2 |--------- \    DN    /                                                                             
+  +--+      +-----+      +------+        +------+           \________/
+                         SRv6 node       SRv6 node
+                          (IWF)
+
+              ]]></artwork>
+            <postamble></postamble>
+          </figure>
+        </t>
+                    
+        </section>
+
+<!--
+        <t>Details about SRv6 node representing user-plane functions
         are described in <xref target="uplane-functions"/>. </t>
-    
-    </section>
-
-    <section anchor="uplane-functions" title="Supporting Mobile User-Plane Functions">
-    
-        <t>This section describes mobile user-plane functions for which an SRv6
-        node can apply SRv6 functions and behaviors. The SRv6 node 
-        configured with those segments thereby fulfills the user-plane functions.
-        Each function consist of two segments which are uplink (UL) from
-        mobile node to the correspondent node, and downlink (DL) from the
-        correspondent node to mobile node. </t>
-        
-        <t>An SRv6 node may be configured with multiple types of user-plane
-        functions. Each function may also be configured with multiple sets
-        of the segments for one type of function, for the purpose of
-        separating tenants, resources and service policies, etc. </t>
-        
-        <section anchor="ap_func" title="Access Point">
-
-            <t>The Access Point function provides SRv6 node the
-            role to which mobile node is connected directly.
-            eNodeB could be referenced as an entity
-            implementing the access point in 3GPP terms.</t>
-            
-            <t>When an SRv6 node is configured for an Access Point
-            function, the SRv6 node allocates one DL access-point segment
-            SID per session, or per Access Point function which represents
-            one policy that is shared by multiple sessions.</t>
-            
-            <t>Applicable SRv6 functions and behaviors are determined by
-            use cases described in <xref target="SRv6_funct"/>.</t>
-        
-        </section>
-
-        <section anchor="l2anchor_func" title="Layer-2 Anchor">
-
-            <t>The Layer-2 anchor function enables an SRv6 node
-            to serve as an anchor point while a mobile node moves
-            around within a serving area, which can be assumed
-            as a layer-2 network. Serving Gateway (SGW) could
-            be characterized as an entity implementing the layer-2
-            anchor in 3GPP terms.</t>
-
-            <t>When an SRv6 node is configured for a Layer-2 anchor
-            function, the SRv6 node allocates an UL L2-anchor segment SID per
-            SRv6 policy, which is bound to a L3-anchor function
-            and specific service if needed. The SRv6 node also allocates
-            one DL L2-anchor segment SID per SRv6 policy, which is bound to
-            the serving access point SID and a specific service if needed.</t>
-
-            <t>Applicable SRv6 functions and behaviors are determined by
-            use cases described in <xref target="SRv6_funct"/>.</t>
-
-        </section>
-
-        <section anchor="l3anchor_func" title="Layer-3 Anchor">
-
-            <t>The Layer-3 anchor function enables SRv6 node to
-            server as an anchor point across a mobile network
-            consists of multiple serving areas. Packet data
-            network gateway (PGW) could be characterized as an
-            entity implementing the layer-3 anchor in 3GPP terms.</t>
-
-            <t>When an SRv6 node is configured for a Layer-3 Anchor function,
-            the SRv6 node allocates one UL L3-anchor segment SID per
-            L3-anchor function. Each L3-anchor SID
-            represents one policy which is shared by multiple sessions,
-            such as a routing table, or a service policy within the table.
-            The routing table should maintain forwarding entries of the 
-            associated MNs.</t>
-
-            <t>Applicable SRv6 functions and behaviors are determined by
-            use cases described in <xref target="SRv6_funct"/>.</t>
-
-        </section>
-
-
-        <section anchor="stateless_iw_func" title="Stateless Interworking">
-        
-            <t>The stateless interworking function provides SRv6 node an
-            interworking role between existing mobile user-plane and SRv6
-            mobile user-plane. <xref target="fig_interwork-sid"/> shows the
-            SRv6 SID format for the stateless interworking function that
-            encodes identifiers of corresponding tunnel in existing
-            network as argument of the SID. </t>
-            
-            <t>
-                <figure anchor="fig_interwork-sid" 
-                title="Stateless Interworking SID Encoding">
-                <artwork align="center"><![CDATA[
-
-+----------------------+-------+-------+-------+
-|    IW-IPv6-Prefix    |IPv4DA |IPv4SA |TUN-ID |
-+----------------------+-------+-------+-------+
-        128-a-b-c          a      b       c
-
-                  ]]></artwork>
-                <postamble></postamble>
-              </figure>
-            </t>
-            
-
-            <t>Stateless interworking function introduces the following 
-            SRv6 end function and transit behavior. </t>
-
-            <t>
-                <list style="hanging" hangIndent="24">
-                    <t hangText="End.TM: ">End point function with encapsulation for mapped tunnel</t>
-                    <t hangText="T.Tmap: ">Transit behavior with tunnel decapsulation and mapping an SRv6 Policy</t>
-                </list>
-            </t>
-            
-            
-            <t>Stateless interworking function is associated with the
-           following mandatory parameters:</t>
-           
-            <t><list style="hanging" hangIndent="24">
-                <t hangText="IW-IPv4-Prefix: ">IPv4 prefix representing network of
-                SRv6 user-plane for legacy mobile user-plane</t>
-                <t hangText="IW-IPv6-Prefix: ">IPv6 prefix representing network of
-                legacy mobile user-plane for SRv6 user-plane</t>
-                <t hangText="TUN-PROTO: ">Tunnel protocol type, such as GTP-U or
-                GRE for PMIP</t>
-            </list></t>
- 
-            
-            <section anchor="end.tm" title="End.TM: End point function with encapsulation for mapped tunnel">
-            
-                <t>The "End point to encapsulate for mapped tunnel" function (End.TM for short)
-                is used in the direction from SRv6 user-plane to legacy user-plane network.</t>
-            
-                <t> When interworking node N receives a packet destined to S and S is a local
-                End.TM SID, N does:</t>
-
-                <figure><artwork align="left"><![CDATA[
-1. IF NH=SRH & SL > 0 THEN                   
-2.    decrement SL                               
-3.    update the IPv6 DA with SRH[SL]            
-4.    push header of TUN-PROTO with tunnel ID from S            ;; Ref1
-5.    push outer IPv4 header with SA, DA from S  
-6. ELSE                                          
-7.    Drop the packet                            
-                  ]]></artwork></figure>
-
-                <t>Ref1: TUN-PROTO indicates target tunnel type.</t>
-
- 
-                    
-            </section>
-            
-            <section anchor="T.Tmap" title="T.Tmap: Transit behavior with tunnel decapsulation and mapping an SRv6 Policy">
-            
-                <t>The "Transit with tunnel decapsulation and map to an
-                SRv6 policy" function (T.Tmap for short) is used in the
-                direction from legacy user-plane to SRv6 user-plane
-                network.</t>
-
-
-                <t>When interworking node N receives a packet destined to a IW-IPv4-Prefix,  N does:</t>
-   
-                <figure><artwork align="left"><![CDATA[
-1.   IF P.PLOAD == TUN-PROTO & T.PLOAD == IPv6 THEN    ;; Ref1, Ref1bis
-2.      pop the outer IPv4 header and tunnel headers                   
-3.      copy IPv4 DA, SA, TUN-ID to form SID B with IW-IPv6-Prefix     
-4.      insert the SRH (D, B; SL=1)                    ;; Ref2, Ref2bis
-5.      set the IPv6 DA = B                                            
-6.      forward along the shortest path to B                           
-7.   ELSE                                                              
-8.      Drop the packet                                                
-                  ]]></artwork></figure>
-                
-                <t>Ref1: P.PLOAD and T.PLOAD represent payload protocol of
-                the receiving packet, and payload protocol of the tunnel
-                respectively.</t>
-
-                <t>Ref1bis: First nibble of payload is used to determine
-                payload protocol in GTP-U case since it has no payload
-                protocol indicator in the header.</t>
-
-                <t>Ref2: The received IPv6 DA is placed as last SID of the inserted SRH.</t>
-
-                <t>Ref2bis: The SRH is inserted before any other IPv6 Routing Extension
-                Header.</t>
-
-
-            </section>
-
-<!--                
-                    <t>In case of IPv4 flow packet over the user-plane, the
-                    endpoint does IPv6 header encaps and decaps instead of SRH
-                    insert and pop process. The IPv6 header includes
-                    interworking segment SID in the SRH.</t>
-                
-                    <t>Noted that to make sure stateless interworking, entities
-                    of control-plane in mobile management should cooperate with
-                    SRv6 user-plane settings. Further control-plane
-                    consideration is discussed in <xref target="c-plane"/>.</t>
-                    
-                   It is
-            expected that the endpoint of interworking segment
-            could be unaware from the control-plane of the
-            mobility management. While there are combinations
-            of interworking either existing or SRv6 network in
-            which user-plane functions accommodate,
-            interworking segment should cover all combinations
-            without mobility state.</t>
 -->
- 
 
-        </section>
+    </section>
 
-        <section anchor="rate-limit" title="Rate Limit">
-    
-            <t>Mobile user-plane requires a rate-limit feature. SID is
-            able to encode limiting rate as an argument in SID.
-            Multiple flows of packets should have same group identifier
-            in SID when those flows are in an same AMBR group. This
-            helps to keep user-plane stateless. That enables SRv6
-            endpoint nodes which are unaware from the mobile
-            control-plane information. Encoding format of rate limit
-            segment SID is following:</t>
+    <section anchor="uplane-functions" title="Dataplane behaviors">
+        
+        <t>This section describes the mobile dataplane behaviors using SRv6.
+        The terminology for the functions enabled on the SRv6 node refers to 
+        <xref target="I-D.filsfils-spring-srv6-network-programming"/>. </t>
+        
+        <t>There are two conceivable options in terms of the SRv6 SID allocation.
+        One is "Traditional mode", which inherits the traditional mobile data 
+        plane, and another one is "Enhanced mode", which aggregates the mobile 
+        sessions and allocates SID per policy basis. </t>
 
-            <t>
-                <figure anchor="fig_ratelimit-sid" 
-                title="Stateless Interworking SID Encoding">
-                <artwork align="center"><![CDATA[
-
-+----------------------+----------+-----------+
-| Locator of rate-limit| group-id | limit-rate|
-+----------------------+----------+-----------+
-          128-i-j            i          j
-
-                  ]]></artwork>
-                <postamble></postamble>
-              </figure>
-            </t>
+      
+        <section anchor="traditional_mode" title="Traditional Mode">
             
-            <t>In case of j bit length is zero in SID, the node should
-            not do rate limiting unless static configuration or
-            control-plane sets the limit rate associated to the
-            SID. </t>
+         <t> In the traditional mode, we assume that mobile user-plane
+         functions are just as same as existing ones except the use of SRv6
+         as the data plane instead of GTP-U. No impact to the rest part of 
+         mobile system should be expected.</t>
 
+         <t> In the traditional mobile network, an UE session is mapped 1-for-1 
+         with a specific GTP tunnel (TEID). This 1-for-1 mapping is replicated 
+         here as the sole pupose to replace the GTP encaps with the SRv6 encaps, 
+         while not changing anything else. </t>
+         
+         <t> This mode is not likely to be considered for deploymet from the 
+         scalability point of view. But this model minimizes the changed required
+         to the entire system and it is a good startpoint for forming the common 
+         basis. </t>
+
+       
+         <section anchor="packet_s1t" title="Packet flow for Scenario1">
+         
+               <t> Refer to <xref target="fig_scenario1"/>. 
+			<list style="hanging">
+               <t> UE_out  : (A,Z) </t>
+               <t> gNB_out : (gNB, U1::1) -> T.Encaps.Reduced [U1::1] </t>
+               <t> UPF1_out: (gNB, U2::1) -> END.MAP </t>
+               <t> UPF2_out: (A,Z) -> END.DT </t>
+               </list>
+
+               The UE packet arrives to the gNB. The gNB performs a 
+               T.Encaps.Reduced operations. Since there is only one SID, 
+               there is no need to push an SRH. gNB only puts an outer IPv6 
+               header with IPv6 DA U1::1. U1::1 represents an anchoring SID
+               specific for that session at UPF1. The SID U1::1 is retrived
+               retrieved through a control plane.</t>
+
+
+               <t> Upon pacekt arrival on UPF1, the SID U1::1 is a local 
+               End.MAP SID. This function maps the SID with the next anchoring
+               point and replaces the SID by U2::1, that belongs to the next 
+               anchoring point. </t>
+               
+               <t> Upon packe arrival on UPF2, the SID U2::1 corresponds to an 
+               END.DT SID. It decapsulate the packet, peforms a lookup
+               in a specific table and forward the packet towards the data
+               network. </t>
+               
+               <t> For the reverse path, the same functions apply. </t>
+               
+               <t> For IPv6 user-traffic, a service provider can choose to 
+               do SRH insertion, instead of doing SRH encasulation, so that 
+               it would lower the overhead. In such case, the functions used 
+               are T.Insert, END.MAP and END.T. </t>
         </section>
         
+        </section>
         
+
+        <section anchor="enhanced_mode" title="Enhanced Mode">
+            
+         <t>This mode improves the scalability. In addition, it provides key 
+         improvements in terms of traffic steering and service chaining, 
+         thanks to the use of an SR policy of multiple SIDs, instead of single 
+         one in the Traditional mode. 
+         
+         <list style='symbols'>
+          <t> Several UE share the same SR Policy (and composing SID) </t>
+          <t> The SR policy MAY include SIDs for traffic steering and service chaining on top of the UPF anchor. </t>
+          <t> The initiating SR node resovle the IP address into a SID list through a mechanism like reverse DNS, LISP, etc. </t>
+          </list>
+
+          </t>
+                 
+         <section anchor="packet_s1e" title="Packet flow for Scenario1">
+               
+               <t>  Refer to <xref target="fig_scenario1"/>. </t>
+               <t> [Uplink]
+               <list style="hanging">
+               <t> UE_out  : (A,Z) </t>
+               <t> gNB_out : (gNB, S1) (gNB, S1; SL=2) (A,Z) -> T.Encaps.Reduced [S1, C1, U2::1] </t> 
+               <t> S1_out  : (gNB, C1) (U2::1, S1; SL=1) (A,Z) </t>
+               <t> C1_out  : (gNB, U2::1) (A,Z) -> PSP </t>
+               <t> UPF2_out: (A,Z) -> END.DT </t>
+               </list>
+
+               UE sends its packet (A,Z) on a specific bearer session to its 
+               gNB. gNB's CP associates the session from the UE (A) with IPv6 
+               address B and GTP TEID T. gNB's CP does a lookup on B (by reverseDNS, 
+               LISP, etc.) to find the related SID list [S1, C1, U2::1]. 
+              </t>
+
+
+
+               <t> [Downlink]
+               <list style="hanging">
+               <t> [UPF2_in : (Z,A) -> UPF2 maps A with SID list [C1, S1, gNB] </t>
+               <t> [UPF2_out: (U2::1, C1) (gNB, S1; SL=2) (Z,A) -> T.Encaps.Reduced </t>
+               <t> [C1_out  : (U2::1, S1) (gNB, S1; SL=1) (Z,A) </t>
+               <t> [S1_out  : (U2::1, gNB) (Z,A) -> PSP </t>
+               <t> [gNB_out : (Z,A) </t>
+               </list>
+               </t>
+
+                <t> As a generic property of Segment Routing, the SIDs 
+                instantiated at UPF1 and UPf2 (U1::1 and U2::2) are shared 
+                among several UE sessions. This menas that for 1 million UEs, 
+                there will M T.Encaps operations and N U2::1 SIDS, where M 
+                and N scales in the likely tens or low-hundreds.
+               </t>
+
+               <t> For IPv6 user-traffic, a service provider can choose to 
+               do SRH insertion, instead of doing SRH encasulation, so that 
+               it would lower the overhead. In such case, the functions used 
+               are T.Insert, END.MAP and END.T. </t>
+
+         </section>
+  
+         <section anchor="packet_s2e" title="Packet flow for Scenario2">
+              
+               <t>  Refer to <xref target="fig_scenario2"/>. 
+               <list style='symbols'>
+               <t> In Scenario2, gNB is unchanged and encapsulates packets into GTP. </t>
+               <t> Interwork Function (IFW) removes GTP, finds SID list related to DA, add SRH with SID list. </t>
+               <t> The SR policy MAY include SIDs for traffic steering and service chaining on top of the UPF anchor, in commono with Scenario1. </t>
+               </list>
+               </t>
+               
+               <t> 
+               UE gets an IP address (A) from its L3 anchor point (U2::1)
+               UE sends its packet (A,Z) on a specific bearer session to its gNB.
+               gNB's CP associates the session from the UE (A) with IPv6 address B
+               and GTP TEID T. </t>
+         
+               <t>[Uplink]
+               <list style='hanging'>
+               <t> gNB_out : (gNB, B) (GTP: TEID T) (A,Z) -> Interface N3 unchanged </t> 
+               <t> IWF_out : (IWF, S1) (U2::1, S1; SL=1) (A,Z)  -> New END.GTP.UP </t>
+               <t> S1_out  : (IWF, C1) (U2::1, C1; SL=1) (A,Z) </t>
+               <t> C1_out  : (gNB, U2::1) (A,Z) -> PSP </t>
+               <t> UPF2_out: (A,Z) -> END.DT </t>
+               </list>
+               </t>
+
+               <t>[Downlink]
+               <list style='hanging'>
+               <t> UPF2_in : (Z,A) -> UPF2 maps A with SID list [C1, S1, IWF::TEID, gNB] </t>
+               <t> UPF2_out: (U2::1, C1) (gNB, IWF::TEID, S1; SL=3) (Z,A) -> T.Encaps.Reduced </t>
+         		<t> C1_out  : (U2::1, S1) (gNB, S1; SL=2) (Z,A) </t>
+         		<t> S1_out  : (U2::1, IWF::TEID) (gNB, IWF::TEID, S1, SL=1) (Z,A) </t>
+         		<t> gNB_out : (Z,A) </t>
+         		</list>
+         		</t>
+
+         		<t> For the downlink traffic, the IWF is stateless. All the state is 
+         		in the SRH imposed by the UPF. The UPF must have this UE-Base state 
+         		anyway since it's the anchor point. </t>
+
+         		<t> For the uplink traffic, the state at the IWF is shared, not 
+         		dedicated on a per UE/session basis. Hence, the states likely scale 
+         		in the low 10/100s and this is more scalable compared to the millions 
+         		of sessions.</t>
+
+               <t> For IPv6 user-traffic, a service provider can choose to 
+               do SRH insertion, instead of doing SRH encasulation, so that 
+               it would lower the overhead. In such case, the functions used 
+               are T.Insert, END.MAP and END.T. </t>
+         </section>
+
+         </section>
+   
     </section>
         
-    <section anchor="SRv6_funct" title="Segment Routing IPv6 Functions and Behaviors by Use Cases">
-        
-            <t> This section describes SRv6 functions and behavior applied
-           to mobile user-plane functions by use cases. Terminology of SRv6
-           endpoint functions refers to <xref
-           target="I-D.filsfils-spring-srv6-network-programming"/>. </t>
-           
-           <section anchor="basic_mode" title="Basic Mode">
-            
-                    <t>In the basic mode, we assume that mobile user-plane
-                    functions are as same as existing ones except using
-                    SRv6. This means that there is no impact to the rest part
-                    of mobile system should be expected unless advanced
-                    segment routing features are introduced to it.</t>
-                    
-                    <texttable anchor="basic_mode_table" title="SRv6 Functions for Basic Mode">
-                        <ttcol align="left">User-plane Function</ttcol>
-                        <ttcol align="center">Uplink</ttcol>
-                        <ttcol align="center">Downlink</ttcol>
-                        <c>Access Point</c><c>T.Insert</c><c>End.X</c>
-                        <c>L2-anchor</c>   <c>End.B6</c><c>End.B6</c>
-                        <c>L3-anchor</c>   <c>End.T</c><c>T.Insert</c>
-                    </texttable>
-                    
-                    <section anchor="basic_ul" title="Uplink">
-                        <t>In uplink, SRv6 node applies following SRv6 end
-                        point functions and transit behavior. SIDs are
-                        allocated per L3-anchor function in the SRv6 nodes of
-                        both L2 and L3-anchor functions in basic mode.</t>
-
-                        <t>
-                            <list style="hanging">
-                                <t hangText="Access Point:">
-                                    <list>
-                                        <t>When the access point node receives a packet
-                                        destined to "D::1" from a mobile node "S::1", it
-                                        performs T.Insert process for the receiving packets to
-                                        push a SRH with SID list &lt;A2::1, D::1&gt; with SL=1.
-                                        The access point node update DA to next UL L2-anchor 
-                                        SID "A2::1" which the SL indicates and forward the packet. </t>
-                                    </list><vspace />
-                                </t>
-                                <t hangText="Layer-2 Anchor:">
-                                    <list>
-                                        <t>The L2-anchor node of "A2::1" segment does
-                                        End.B6 process for the receiving packet according
-                                        to the SRH. The node updates DA to next UL L3-anchor
-                                        SID "A3::1" bound to "A2::1" and forward the packet.
-                                        In this basic use case, just one UL L3-anchor SID
-                                        with SL=0 is sufficient, so that there is no need
-                                        to push another SRH to the packet in that PSP
-                                        (Penultimate Segment Pop) operation. </t>
-                                    </list><vspace />
-                                </t>
-                                <t hangText="Layer-3 Anchor:">
-                                    <list>
-                                        <t>The L3-anchor node of "A3::1" segment does End.T
-                                        process for the receiving packet according to the
-                                        SRH. The node decrement SL to 0, updates DA to D::1 
-                                        which the SL indicates and lookup IPv6 table associated with "A3::1". In
-                                        this basic use case, the decremented SL is 0 so that
-                                        the node does PSP operation to pop out the SRH
-                                        from the packet and forward it. </t>
-                                    </list>
-                                </t>
-                            </list>
-                        </t>
-                                                
-                        
-                        
-                    </section>
-                        
-                    <section anchor="basic_dl" title="Downlink">
-                        <t>In downlink, SRv6 node applies following SRv6
-                        end point functions and transit behavior. SIDs are
-                        allocated per session in the SRv6 nodes of both
-                        L2-anchor and access point functions in basic
-                        mode.</t>
-
-                        <t>
-                            <list style="hanging">
-                                <t hangText="Layer-3 Anchor:">
-                                    <list>
-                                        <t>When the L3-anchor node receives a packet
-                                        destine to "S::1" from a correspondent node "D::1", it
-                                        does T.Insert process for the receiving packets to
-                                        push a SRH with SID list &lt;A2::2, S::1&gt; with SL=1.
-                                        The L3-anchor node update DA to next DL L2-anchor SID "A2::2" which the SL
-                                        indicates and forward the packet. </t>
-                                    </list><vspace />
-                                </t>
-                                <t hangText="Layer-2 Anchor:">
-                                    <list>
-                                        <t>The L2-anchor node of "A2::2" segment does
-                                        End.B6 process for the receiving packet according
-                                        to the SRH. The node updates DA to next DL access point
-                                        segment "A1::1" bound to "A2::2" and forward the packet. In this
-                                        basic use case, just one DL access point SID with SL=0 is
-                                        enough to do it so that there is no need
-                                        to push another SRH to the packet in that PSP
-                                        (Penultimate Segment Pop) operation. </t>
-                                    </list><vspace />
-                                </t>
-                                <t hangText="Access Point:">
-                                    <list>
-                                        <t>The access point node of "A1::1" segment does
-                                        End.X process for the receiving packet according to
-                                        the segment. The node decrement SL to 0, updates DA to S::1
-                                        which the SL indicates and forward the packet to the mobile node 
-                                        of "S::1" through radio channel associated with "A1::1". In this
-                                        use case, the decremented SL is 0 so that the node does
-                                        PSP operation of popped out the SRH from the packet and 
-                                        forward it. </t>
-                                    </list>
-                                </t>
-                            </list>
-                        </t>
-                        
-                        
-                        
-
-                    </section>
-    
-                </section>
-
-           <section anchor="aggregate_mode" title="Aggregate Mode">
-            
-                <t>In the aggregate mode, user-plane function is able to
-                steer multiple mobile sessions per service policy. This
-                means that mobile sessions paths are aggregated into a
-                service path which includes not only mobile user-plane
-                functions but also other nodes, links or service
-                functions. SIDs are allocated per service policy in the
-                SRv6 nodes of user-plane functions in the aggregate
-                mode.</t>
-                
-                <t>Aggregate mode user-plane can take advantage of SRv6 that
-                enables seamless mobile user-plane deployment with service
-                chaining, VPNs, and traffic-engineering by computing a path to fulfill
-                the policy.</t>
-                    
-                <texttable anchor="aggragate_mode_table" title="SRv6 Functions for Aggregate Mode">
-                    <ttcol align="left">User-plane Function</ttcol>
-                    <ttcol align="center">Uplink</ttcol>
-                    <ttcol align="center">Downlink</ttcol>
-                    <c>Access Point</c><c>T.Insert</c><c>End</c>
-                    <c>L2-anchor</c>   <c>End or End.B6</c><c>End or End.B6</c>
-                    <c>L3-anchor</c>   <c>End.T</c><c>T.Insert</c>
-                </texttable>
-                    
-                    <section anchor="aggregate_ul" title="Uplink">
-                        <t>In uplink, SRv6 node applies following SRv6 end point functions
-                        and transit behavior. </t>
-
-                        <t>
-                            <list style="hanging">
-                                <t hangText="Access Point:">
-                                    <list>
-                                        <t>When the access point node receives a packet
-                                        destine to "D::1" from a mobile node "S::1", it
-                                        does T.Insert process for the receiving packets.</t>
-                                    </list>
-                                    <list>
-                                        <t>First scenario is that the service policy for 
-                                        "D::1" is via service function S1 and node C1 
-                                        before reach to L2-anchor "A2::1" so that the node
-                                        pushes a SRH with SID list &lt;S1, C1, A2::1, D::1&gt; with SL=3.
-                                        The node updates DA to service function S1
-                                        which the SL indicates and forward the packet. </t>
-                                    </list>
-                                    <list>
-                                        <t>Second case is that the access point function
-                                        directly indicates the path beyond the
-                                        L2-anchor, service function S2 and
-                                        L3-anchor "A3::1" for example, the SID list
-                                        shoud be &lt;S1, C1, A2::, S2, A3::1, D::1&gt;
-                                        with SL=5.</t>
-                                    </list><vspace />
-                                </t>
-                                <t hangText="Layer-2 Anchor:">
-                                    <list>
-                                        <t>It is assumed that the packet successfully
-                                        traversed S1 and C1 segments so that the SL
-                                        was decremented 3 to 1 in the first scenario, and 
-                                        5 to 3 in the second scenario before arriving the node 
-                                        of "A2::1" or "A2::" segment.</t>
-                                    </list>
-                                    <list>
-                                        <t>In the first scenario that the L2-anchor node of "A2::1" segment is 
-                                        bound to a service policy which indicates path via 
-                                        service function S2 and L3-anchor function A3::1, the node
-                                        does End.B6 process for the receiving packet to push a new
-                                        SRH with SID list &lt;S2, A3::1&gt; with SL=1. 
-                                        The node updates DA to next service function SID 
-                                        S2 which the SL indicates and forward the packet.</t>
-                                    </list>
-                                    <list>
-                                        <t>In the second scenario that one SRH with SIDs &lt;S1, C1, A2::,
-                                        S2, A3::1, D::1&gt;, the L2-anchor node of "A2::" segment
-                                        is bound to just End function. The node does
-                                        End process for the receiving packet according to
-                                        the SRH that decrements SL to 2, updates DA to
-                                        next service function SID S2 which the SL
-                                        indicates and forward the packet. </t>
-                                    </list><vspace />
-                                </t>
-                                <t hangText="Layer-3 Anchor:">
-                                    <list>
-                                        <t>The L3-anchor node of "A3::1" segment does
-                                        End.T process for the receiving packet according
-                                        to the SRH(s). </t>
-                                    </list>
-                                    <list>
-                                        <t>In the first scenario that outer SRH with SIDs
-                                        &lt;S2, A3::1&gt;, it is assumed that the SL is
-                                        decremented to 0 at service function S2 so that
-                                        the node pops outer SRH. Then the node processes
-                                        second SRH with SIDs &lt;S1, C1, A2::1, D::1&gt; that 
-                                        decrements SL to 0, updates DA to D::1 which the SL 
-                                        indicates and lookup IPv6 table associated with "A3::1". 
-                                        In this case, the decremented SL is 0 so that the node
-                                        does PSP operation of popped out the SRH from the
-                                        packet and forward it. </t>
-                                    </list>
-                                    <list>
-                                        <t>In the second scenario that one SRH with SIDs &lt;S1, C1, A2::,
-                                        S2, A3::1, D::1&gt;, L3-anchor node of "A3::"
-                                        segment does End.T process for the receiving
-                                        packet according to the SRH. The remaining processes 
-                                        are as same as in the previous case. </t>
-                                    </list>
-                                </t>
-                            </list>
-                        </t>
-
-
-                    </section>
-                        
-                    <section anchor="aggregate_dl" title="Downlink">                        
-                        <t>In downlink, SRv6 node applies following SRv6 end point functions
-                        and transit behavior.</t>
-
-                        <t>
-                            <list style="hanging">
-                                <t hangText="Layer-3 Anchor:">
-                                    <list>
-                                        <t>When the L3-anchor node receives a packet
-                                        destine to "S::1" from a mobile node "D::1", it
-                                        does T.Insert process for the receiving packets.</t>
-                                    </list>
-                                    <list>
-                                        <t>First scenario is that the service policy for "S::1" is via service function S2
-                                        before reach to L2-anchor "A2::2" so that the node
-                                        pushes a SRH with SID list &lt;S2, A2::2, S::1&gt; with SL=2.
-                                        The node updates DA to service function S2
-                                        which the SL indicates and forward the packet. </t>
-                                    </list>
-                                    <list>
-                                        <t>Second scenario is that the L3-anchor function
-                                        directly indicates the path beyond the
-                                        L2-anchor, service function S1, node C3 and
-                                        access point "A1::" for example, the SID list
-                                        should be &lt;S2, A2::, S1, C1, A1::1, D::1&gt;
-                                        with SL=5.</t>
-                                    </list><vspace />
-                                </t>
-                                <t hangText="Layer-2 Anchor:">
-                                    <list>
-                                        <t>It is assumed that the packet successfully
-                                        traversed S2 segment so that the SL
-                                        was decremented 2 to 1 in the former case, and 
-                                        5 to 4 in the latter case before arriving the node 
-                                        of "A2::2" or "A2::" segment.</t>
-                                    </list>
-                                    <list>
-                                        <t>In the first scenario that the L2-anchor node of "A2::2" segment is 
-                                        bound to a service policy which indicates path via node C1,
-                                        service function S1 and access point function A1::, the node
-                                        does End.B6 process for the receiving packet to push a new
-                                        SRH with SID list &lt;C1, S1, A1::1&gt; with SL=1. 
-                                        The node updates DA to next service function SID 
-                                        C1 which the SL indicates and forward the packet.</t>
-                                    </list>
-                                    <list>
-                                        <t>In the second scenario that one SRH with SIDs &lt;S1, C1, A2::,
-                                        S2, A3::1, D::1&gt;, the L2-anchor node of "A2::" segment
-                                        is bound to just End function. The node does
-                                        End process for the receiving packet according to
-                                        the SRH that decrements SL to 2, updates DA to
-                                        next node C1 which the SL
-                                        indicates and forwards the packet. </t>
-                                    </list><vspace />
-                                </t>
-                                <t hangText="Access Point:">
-                                    <list>
-                                        <t>The access point node of "A1::1" segment does
-                                        End process for the receiving packet according
-                                        to the SRH(s). </t>
-                                    </list>
-                                    <list>
-                                        <t>In the first scenario that outer SRH with SIDs
-                                        &lt;C1, S1, A1::1&gt;, it is assumed that the SL is
-                                        decremented 2 to 0 at node C1 and service function S1 so that
-                                        the outer SRH is popped out by PSP at S1. Thus the node processes
-                                        second SRH with SIDs &lt;S2, A2::2, S::1&gt; that 
-                                        decrements SL to 0, updates DA to S::1 which the SL 
-                                        indicates and forward the packet to the mobile node
-                                        through radio channel associated with "S::1".
-                                        In this case, the decremented SL is 0 so that the node
-                                        does PSP operation of popped out the SRH from the
-                                        packet and forward it. </t>
-                                    </list>
-                                    <list>
-                                        <t>In the second scenario that one SRH with SIDs &lt;S2, A2::, C1,
-                                        S1, A1::1, S::1&gt;, access node of "A1::1"
-                                        segment does End process for the receiving
-                                        packet according to the SRH. Rest part of processes 
-                                        are as same as previous case.</t>
-                                    </list>
-                                </t>
-                            </list>
-                        </t>
-
-                    </section>
-    
-                </section>
-
-                <section anchor="stateless-iwf-access" title="Stateless Interworking with Legacy Access Network">
-
-                    <t>This section describes a use case in which user-plane
-                    functions are interworking statelessly between SRv6
-                    and legacy access networks. Here stateless means that
-                    there's no need to be aware of the state of any mobility
-                    sessions in the node. </t>
-                    
-                    <t>As some types of interworking scenarios could be
-                    considered, we will describe other cases in the future
-                    versions of this document.</t>
-                    
-                    <section title="Uplink: Lagacy Access to SRv6">
-                        
-                        <t><list style="hanging">
-                            <t hangText="Legacy Access Point:">
-                                <list>
-                                    <t>When a legacy access point node
-                                    receives a packet destined to "D::1"
-                                    from a mobile node "S::1" through an
-                                    associated radio channel, it does
-                                    tunnel encapsulation with the tunneling
-                                    parameters, IPv4 DA, SA and tunnel
-                                    header with ID, and sends out the
-                                    packet to the network. </t>
-                                </list>
-                            </t>
-                        </list></t>
-
-                        <t><list style="hanging">
-                            <t hangText="Stateless Interworking:">
-                                <list>
-                                    <t>The stateless interworking node
-                                    corresponding to the IPv4 DA does
-                                    T.Tmap process for the receiving packet
-                                    to pop the tunnel headers and push a
-                                    SRH to the packet. The SRH consists of SIDs &lt;B1,
-                                    D::1&gt; with SL=1, where "B1" encodes
-                                    IW-IPv6-Prefix, tunnel IPv4 DA, SA and
-                                    TUN-ID in it as <xref
-                                    target="fig_interwork-sid"/> defined.
-                                    The stateless interworking node updates
-                                    DA to "B1" and forward the packet. 
-                                    SA of the packet must be kept as "S::1".</t>
-                                </list>
-                            </t>
-                        </list></t>
-                        
-                        <t><list style="hanging">
-                            <t hangText="Layer-2 or Layer-3 Anchor:">
-                                <list>
-                                    <t>The receiving node of the packet destined to B1
-                                    either be Layer-2 anchor, or Layer-3 anchor node.
-                                    Which type of anchor function bound to 
-                                    B1 depends on operational policy.</t>
-                                </list>
-                                <list>
-                                    <t>In case of B1 to an L2-anchor node,
-                                    the L2-anchor node does End.B6 process
-                                    for the receiving packet as same as
-                                    previous section.</t>
-                                </list>
-                                <list>
-                                    <t>In case of B1 to an L3-anchor node,
-                                    the L3-anchor node does End.T process
-                                    for the receiving packet as same as
-                                    previous section.</t>
-                                </list>
-                            </t>
-                        </list></t>
-
-                    </section>
-                    
-                    <section title="Downlink: SRv6 to Legacy Access">
-
-                        <t><list style="hanging">
-                            <t hangText="Layer-2 or Layer-3 Anchor:">
-                                <list>
-                                    <t>In case of an L3-anchor node
-                                    receives a packet destined to S::1 from the
-                                    correspondent node "D::1", and
-                                    stateless interworking SID is bound to
-                                    the next segment of S::1, the
-                                    L3-anchor node does T.Insert process
-                                    for the receiving packet to push a SRH
-                                    with SID list &lt;B2::, S::1&gt; with
-                                    SL=1, where "B2" which encodes
-                                    IW-IPv6-Prefix, tunnel IPv4 DA, SA and
-                                    TUN-ID as shown in <xref target="fig_interwork-sid"/>.
-                                    The L3-anchor node updates DA to "B2"
-                                    and forwards the packet.</t>
-                                </list>
-                                <list>
-                                    <t>In case an L2-anchor node receives a packet
-                                    destined to SID "A2::B2" and the SID is bound to "B2",
-                                    the L2-anchor node does End.B6 process
-                                    for the receiving packet as same as
-                                    previous section. The node updates DA to
-                                    B2 and forward the packet.</t>
-                                </list>
-                            </t>
-                        </list></t>
-
-                        <t><list style="hanging">
-                            <t hangText="Stateless Interworking:">
-                                <list>
-                                    <t>The stateless interworking node of
-                                    "B2" End.TM process for the receiving
-                                    packet according to the SRH. The node
-                                    decrements SL to 0, updates DA to "D::1"
-                                    which the SL indicates, pushes IPv4 and
-                                    tunnel headers with IPv4 DA, SA and
-                                    TUN-ID extracted from "B2", and forward
-                                    the packet to the legacy network. </t>
-                                </list>
-                                <list>
-                                    <t> In this use case, decremented SL is
-                                    0 so that the node does PSP operation
-                                    of popped out the SRH from the packet
-                                    and forward it.</t>
-                                </list>
-                            </t>
-                        </list></t>
-                        
-                        <t><list style="hanging">
-                            <t hangText="Legacy Access Point:">
-                                <list>
-                                    <t> The legacy access point node of the
-                                    IPv4 DA does tunnel termination process
-                                    for the receiving packet according to
-                                    the tunnel header. The node pop the
-                                    IPv4 and tunnel header and forward the
-                                    packet to the mobile node through radio
-                                    channel associated with the tunnel.</t>
-                                </list>
-                            </t>
-                        </list></t>
-                    
-                    </section>
-
-                </section>
-
-        </section>
-
-    
-
 
     <section anchor="netslice" title="Network Slicing Considerations">
-    
-        <t>A mobile network may be required to create a network slice that
-        represents a set of network resources and isolates those resource
-        from other slices. User-plane functions represented as SRv6
-        segments would be part of a slice.</t>
+
+        <t>A mobile network may be required to implement "network slices",
+        which logically separate network resources. User-plane functions 
+        represented as SRv6 segments would be part of a slice.</t>
         
-        <t>To represent a set of user-plane function segments for a slice,
-        sharing same prefix through those SIDs within the slice could be a
-        straightforward way. SIDs in a network slice may include other type
-        of functions in addition to the mobile user-plane functions
-        described in this document, and underlay integration to meet SLA and
-        quality requirements.</t>
+        <t>A simple way to represent slice would be to apply L2/L3vpn 
+        described in <xref
+        target="I-D.filsfils-spring-srv6-network-programming"/> . Segment
+        Routing with [IGP flex algo] would provide even more advanced
+        separation based on metrics like link-delay Thus, a service
+        provider would be able to have network slices per required SLA. </t>
         
-        <t>While network slicing has been discussed in the IETF and other
-        standardization bodies, what functionalities are required for
-        network slicing in mobile user-plane is further study item and to
-        be discussed.</t>
+        <t>The SRv6 SID and quite a few SR extended capability would be 
+        a powerful tool for providing logical separation/integration 
+        within a network. Details are for further study. </t>
 
     </section>
 
+        <section anchor="c-plane" title="Control Plane Considerations">
 
+        <t>This documents focuse on the dataplane behavior. The control planes
+        could be based on the existing 3GPP based signaling, LISP/ILSR, DNS/reverse 
+        DNS lookup, MFA, etc., and to be discussed further. </t>
+
+        <t>It's notable that SRv6's network programming nature allows a 
+        flexible and dynamic anchor placement. </t>
+        
+
+    </section>
+<!--
     <section anchor="c-plane" title="Control Plane Considerations">
     
         <section anchor="existing-cplane" title="Existing Control Plane">
@@ -1035,7 +542,7 @@
             not impact the control-plane protocols. In this case, a tunnel endpoint IPv6
             address field in the control-plane message can be used to signal a SID. </t>
             
-            <t>The basic mode described in <xref target="basic_mode"/> should be adopted.
+            <t>The basic mode described in <xref target="traditional_mode"/> should be adopted.
             In the basic mode, SID indicates unique session so that tunnel identifier 
             is not required to SRv6 user-plane. But the mobile control-plane may
             assume that one user-plane entity has one IPv6 address and it allocates 
@@ -1048,28 +555,13 @@
             
             <t>In this way, there is no impact to the control-plane.</t>
             
-            <!--
-            <xref
-            target="table_cplane-mode"/> shows applicable user-plane
-            function segments for that restriction.</t>
-        
-            <texttable anchor="table_cplane-mode" title="Applicable SRv6 User-Plane for Existing Control-Plane">
-                <ttcol align="left">User-plane Function</ttcol>
-                <ttcol align="center">Basic Mode</ttcol>
-                <ttcol align="center">Aggregate Mode</ttcol>
-                <c>UL access point to L2-anchor</c>   <c>X</c><c> </c>
-                <c>UL L2-anchor to L3-anchor</c>      <c>X</c><c>X</c>
-                <c>DL L3-anchor to L2-anchor</c>      <c>X</c><c> </c>
-                <c>DL L2-anchor to access point</c>   <c>X</c><c> </c>
-            </texttable>
-            
-            -->
+
         </section>
         
         <section anchor="aggr_cplane" title="Aggregate Mode">
         
             <t>To support aggregate mode as described in <xref
-            target="aggregate_mode"/> for a control-plane protocol, allocated SIDs
+            target="enhanced_mode"/> for a control-plane protocol, allocated SIDs
             for service policies can also be signaled as a tunnel endpoint IPv6 address.
             In this case, the SRv6 policy associated to the SID should be configured
             in the user-plane node through other means.</t>
@@ -1133,10 +625,9 @@
             that address space for mobile sessions which is usual operation for it and no
             difference from legacy system.</t>
         
-        </section>
-        
+        </section>   
     </section>
-    
+-->
 
     <section title="Security Considerations">
     
@@ -1192,6 +683,15 @@
                 <date month="December" year="2017" />
             </front>
             <seriesInfo name="3GPP TS 29.244" value="15.0.0" />
+        </reference>
+        <reference anchor="TS.23501">
+            <front>
+                <title>System Architecture for the 5G System</title>
+                <author surname="3GPP" fullname="3GPP">
+                </author>
+                <date month="November" year="2017" />
+            </front>
+            <seriesInfo name="3GPP TS 23.501" value="15.0.0" />
         </reference>
     </references>
 
