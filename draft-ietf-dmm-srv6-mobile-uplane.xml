@@ -179,7 +179,7 @@
         <t>Further on, SRv6 introduces the notion of network-programming <xref target="I-D.filsfils-spring-srv6-network-programming"/>, that applied to mobility can fulfill the user-plane functions of mobility management. SRv6 takes advantage of underlying transport awareness and flexibility to deploy mobility user-plane functions in an optimized manner. Those are the motivations to adopt SRv6 for mobile user-plane.</t>
     </section>
 
-    <section anchor="scenarios" title="Reference Architecture and Deployment Scenarios">
+    <section anchor="scenarios" title="Reference Architecture">
         <t>This section describes a reference architecture and possible deployment
         scenarios.</t>
         
