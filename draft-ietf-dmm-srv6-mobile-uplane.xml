@@ -781,32 +781,32 @@ gNB_out : (Z,A)
     </section>
 
     <section anchor="IANA" title="IANA Considerations">
-      <t>This I-D requests to IANA to allocate, within the &quot;Endpoint Function Types&quot; sub-registry belonging to the top-level &quot;Segment-routing with IPv6 dataplane (SRv6) Parameters&quot; registry <xref target="I-D.filsfils-spring-srv6-network-programming"/>, the following allocations:</t>
+      <t>This I-D requests to IANA to allocate, within the &quot;SRv6 Endpoint Types&quot; sub-registry belonging to the top-level &quot;Segment-routing with IPv6 dataplane (SRv6) Parameters&quot; registry <xref target="I-D.filsfils-spring-srv6-network-programming"/>, the following allocations:</t>
 
-      <texttable anchor="endpoint_opcodes" title="SRv6 Endpoint Function Types">
+      <texttable anchor="endpoint_opcodes" title="SRv6 Mobile User-plane Endpoint Types">
           <ttcol align="left">Value/Range</ttcol>
           <ttcol align="center">Hex</ttcol>
           <ttcol align="center">Endpoint function</ttcol>
           <ttcol align="center">Reference</ttcol>
           
-          <c>27</c>
-          <c>0x001B</c>
+          <c>TBA</c>
+          <c>TBA</c>
           <c>End.MAP</c>
           <c>[This.ID]</c>  
-          <c>28</c>
-          <c>0x001C</c>
+          <c>TBA</c>
+          <c>TBA</c>
           <c>End.M.GTP6.UP</c>
           <c>[This.ID]</c>
-          <c>29</c>
-          <c>0x001D</c>
+          <c>TBA</c>
+          <c>TBA</c>
           <c>End.M.GTP6.DN</c>
           <c>[This.ID]</c>
-          <c>30</c>
-          <c>0x001E</c>
+          <c>TBA</c>
+          <c>TBA</c>
           <c>End.M.GTP4.DN</c>
           <c>[This.ID]</c>
-          <c>31</c>
-          <c>0x001F</c>
+          <c>TBA</c>
+          <c>TBA</c>
           <c>End.Limit</c>
           <c>[This.ID]</c>
       </texttable>
