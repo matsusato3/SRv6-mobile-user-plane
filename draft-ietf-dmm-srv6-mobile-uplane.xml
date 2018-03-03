@@ -174,7 +174,7 @@
 
     <section anchor="motivations" title="Motivation">
         <t>Every day mobility networks are getting more challenging to operate: on one hand, traffic is constantly growing, and latency requirements are more strict; on the other-hand, there are new use-cases like NFV that are also challenging network management.</t>
-        <t>Problem comes from the fact that the current architecture of mobile networks is agnostic to the underlying transport. Indeed, it rigidly fragments the user-plane into radio access, core and service networks and connects them by tunneling techniques through the user-plane roles such as access and anchor nodes.  uch agnosticism and rigidness make it difficult for the operator to optimize and operate the data-path.</t>
+        <t>Problem comes from the fact that the current architecture of mobile networks is agnostic to the underlying transport. Indeed, it rigidly fragments the user-plane into radio access, core and service networks and connects them by tunneling techniques through the user-plane roles such as access and anchor nodes.  Such agnosticism and rigidness make it difficult for the operator to optimize and operate the data-path.</t>
         <t>While the mobile network industry has been trying to solve those problems, applications have shifted to use IPv6, and network operators have started adopting IPv6 as their IP transport as well.  SRv6, the IPv6 instantiation of Segment Routing, integrates both the application data-path and the underlying transport layer into one single protocol, allowing operators to optimize the network in a simplified manner and removing state from the network.</t>
         <t>Further on, SRv6 introduces the notion of network-programming <xref target="I-D.filsfils-spring-srv6-network-programming"/>, that applied to mobility can fulfill the user-plane functions of mobility management. SRv6 takes advantage of underlying transport awareness and flexibility to deploy mobility user-plane functions in an optimized manner. Those are the motivations to adopt SRv6 for mobile user-plane.</t>
     </section>
@@ -233,7 +233,7 @@
       <t>This section makes reference to new SRv6 functions designed for the mobile userplane. This SRv6 functions are detailed in the <xref target="srv6_functions"/>.</t>
     
       <section anchor="traditional_mode" title="Traditional mode (formerly Basic mode)">
-        <t>In the traditional mode, we assume that mobile user-plane functions are just as same as existing ones except the use of SRv6 as the data plane instead of GTP-U. No impact to the rest part of mobile system should be expected.</t>
+        <t>In the traditional mode, we assume that mobile user-plane functions are just as same as existing ones except the use of SRv6 as the user plane instead of GTP-U. No impact to the rest part of mobile system should be expected.</t>
 
         <t>In the traditional mobile network, an UE session is mapped 1-for-1 with a specific GTP tunnel (TEID). This 1-for-1 mapping is replicated here as the sole pupose to replace the GTP encaps with the SRv6 encaps, while not changing anything else.</t>
 
@@ -823,11 +823,11 @@ gNB_out : (Z,A)
         &rfc2119;
         &I-D.ietf-spring-segment-routing;
         &I-D.filsfils-spring-srv6-network-programming;
-        &I-D.hegdeppsenak-isis-sr-flex-algo;
     </references>
 
     <references title="Informative References">
         &I-D.ietf-dmm-fpc-cpdp;
+        &I-D.hegdeppsenak-isis-sr-flex-algo;
         &rfc5213;
         <reference anchor="TS.29281">
             <front>
