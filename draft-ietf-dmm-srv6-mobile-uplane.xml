@@ -6,6 +6,7 @@
   <!ENTITY I-D.filsfils-spring-srv6-network-programming SYSTEM "http://xml.resource.org/public/rfc/bibxml3/reference.I-D.filsfils-spring-srv6-network-programming.xml">
   <!ENTITY I-D.hegdeppsenak-isis-sr-flex-algo SYSTEM "http://xml.resource.org/public/rfc/bibxml3/reference.I-D.hegdeppsenak-isis-sr-flex-algo.xml">
   <!ENTITY I-D.ietf-dmm-fpc-cpdp SYSTEM "http://xml.resource.org/public/rfc/bibxml3/reference.I-D.ietf-dmm-fpc-cpdp.xml">
+  <!ENTITY I-D.gundavelli-dmm-mfa SYSTEM "http://xml.resource.org/public/rfc/bibxml3/reference.I-D.gundavelli-dmm-mfa.xml">
 ]>
 <?xml-stylesheet type='text/xsl' href='rfc2629.xslt' ?>
 
@@ -123,7 +124,8 @@
       the ability to control underlying layer will be even more beneficial 
       to the mobile user-plane, in terms of providing flexibility and SLA 
       control for various applications. It also simplifies the network 
-      architecture by eliminating the necessity of tunnels, such as GTP, 
+      architecture by eliminating the necessity of tunnels, such as 
+      <xref target="TS.29281">GTP-U</xref>, <xref target="RFC5213"/>, 
       Mac-in-Mac, MPLS, and so on. In addition, Segment Routing provides 
       an enhanced method for network slicing, which is briefly touched 
       by this document.  </t>
@@ -175,7 +177,7 @@
     <section anchor="motivations" title="Motivation">
         <t>Every day mobility networks are getting more challenging to operate: on one hand, traffic is constantly growing, and latency requirements are more strict; on the other-hand, there are new use-cases like NFV that are also challenging network management.</t>
         <t>Problem comes from the fact that the current architecture of mobile networks is agnostic to the underlying transport. Indeed, it rigidly fragments the user-plane into radio access, core and service networks and connects them by tunneling techniques through the user-plane roles such as access and anchor nodes. Such agnosticism and rigidness make it difficult for the operator to optimize and operate the data-path.</t>
-        <t>While the mobile network industry has been trying to solve those problems, applications have shifted to use IPv6, and network operators have started adopting IPv6 as their IP transport as well.  SRv6, the IPv6 instantiation of Segment Routing, integrates both the application data-path and the underlying transport layer into one single protocol, allowing operators to optimize the network in a simplified manner and removing state from the network.</t>
+        <t>While the mobile network industry has been trying to solve those problems, applications have shifted to use IPv6, and network operators have started adopting IPv6 as their IP transport as well.  SRv6, the IPv6 instantiation of Segment Routing <xref target="I-D.ietf-spring-segment-routing"/>, integrates both the application data-path and the underlying transport layer into one single protocol, allowing operators to optimize the network in a simplified manner and removing state from the network.</t>
         <t>Further on, SRv6 introduces the notion of network-programming <xref target="I-D.filsfils-spring-srv6-network-programming"/>, that applied to mobility can fulfill the user-plane functions of mobility management. SRv6 takes advantage of underlying transport awareness and flexibility to deploy mobility user-plane functions in an optimized manner. Those are the motivations to adopt SRv6 for mobile user-plane.</t>
     </section>
 
@@ -185,7 +187,7 @@
         
         <t><xref target="fig_ref-arch"/> shows a reference architecture, based
         on 5G packet core architecture <xref target="TS.23501"/>.</t>
-        <t>Please note that all the user-plane described in this document does not depend on any specific architecture. This architecture is just used as a reference based on the latest 3GPP standards at the time of writting this draft. We used it for conveniency.</t>
+        <t>Please note that all the user-plane described in this document does not depend on any specific architecture. This architecture is just used as a reference based on the latest 3GPP standards at the time of writting this draft. Other type of architectures can be seen in <xref target="I-D.gundavelli-dmm-mfa"/> and [WHITEPAPER-5G-UP].</t>
         <figure anchor="fig_ref-arch" title="Reference Architecture">
           <artwork align="center"><![CDATA[
                                +-----+
@@ -225,7 +227,7 @@
     <section anchor="uplane-functions" title="User-plane behaviors">
       <t>This section describes the mobile user-plane behaviors using SRv6.</t>
       
-      <t>In order to simplify the SRv6 adoption, we present two different &quot;modes&quot; that vary with respect the SRv6 SID allocation. The first one is the "Traditional mode", which inherits the traditional mobile user-plane. In this mode there is no change to mobility networks architecture, except for the pure replacement of GTP-U for SRv6.</t>
+      <t>In order to simplify the SRv6 adoption, we present two different &quot;modes&quot; that vary with respect the SRv6 SID allocation. The first one is the "Traditional mode", which inherits the traditional mobile user-plane. In this mode there is no change to mobility networks architecture, except for the pure replacement of <xref target="TS.29281">GTP-U</xref> for SRv6.</t>
       <t>The second mode is the "Enhanced mode", which aggregates the mobile sessions and allocates SID on a per policy basis. The benefit of the latter is that the SR policy contains SIDs for Traffic Engineering and VNFs. Both of these modes assume both the gNB and UPFs are SR-aware.</t>
 
       <t>Additionally, we introduce a new "Enhanced mode with unchanged gNB GTP behavior". This mode consists of two mechanisms for interworking with legacy access networks. One of these mechanism is designed to interwork with legacy eNBs using GTP/IPv4. The second method is designed to interwork with legacy eNBs using GTP/IPv6.</t>
@@ -672,7 +674,7 @@ gNB_out : (Z,A)
     </section>
 
     <section anchor="c-plane" title="Control Plane Considerations">
-        <t>This documents focuse on the dataplane behavior. The control planes could be based on the existing 3GPP based signaling for N4 interface <xref target="TS.29244"/>, LISP/ILSR, DNS/reverse DNS lookup, MFA, etc., and to be discussed further.</t>
+        <t>This documents focuse on the dataplane behavior. The control planes could be based on the existing 3GPP based signaling for N4 interface <xref target="TS.29244"/>, <xref target="I-D.ietf-dmm-fpc-cpdp"/>, control-plane protocols described in [WHITEPAPER-5G-UP], etc., and to be discussed further.</t>
 
         <t>Note that the IANA section of this document allocates the SRv6 endpoint function types for the new functions defined in this document. All control-plane protocols are expected to leverage these function type-codes to signal each function.</t>
 
@@ -832,6 +834,7 @@ gNB_out : (Z,A)
     <references title="Informative References">
         &I-D.ietf-dmm-fpc-cpdp;
         &I-D.hegdeppsenak-isis-sr-flex-algo;
+        &I-D.gundavelli-dmm-mfa;
         &rfc5213;
         <reference anchor="TS.29281">
             <front>
