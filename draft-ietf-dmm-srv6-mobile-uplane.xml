@@ -161,7 +161,7 @@
         <t>In this version of the document, we assume that there is no other extension header than the SRH. This will be lifted in future versions of the document.</t>
         <t>SID: A Segment Identifier which represents a specific segment in segment routing domain. The SID type used in this document is IPv6 address (also referenced as SRv6 Segment or SRv6 SID).</t>
         <t>A SID list is represented as &lt;S1, S2, S3&gt; where S1 is the first SID to visit, S2 is the second SID to visit and S3 is the last SID to visit along the SR path.</t>
-        <t>(SA,DA) (S3, S2, S1; SL) represents an IPv6 packet with:<list style="format - ">
+        <t>(SA,DA) (S3, S2, S1; SL) represents an IPv6 packet with:<list style="symbols">
           <t>IPv6 header with source and destination addresses respectively SA and DA and next-header is SRH</t>
           <t>SRH with SID list &lt;S1, S2, S3&gt; with SegmentsLeft = SL</t>
           <t>Note the difference between the &lt;&gt; and () symbols: &lt;S1, S2, S3&gt; represents a SID list where S1 is the first SID and S3 is the last SID. (S3, S2, S1; SL) represents the same SID list but encoded in the SRH format where the rightmost SID in the SRH is the first SID and the leftmost SID in the SRH is the last SID. When referring to an SR policy in a high-level use-case, it is simpler to use the &lt;S1, S2, S3&gt; notation. When referring to an illustration of the detailed behavior, the (S3, S2, S1; SL) notation is more convenient.</t>
@@ -205,7 +205,7 @@
             ]]></artwork>
         </figure>
         <t>
-          <list style="format - ">
+          <list style="symbols">
             <t>UE  : User Equipment </t>
             <t>gNB : gNodeB </t>
             <t>UPF : User Plane Function </t>
@@ -272,7 +272,7 @@ UPF2_out: (A,Z)                  -> End.DT4 or End.DT6
           <t>For the downlink path, the same functions apply in reverse order.</t>
         </section>
         <section title="IPv6 user-traffic">
-          <t>For IPv6 user-traffic it is RECOMMENDED to perform encapsulation. However based on local policy, a service provider MAY choose to do SRH insertion. The main benefit is a lower overhead. In such case, the functions used are T.Insert, End.B6 and End.T.</t>
+          <t>For IPv6 user-traffic it is RECOMMENDED to perform encapsulation. However based on local policy, a service provider MAY choose to do SRH insertion. The main benefit is a lower overhead. In such case, the functions used are T.Insert.Red at gNB, End.MAP at UPF1 and End.T at UPF2 on Uplink, T.Insert.Red at UPF2, End.MAP at UPF1 and End.X at gNB on Downlink.</t>
         </section>
       </section>
       
@@ -280,12 +280,12 @@ UPF2_out: (A,Z)                  -> End.DT4 or End.DT6
         <t>This mode improves the scalability. In addition, it provides key improvements in terms of traffic steering and service chaining, thanks to the use of an SR policy of multiple SIDs, instead of single one in the Traditional mode.</t>
 
         <t>Key points:
-        <list style='format -'>
+        <list style='symbols'>
           <t>Several UE share the same SR Policy (and it's composings SID)</t>
           <t>The SR policy MAY include SIDs for traffic engineering and service chaining on top of the UPF anchor.</t>
         </list></t>
         <t>The gNB control-plane (N2 interface) is unchanged, specifically a single IPv6 address is given to the gNB.
-        <list style='format -'>        
+        <list style='symbols'>        
           <t>The gNB resolves the IP address into a SID list through a mechanism like reverse-DNS, LISP, PCEP, etc.</t>
         </list></t>
 
@@ -312,7 +312,7 @@ UPF2_out: (A,Z)                  -> End.DT4 or End.DT6
           <figure>
             <artwork align="center"><![CDATA[
 UE_out  : (A,Z)
-gNB_out : (gNB, S1)(U2::1, C1; SL=2)(A,Z)-> T.Encaps.Red<S1, C1, U2::1>
+gNB_out : (gNB, S1)(U2::1, C1; SL=2)(A,Z)-> T.Encaps.Red<S1,C1,U2::1>
 S1_out  : (gNB, C1)(U2::1, C1; SL=1 (A,Z)
 C1_out  : (gNB, U2::1)(A,Z)              -> PSP
 UPF2_out: (A,Z)                          -> End.DT4 or End.DT6
@@ -323,13 +323,14 @@ UPF2_out: (A,Z)                          -> End.DT4 or End.DT6
           <t>Once the packet leaves the gNB, it already contains all the segments of the SR policy. This SR policy contains segments for traffic engineering (C1) and for service chaining (S1).</t>
           <t>The nodes S1 and C1 perform their related Endpoint functionality and forward.</t>
           <t>When the packet arrives to UPF2, the active segment (U2::1) is an End.DT4/6 which performs the decapsulation (removing the IPv6 header with all it's extension headers) and forward towards the data network.</t>
+          <t>Note that in case several APNs are using duplicated IPv4 private address spaces, then the aggregated SR policies are unique per APNs.</t>
         </section>
         <section title="Packet flow - Downlink">
           <t>The downlink packet flow is the following:</t>
           <figure>
             <artwork align="center"><![CDATA[
-UPF2_in : (Z,A)                              -> UPF2 maps the flow with
-                                                SID list <C1, S1, gNB>
+UPF2_in : (Z,A)                              -> UPF2 maps the flow w/
+                                                SID list <C1,S1, gNB>
 UPF2_out: (U2::1, C1)(gNB, S1; SL=2)(Z,A)    -> T.Encaps.Red
 C1_out  : (U2::1, S1)(gNB, S1; SL=1)(Z,A)
 S1_out  : (U2::1, gNB)(Z,A)                  -> PSP
@@ -342,7 +343,7 @@ gNB_out : (Z,A)                              -> End.DT4 or End.DT6
         </section>
 
         <section title="IPv6 user-traffic">
-          <t>For IPv6 user-traffic it is RECOMMENDED to perform encapsulation. However based on local policy, a service provider MAY choose to do SRH insertion. The main benefit is a lower overhead. In such case, the functions used are T.Insert, End.B6 and End.T.</t>
+          <t>For IPv6 user-traffic it is RECOMMENDED to perform encapsulation. However based on local policy, a service provider MAY choose to do SRH insertion. The main benefit is a lower overhead. In such case, the functions used are T.Insert.Red at gNB, End.MAP at UPF1 and End.T at UPF2 on Uplink, T.Insert.Red at UPF2, End.MAP at UPF1 and End.X at gNB on Downlink.</t>
         </section>
       </section>
 
@@ -364,10 +365,10 @@ gNB_out : (Z,A)                              -> End.DT4 or End.DT6
         <section title="Interworking with IPv6 GTP">
           <t>In this interworking mode we assume that the gNB is using GTP over IPv6 in the N3 interface</t>
           <t>Key points:
-          <list style='format -'>
+          <list style='symbols'>
             <t>gNB is unchanged and encaps into GTP (N3 interface is not modified).</t>
             <t>5G Control-Plane (N2 interface) is unmodified: 1 IPv6 address (i.e. a BSID at the SR GW)
-            <list style='format -'>
+            <list style='symbols'>
               <t>gNB CP does not need to support the LISP resolution of the IPv6 address into a SID List.</t>
             </list></t>
             <t>SR GW removes GTP, finds SID list related to DA, add SRH with SID list.</t>
@@ -381,15 +382,15 @@ gNB_out : (Z,A)                              -> End.DT4 or End.DT6
           <t>We also assume that we have two service segment, S1 and C1. S1 represents a VNF in the network, and C1 represents a router over which we are going to perform Traffic Engineering.</t>
           <figure anchor="fig_interworking_ipv6" title="Enhanced mode with unchanged gNB IPv6/GTP behavior">
             <artwork align="center"><![CDATA[    
-                                +----+
-               IPv6/GTP        -| S1 |-                            ___
-+--+   +-----+   [N3]         / +----+ \                          /   
-|UE|---| gNB |-              /   SRv6   \ +----+   +------+ [N6] /    
-+--+   +-----+ \            /    NFV     -| C1 |---| UPF2 |------\  DN
-         GTP    \ +------+ /              +----+   +------+       \___
-                 -| SRGW |-                SRv6      SRv6
-                  +------+                  TE       
-                 SR Gateway
+                               +----+
+              IPv6/GTP        -| S1 |-                            ___
++--+  +-----+   [N3]         / +----+ \                          /   
+|UE|--| gNB |-              /   SRv6   \ +----+   +------+ [N6] /    
++--+  +-----+ \            /    NFV     -| C1 |---| UPF2 |------\  DN
+        GTP    \ +------+ /              +----+   +------+       \___
+                -| SRGW |-                SRv6      SRv6
+                 +------+                  TE       
+                SR Gateway
                 ]]></artwork>
           </figure>
 
@@ -400,8 +401,8 @@ gNB_out : (Z,A)                              -> End.DT4 or End.DT6
 UE_out  : (A,Z)
 gNB_out : (gNB, B)(GTP: TEID T)(A,Z)       -> Interface N3 unmodified
                                               (IPv6/GTP)
-SRGW_out: (SRGW, S1)(U2::1, C1; SL=2)(A,Z) -> B is an End.M.GTP6.UP SID
-                                              at the SRGW
+SRGW_out: (SRGW, S1)(U2::1, C1; SL=2)(A,Z) -> B is an End.M.GTP6.UP
+                                              SID at the SRGW
 S1_out  : (SRGW, C1)(U2::1, C1; SL=1)(A,Z)
 C1_out  : (SRGW, U2::1)(A,Z)               -> PSP
 UPF2_out: (A,Z)                            -> End.DT4 or End.DT6 
@@ -419,11 +420,11 @@ UPF2_out: (A,Z)                            -> End.DT4 or End.DT6
             <figure>
               <artwork align="center"><![CDATA[
 UPF2_in : (Z,A)                           -> UPF2 maps the flow with
-                                             <C1, S1, SRGW::TEID, gNB>
+                                             <C1, S1, SRGW::TEID,gNB>
 UPF2_out: (U2::1, C1)(gNB, SRGW::TEID, S1; SL=3)(Z,A) -> T.Encaps.Red
 C1_out  : (U2::1, S1)(gNB, S1; SL=2)(Z,A)
 S1_out  : (U2::1, SRGW::TEID)(gNB, SRGW::TEID, S1, SL=1)(Z,A)
-SRGW_out: (SRGW, gNB)(GTP: TEID=T)(Z,A)   -> SRGW::/96 is End.M.GTP6.DN
+SRGW_out: (SRGW, gNB)(GTP: TEID=T)(Z,A)   -> SRGW/96 is End.M.GTP6.DN
 gNB_out : (Z,A)
               ]]></artwork>
             </figure>
@@ -439,7 +440,7 @@ gNB_out : (Z,A)
           </section>
 
           <section title="IPv6 user-traffic">
-            <t>For IPv6 user-traffic it is RECOMMENDED to perform encapsulation. However based on local policy, a service provider MAY choose to do SRH insertion. The main benefit is a lower overhead. In such case, the functions used are T.Insert, End.B6 and End.T.</t>
+            <t>For IPv6 user-traffic it is RECOMMENDED to perform encapsulation. However based on local policy, a service provider MAY choose to do SRH insertion. The main benefit is a lower overhead.</t>
           </section>
         </section>
 
@@ -457,15 +458,15 @@ gNB_out : (Z,A)
 
           <figure anchor="fig_interworking_ipv4" title="Enhanced mode with unchanged gNB IPv4/GTP behavior">
             <artwork align="center"><![CDATA[    
-                                +----+
-               IPv4/GTP        -| S1 |-                            ___
-+--+   +-----+   [N3]         / +----+ \                          /   
-|UE|---| gNB |-              /   SRv6   \ +----+   +------+ [N6] /    
-+--+   +-----+ \            /    NFV     -| C1 |---| UPF2 |------\  DN
-         GTP    \ +------+ /              +----+   +------+       \___
-                 -| SRGW |-                SRv6      SRv6
-                  +------+                  TE       
-                 SR Gateway
+                               +----+
+              IPv4/GTP        -| S1 |-                            ___
++--+  +-----+   [N3]         / +----+ \                          /   
+|UE|--| gNB |-              /   SRv6   \ +----+   +------+ [N6] /    
++--+  +-----+ \            /    NFV     -| C1 |---| UPF2 |------\  DN
+        GTP    \ +------+ /              +----+   +------+       \___
+                -| SRGW |-                SRv6      SRv6
+                 +------+                  TE       
+                SR Gateway
                 ]]></artwork>
           </figure>
 
@@ -473,8 +474,8 @@ gNB_out : (Z,A)
             <t>The uplink packet flow is the following:</t>             
             <figure>
               <artwork align="center"><![CDATA[
-gNB_out : (gNB, B)(GTP: TEID T)(A,Z)          -> Interface N3 unchanged
-                                                 IPv4/GTP
+gNB_out : (gNB, B)(GTP: TEID T)(A,Z)          -> Interface N3
+                                                 unchanged IPv4/GTP
 UPF1_out: (SRGW, S1)(U2::1, C1; SL=1)(A,Z)    -> T.M.Tmap function
 S1_out  : (SRGW, C1)(U2::1, C1; SL=1)(A,Z)
 C1_out  : (gNB, U2::1) (A,Z)                  -> PSP
@@ -491,9 +492,9 @@ UPF2_out: (A,Z)                               -> End.DT4 or End.DT6
             <t>The downlink packet flow is the following:</t>
             <figure>
               <artwork align="center"><![CDATA[
-UPF2_in : (Z,A)                            -> UPF2 maps flow with SIDs
-                                             <C1, S1, SRGW::SA:DA:TEID>
-UPF2_out: (U2::1, C1)(SRGW::SA:DA:TEID, S1; SL=2)(Z,A) -> T.Encaps.Red
+UPF2_in : (Z,A)                            -> UPF2 maps flow with SID
+                                            <C1, S1,SRGW::SA:DA:TEID>
+UPF2_out: (U2::1, C1)(SRGW::SA:DA:TEID, S1; SL=2)(Z,A) ->T.Encaps.Red
 C1_out  : (U2::1, S1)(SRGW::SA:DA:TEID, S1; SL=1)(Z,A)
 S1_out  : (U2::1, SRGW::SA:DA:TEID)(Z,A)   -> End.M.GTP4.DN
 SRGW_out: (SA, DA)(GTP: TEID=TEID)(Z,A)
@@ -509,6 +510,10 @@ gNB_out : (Z,A)
           <section title="Scalability">
             <t>For the downlink traffic, the SR Gateway is stateless. All the state is in the SRH imposed by the UPF. The UPF must have this UE-base state anyway (it is its anchor point).</t>
             <t>For the uplink traffic, the state at the SR Gateway is dedicated on a per UE/session basis. There is state for steering the different sessions on a SR policies. Notice however that the SR policies are shared among several UE/sessions.</t>
+          </section>
+
+          <section title="IPv6 user-traffic">
+            <t>For IPv6 user-traffic it is RECOMMENDED to perform encapsulation. However based on local policy, a service provider MAY choose to do SRH insertion. The main benefit is a lower overhead.</t>
           </section>
         </section>
 
@@ -528,8 +533,8 @@ gNB_out : (Z,A)
         <t>When the SR Gateway node N receives a packet destined to S and S is a local End.MAP SID, N does:</t>
 
         <figure><artwork align="left"><![CDATA[
-1.    look up the IPv6 DA in the mapping table                              
-2.    update the IPv6 DA with the new mapped SID                 ;; Ref1
+1.    look up the IPv6 DA in the mapping table 
+2.    update the IPv6 DA with the new mapped SID              ;; Ref1
 5.    forward according to the new mapped SID
 8. ELSE                                          
 9.    Drop the packet                            
@@ -545,7 +550,7 @@ gNB_out : (Z,A)
 
         <figure><artwork align="left"><![CDATA[
 1. IF NH=UDP & UDP_PORT = GTP THEN            
-2.    pop the IP, UDP and GTP headers                               
+2.    pop the IP, UDP and GTP headers
 3.    push a new IPv6 header with its own SRH <S2, S3>
 4.    set the outer IPv6 SA to A
 5.    set the outer IPv6 DA to S1
@@ -563,10 +568,10 @@ gNB_out : (Z,A)
         <t>When the SR Gateway node N receives a packet destined to S and S is a local End.M.GTP6.DN SID, N does:</t>
 
         <figure><artwork align="left"><![CDATA[
- 1. IF NH=SRH & SL = 1  THEN                                    ;; Ref1            
+ 1. IF NH=SRH & SL = 1  THEN                                  ;; Ref1
  2.    decrement SL                               
  3.    store SRH[SL] in variable new_DA
- 4.    store TEID in variable new_TEID                          ;; Ref2
+ 4.    store TEID in variable new_TEID                        ;; Ref2
  5.    pop IP header and all it's extension headers   
  6.    push new IPv6 header and GTP-U header
  7.    set IPv6 DA to new_da
@@ -590,7 +595,7 @@ gNB_out : (Z,A)
 2.    decrement SL                               
 3.    update the IPv6 DA with SRH[SL]
 4.    pop the SRH
-4.    push header of TUN-PROTO with tunnel ID from S           ;; Ref1
+4.    push header of TUN-PROTO with tunnel ID from S          ;; Ref1
 5.    push outer IPv4 header with SA, DA from S  
 6. ELSE                                          
 7.    Drop the packet                            
@@ -671,6 +676,8 @@ gNB_out : (Z,A)
 
     <section anchor="c-plane" title="Control Plane Considerations">
         <t>This documents focuse on the dataplane behavior. The control planes could be based on the existing 3GPP based signaling, LISP/ILSR, DNS/reverse DNS lookup, MFA, etc., and to be discussed further.</t>
+
+        <t>Note that the IANA section of this document allocates the SRv6 endpoint function types for the new functions defined in this document. All control-plane protocols are expected to leverage these function type-codes to signal each function.</t>
 
         <t>It's notable that SRv6's network programming nature allows a flexible and dynamic anchor placement. </t>
     </section>
