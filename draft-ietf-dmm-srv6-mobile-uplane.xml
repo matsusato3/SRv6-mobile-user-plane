@@ -282,7 +282,7 @@ UPF2_out: (A,Z)                  -> End.DT4 or End.DT6
         </section>
 
         <section anchor="traditional_dn" title="Packet flow - Downlink">
-          <t>The uplink packet flow is the following:</t>
+          <t>The downlink packet flow is the following:</t>
           <figure>
             <artwork align="center"><![CDATA[
 UPF2_in : (Z,A)
