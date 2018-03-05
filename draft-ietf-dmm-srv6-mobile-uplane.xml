@@ -289,7 +289,7 @@ UPF2_out: (A,Z)                  -> End.DT4 or End.DT6
           <t>The gNB resolves the IP address into a SID list through a mechanism like reverse-DNS, LISP, PCEP, etc.</t>
         </list></t>
 
-        <t>Our reference topology is shown in <xref target="fig_enhanced"/>. In this mode we assume that the gNB and the UPF are SR-aware. We also assume that we have two services segments, S1 and C1. S1 represents a VNF in the network, and C1 represents a router over which we are going to perform Traffic Engineering.</t>
+        <t>Our reference topology is shown in <xref target="fig_enhanced"/>. In this mode we assume that the gNB and the UPF are SR-aware. We also assume that we have two services segments, S1 and C1. S1 represents a VNF in the network, and C1 represents a constraint path on a router over which we are going to perform Traffic Engineering.</t>
 
         <figure anchor="fig_enhanced" title="Enhanced mode - Reference topology">
           <artwork align="center"><![CDATA[    
@@ -349,8 +349,8 @@ gNB_out : (Z,A)                              -> End.DT4 or End.DT6
 
       <section anchor="enhanced_gtp" title="Enhanced mode with unchanged gNB GTP behavior">
         <t>In this section we introduce two mechanisms for interworking with legacy eNBs that still use GTP. One of the mechanisms is valid for IPv4 while the other for IPv6.</t>
-        <t>In this scenario, it is assumed that gNB does not supportSRv6. It just supports GTP encapsulation based on IPv4. Hence in order to achieve interworking we are going to add a new SR Gateway (SRGW) entity. This SR Gateway is going to map the GTP traffic into SRv6.</t>
-        <t>The SR Gateway maintains very little state on it. For this reason, it can be implemented either in a software based platform (e.g. VPP), in any existing hardware platform that already supports SRv6 or as part of a UPF implementation.</t>
+        <t>In this scenario, it is assumed that gNB does not support SRv6. It just supports GTP encapsulation over IPv4 or IPv6. Hence in order to achieve interworking we are going to add a new SR Gateway (SRGW) entity. This SRGW is going to map the GTP traffic into SRv6.</t>
+        <t>The SRGW maintains very little state on it. For this reason, it can be implemented either in a software based platform (e.g. VPP), in any existing hardware platform that already supports SRv6 or as part of a UPF implementation.</t>
         <figure anchor="fig_interworking" title="Reference topology for interworking">
             <artwork align="center"><![CDATA[
                                                           _______
@@ -367,16 +367,16 @@ gNB_out : (Z,A)                              -> End.DT4 or End.DT6
           <t>Key points:
           <list style='symbols'>
             <t>gNB is unchanged and encaps into GTP (N3 interface is not modified).</t>
-            <t>5G Control-Plane (N2 interface) is unmodified: 1 IPv6 address (i.e. a BSID at the SR GW)
+            <t>5G Control-Plane (N2 interface) is unmodified: 1 IPv6 address (i.e. a BSID at the SRGW)
             <list style='symbols'>
               <t>gNB CP does not need to support the LISP resolution of the IPv6 address into a SID List.</t>
             </list></t>
-            <t>SR GW removes GTP, finds SID list related to DA, add SRH with SID list.</t>
-            <t>There is NO state for the downlink at the SR gateway.</t>
-            <t>There is simple state in the uplink at the SR gateway (leveraging the enhanced mode results in few SR policies on this node. SR policies are shared across UEs).</t>
+            <t>SRGW removes GTP, finds SID list related to DA, add SRH with SID list.</t>
+            <t>There is NO state for the downlink at the SRGW.</t>
+            <t>There is simple state in the uplink at the SRGW (leveraging the enhanced mode results in few SR policies on this node. SR policies are shared across UEs).</t>
             <t>As soon as the packet leaves the gNB (uplink), the traffic is SR-routed. This simplifies considerably network slicing <xref target="I-D.hegdeppsenak-isis-sr-flex-algo"/>.</t>
-            <t>Traffic is already classified and steered into an SR policy when it arrives at the SR GW.</t>
-            <t>Intuition: as the gNB is unable to add the SRH and the SID list, instead of doing a Control-Plane mapping of the received BSID into a SID list, we do a user-plane mapping at the SR gateway.</t>
+            <t>Traffic is already classified and steered into an SR policy when it arrives at the SRGW.</t>
+            <t>Intuition: as the gNB is unable to add the SRH and the SID list, instead of doing a Control-Plane mapping of the received BSID into a SID list, we do a user-plane mapping at the SRGW.</t>
           </list></t>
           <t>Our reference topology is shown in <xref target="fig_interworking_ipv6"/>. In this mode we assume that the gNB is an unmodified gNB using IPv6/GTP. The UPFs are SR-aware. Also, as explained before, we introduce a new SRGW entity that is going to map the IPv6/GTP traffic to SRv6.</t> 
           <t>We also assume that we have two service segment, S1 and C1. S1 represents a VNF in the network, and C1 represents a router over which we are going to perform Traffic Engineering.</t>
@@ -435,8 +435,8 @@ gNB_out : (Z,A)
           </section>
 
           <section title="Scalability">
-            <t>For the downlink traffic, the SR Gateway is stateless. All the state is in the SRH imposed by the UPF. The UPF must have this UE-base state anyway (it is its anchor point).</t>
-            <t>For the uplink traffic, the state at the SR Gateway is not dedicated on a per UE/session basis. It is shared among UE's. Hence the states likely scale in the low 10/100's and this is very scalable compared to millions of UE's.</t>
+            <t>For the downlink traffic, the SRGW is stateless. All the state is in the SRH imposed by the UPF. The UPF must have this UE-base state anyway (it is its anchor point).</t>
+            <t>For the uplink traffic, the state at the SRGW is not dedicated on a per UE/session basis. It is shared among UE's. Hence the states likely scale in the low 10/100's and this is very scalable compared to millions of UE's.</t>
           </section>
 
           <section title="IPv6 user-traffic">
@@ -449,8 +449,8 @@ gNB_out : (Z,A)
           <t>Key points:
           <list style='symbols'>
             <t>gNB is unchanged and encaps into GTP (N3 interface is not modified).</t>
-            <t>SR GW removes GTP, finds SID list related to DA, add SRH with SID list.</t>
-            <t>Intuition: as the gNB is unable to add the SRH and the SID list, instead of doing a Control-Plane mapping of the received BSID into a SID list, we do a user-plane mapping at the SR gateway.</t>
+            <t>SRGW removes GTP, finds SID list related to DA, add SRH with SID list.</t>
+            <t>Intuition: as the gNB is unable to add the SRH and the SID list, instead of doing a Control-Plane mapping of the received BSID into a SID list, we do a user-plane mapping at the SRGW.</t>
           </list></t>
 
           <t>Our reference topology is shown in <xref target="fig_interworking_ipv4"/>. In this mode we assume that the gNB is an unmodified gNB using IPv4/GTP. The UPFs are SR-aware. Also, as explained before, we introduce a new SRGW entity that is going to map the IPv4/GTP traffic to SRv6.</t> 
@@ -483,7 +483,7 @@ UPF2_out: (A,Z)                               -> End.DT4 or End.DT6
               ]]></artwork>
             </figure>
             <t>The UE sends its traffic towards the gNB on a specific bearer for that session. The gNB, which is unmodified, encapsulates the packet into a new IPv4, UDP and GTP headers. The IPv4 DA, B, and the GTP TEID are the ones received at the N2 interface.</t>
-            <t>When the packet arrives to the SR-GW, the SR-GW has a classification rule for incoming traffic from the gNB that steers the traffic into an SR policy by using the function T.M.TMap. The SR GW removes the IPv4, UDP and GTP headers and pushes an IPv6 header with its own SRH containing the SIDs related to the SR policy associated with this traffic. The SR-GW forwards according to the new IPv6 DA.</t>
+            <t>When the packet arrives to the SR-GW, the SR-GW has a classification rule for incoming traffic from the gNB that steers the traffic into an SR policy by using the function T.M.TMap. The SRGW removes the IPv4, UDP and GTP headers and pushes an IPv6 header with its own SRH containing the SIDs related to the SR policy associated with this traffic. The SR-GW forwards according to the new IPv6 DA.</t>
             <t>The nodes S1 and C1 perform their related Endpoint functionality and forward.</t>
             <t>When the packet arrives at UPF2, the active segment (U2::1) is an End.DT4/6 which performs the decapsulation (removing the IPv6 header with all it's extension headers) and forwards towards the data network.</t>
           </section>
@@ -508,8 +508,8 @@ gNB_out : (Z,A)
           </section>
 
           <section title="Scalability">
-            <t>For the downlink traffic, the SR Gateway is stateless. All the state is in the SRH imposed by the UPF. The UPF must have this UE-base state anyway (it is its anchor point).</t>
-            <t>For the uplink traffic, the state at the SR Gateway is dedicated on a per UE/session basis. There is state for steering the different sessions on a SR policies. Notice however that the SR policies are shared among several UE/sessions.</t>
+            <t>For the downlink traffic, the SRGW is stateless. All the state is in the SRH imposed by the UPF. The UPF must have this UE-base state anyway (it is its anchor point).</t>
+            <t>For the uplink traffic, the state at the SRGW is dedicated on a per UE/session basis. There is state for steering the different sessions on a SR policies. Notice however that the SR policies are shared among several UE/sessions.</t>
           </section>
 
           <section title="IPv6 user-traffic">
@@ -530,7 +530,7 @@ gNB_out : (Z,A)
       <section title="End.MAP: Endpoint function with SID mapping">
         <t>The "Endpoint function with SID mapping" function (End.MAP for short) is used in several scenarios. Particularly in mobility, it is used in the UPFs for the anchor functionality in some of the use-cases.</t>
     
-        <t>When the SR Gateway node N receives a packet destined to S and S is a local End.MAP SID, N does:</t>
+        <t>When a SR node N receives a packet destined to S and S is a local End.MAP SID, N does:</t>
 
         <figure><artwork align="left"><![CDATA[
 1.    look up the IPv6 DA in the mapping table 
