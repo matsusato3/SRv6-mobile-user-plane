@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="US-ASCII"?>
+SRGW<?xml version="1.0" encoding="US-ASCII"?>
 <!DOCTYPE rfc SYSTEM "rfc2629.dtd" [
   <!ENTITY rfc2119 SYSTEM "http://xml.resource.org/public/rfc/bibxml/reference.RFC.2119.xml">
   <!ENTITY rfc5213 SYSTEM "http://xml.resource.org/public/rfc/bibxml/reference.RFC.5213.xml">
@@ -371,9 +371,9 @@ gNB_out : (Z,A)                              -> End.DT4 or End.DT6
             <list style='symbols'>
               <t>gNB CP does not need to support the LISP resolution of the IPv6 address into a SID List.</t>
             </list></t>
-            <t>SRGW removes GTP, finds SID list related to DA, add SRH with SID list.</t>
+            <t>SRGW removes GTP, finds SID list related to DA, add SRH with the SID list.</t>
             <t>There is NO state for the downlink at the SRGW.</t>
-            <t>There is simple state in the uplink at the SRGW (leveraging the enhanced mode results in few SR policies on this node. SR policies are shared across UEs).</t>
+            <t>There is simple state in the uplink at the SRGW (leveraging the enhanced mode results in few SR policies on this node. A SR policy can be shared across UEs).</t>
             <t>As soon as the packet leaves the gNB (uplink), the traffic is SR-routed. This simplifies considerably network slicing <xref target="I-D.hegdeppsenak-isis-sr-flex-algo"/>.</t>
             <t>Traffic is already classified and steered into an SR policy when it arrives at the SRGW.</t>
             <t>Intuition: as the gNB is unable to add the SRH and the SID list, instead of doing a Control-Plane mapping of the received BSID into a SID list, we do a user-plane mapping at the SRGW.</t>
@@ -408,14 +408,14 @@ C1_out  : (SRGW, U2::1)(A,Z)               -> PSP
 UPF2_out: (A,Z)                            -> End.DT4 or End.DT6 
               ]]></artwork>
             </figure>
-            <t>The UE sends its traffic towards the gNB on a specific bearer for that session. The gNB, which is unmodified, encapsulates the packet into a new IPv6, UDP and GTP headers. The IPv6 DA, B, and the GTP TEID are the ones received in the N2 interface.</t>
-            <t>The IPv6 address that was signalled over the N2 interface for that UE session, B, is now the IPv6 DA. B is an SRv6 BindingSID instantiated at the SRGW. Hence the packet, will be routed up to the SR-GW.</t>
-            <t>When the packet arrives at the SR-GW, the SR-GW realises that B is an End.M.GTP6.UP BindingSID. Hence, the SR-GW will remove the IPv6, UDP and GTP headers, and will push a new IPv6 header with it's own SRH containing the SIDs related to the SR policy associated with this BindingSID.</t>
+            <t>The UE sends a packet destined to Z towards the gNB on a specific bearer for that session. The gNB, which is unmodified, encapsulates the packet into a new IPv6, UDP and GTP headers. The IPv6 DA of B, and the GTP TEID of T are the ones received in the N2 interface.</t>
+            <t>The IPv6 address that was signalled over the N2 interface for that UE session, B, is now the IPv6 DA. B is an SRv6 Binding SID instantiated at the SRGW. Hence the packet, will be routed up to the SRGW.</t>
+            <t>When the packet arrives at the SRGW, the SRGW realises that B is an End.M.GTP6.UP BindingSID. Hence, the SRGW will remove the IPv6, UDP and GTP headers, and will push a new IPv6 header with its own SRH containing the SIDs bound to the SR policy associated with this BindingSID.</t>
             <t>The nodes S1 and C1 perform their related Endpoint functionality and forward.</t>
-            <t>When the packet arrives to UPF2, the active segment (U2::1) is and End.DT4/6 which is going to perform the decapsulation (removing the IPv6 header with all it's extension headers) and forward towards the data network.</t>
+            <t>When the packet arrives to UPF2, the active segment is (U2::1) which bound to End.DT4/6 which is going to perform the decapsulation (removing the outer IPv6 header with all it's extension headers) and forward towards the data network.</t>
           </section>
 
-          <section title="Packet flow - downlink">
+          <section title="Packet flow - Downlink">
             <t>The downlink packet flow is the following:</t>
             <figure>
               <artwork align="center"><![CDATA[
@@ -428,15 +428,15 @@ SRGW_out: (SRGW, gNB)(GTP: TEID=T)(Z,A)   -> SRGW/96 is End.M.GTP6.DN
 gNB_out : (Z,A)
               ]]></artwork>
             </figure>
-            <t>When the packet arrives at the UPF2, the UPF2 will map that particular flow into a UE session. This UE session is associated with the SID list &lt;C1, S1, SRGW::TEID, gNB&gt;. The UPF2 performs a T.Encaps.Reduced operation, encapsulating the packet into a new IPv6 header with its corresponding SRH.</t>
+            <t>When a packet destined to A arrives at the UPF2, the UPF2 lookups an associated table to A and finds the SID list &lt;C1, S1, SRGW::TEID, gNB&gt;. The UPF2 performs a T.Encaps.Reduced operation, encapsulating the packet into a new IPv6 header with its corresponding SRH.</t>
             <t>The nodes C1 and S1 perform their related Endpoint processing.</t>
-            <t>Once the packet arrives to the SR-GW, the SR-GW realizes the active SID is an End.M.GTP6.DN function. The SR-GW removes the IPv6 header and all it's extensions headers. The SR-GW pushes an IPv6, UDP and GTP headers. The new IPv6 DA will be the last SID of the previous SRH, and the GTP TEID is the one received as part of the SID arguments. The SR-GW forwards the packet towards the gNB.</t>
-            <t>Once the packet arrives to the gNB, the packet is a regular IPv6/UDP packet. The gNB looks for the specific wireless bearer for that TEID and forward wirelessly as it does today. Notice that the gNB behavior is not modified.</t>
+            <t>Once the packet arrives to the SRGW, the SRGW realizes the active SID is an End.M.GTP6.DN function. The SRGW removes the IPv6 header and all it's extensions headers. The SRGW generates an IPv6, UDP and GTP headers. The new IPv6 DA is the gNB which is the last SID in the received SRH. The TEID in the generated GTP header is the arguments of the received End.M.GTP6.DN SID. The SRGW pushes the headers to the packet and forwards the packet towards the gNB.</t>
+            <t>Once the packet arrives to the gNB, the packet is a regular IPv6/GTP packet. The gNB looks for the specific radio bearer for that TEID and forward it on the bearer. These gNB behavior  are not modified from current and previous generations.</t>
           </section>
 
           <section title="Scalability">
-            <t>For the downlink traffic, the SRGW is stateless. All the state is in the SRH imposed by the UPF. The UPF must have this UE-base state anyway (it is its anchor point).</t>
-            <t>For the uplink traffic, the state at the SRGW is not dedicated on a per UE/session basis. It is shared among UE's. Hence the states likely scale in the low 10/100's and this is very scalable compared to millions of UE's.</t>
+            <t>For the downlink traffic, the SRGW is stateless. All the state is in the SRH imposed by the UPF2. The UPF2 must have the UE states as the session anchor point.</t>
+            <t>For the uplink traffic, the state at the SRGW does not necessarily need to be per UE session basis. A state of SR policy of which state can be shared among UE's. Hence it is possible to deploy SRGW in very scalable way compared to hold millions of states per UE session basis.</t>
           </section>
 
           <section title="IPv6 user-traffic">
@@ -476,14 +476,14 @@ gNB_out : (Z,A)
               <artwork align="center"><![CDATA[
 gNB_out : (gNB, B)(GTP: TEID T)(A,Z)          -> Interface N3
                                                  unchanged IPv4/GTP
-UPF1_out: (SRGW, S1)(U2::1, C1; SL=1)(A,Z)    -> T.M.Tmap function
+SRGW_out: (SRGW, S1)(U2::1, C1; SL=2)(A,Z)    -> T.M.Tmap function
 S1_out  : (SRGW, C1)(U2::1, C1; SL=1)(A,Z)
-C1_out  : (gNB, U2::1) (A,Z)                  -> PSP
+C1_out  : (SRGW, U2::1) (A,Z)                  -> PSP
 UPF2_out: (A,Z)                               -> End.DT4 or End.DT6
               ]]></artwork>
             </figure>
             <t>The UE sends its traffic towards the gNB on a specific bearer for that session. The gNB, which is unmodified, encapsulates the packet into a new IPv4, UDP and GTP headers. The IPv4 DA, B, and the GTP TEID are the ones received at the N2 interface.</t>
-            <t>When the packet arrives to the SR-GW, the SR-GW has a classification rule for incoming traffic from the gNB that steers the traffic into an SR policy by using the function T.M.TMap. The SRGW removes the IPv4, UDP and GTP headers and pushes an IPv6 header with its own SRH containing the SIDs related to the SR policy associated with this traffic. The SR-GW forwards according to the new IPv6 DA.</t>
+            <t>When the packet arrives to the SRGW, the SRGW has a classification rule for incoming traffic from the gNB that steers the traffic into an SR policy by using the function T.M.TMap. The SRGW removes the IPv4, UDP and GTP headers and pushes an IPv6 header with its own SRH containing the SIDs related to the SR policy associated with this traffic. The SRGW forwards according to the new IPv6 DA.</t>
             <t>The nodes S1 and C1 perform their related Endpoint functionality and forward.</t>
             <t>When the packet arrives at UPF2, the active segment (U2::1) is an End.DT4/6 which performs the decapsulation (removing the IPv6 header with all it's extension headers) and forwards towards the data network.</t>
           </section>
@@ -496,14 +496,14 @@ UPF2_in : (Z,A)                            -> UPF2 maps flow with SID
                                             <C1, S1,SRGW::SA:DA:TEID>
 UPF2_out: (U2::1, C1)(SRGW::SA:DA:TEID, S1; SL=2)(Z,A) ->T.Encaps.Red
 C1_out  : (U2::1, S1)(SRGW::SA:DA:TEID, S1; SL=1)(Z,A)
-S1_out  : (U2::1, SRGW::SA:DA:TEID)(Z,A)   -> End.M.GTP4.DN
-SRGW_out: (SA, DA)(GTP: TEID=TEID)(Z,A)
+S1_out  : (U2::1, SRGW::SA:DA:TEID)(Z,A)
+SRGW_out: (SA, DA)(GTP: TEID=T)(Z,A)       -> End.M.GTP4.DN
 gNB_out : (Z,A)
               ]]></artwork>
             </figure>
             <t>When the packet arrives to the UPF2, the UPF2 will map that particular flow into a UE session. This UE session is associated with the SID list &lt;C1, S1, SRGW::SA:DA:TEID&gt;. The UPF2 performs a T.Encaps.Reduced operation, encapsulating the packet into a new IPv6 header with its corresponding SRH.</t>
             <t>The nodes C1 and S1 perform their related Endpoint processing.</t>
-            <t>Once the packet arrives to the SR-GW, the SR-GW will realise that the active SID is associated with an End.M.GTP4.DN function. The SR-GW will remove the IPv6 header and all it's extensions headers. The SR-GW will push an IPv4, UDP and GTP headers. The IPv4 SA and DA will the ones received as part of the SID arguments. The GTP TEID will also be the one received as part of the SID arguments. The SR-GW performs an IPv4 lookup on the DA and forwards towards the gNB.</t>
+            <t>Once the packet arrives to the SRGW, the SR-GW will realise that the active SID is associated with an End.M.GTP4.DN function. The SRGW will remove the IPv6 header and all it's extensions headers. The SRGW will push an IPv4, UDP and GTP headers. The IPv4 SA and DA will the ones received as part of the SID arguments. The GTP TEID will also be the one received as part of the SID arguments. The SRGW performs an IPv4 lookup on the DA and forwards towards the gNB.</t>
             <t>Once the packet arrives to the gNB, the packet is a regular IPv4/UDP packet. The gNB will look  for the specific wireless bearer for that TEID and forward wirelessly as it does today. Notice that the gNB behavior is not modified.</t>
           </section>
 
@@ -520,7 +520,7 @@ gNB_out : (Z,A)
         <section title="Extensions to the interworking mechanisms">
           <t>In this section we presented two mechanisms for interworking with eNB/gNB that do not support SRv6. These mechanism are done to support GTP over IPv4 and GTP over IPv6.</t>
           <t>Even though we have presented these methods as an extension to the &quot;Enhanced mode&quot;, it is straightforward in its applicability to the &quot;Traditional mode&quot;.</t>
-          <t>Further more, although these mechanisms are designed for interworking with legacy RAN (eNB/gNB only), these methods could also be applied for interworking with a non-SRv6 capable UPF (e.g. L3-anchor is SRv6 capable but L2-anchor is not).</t>
+          <t>Furthermore, although these mechanisms are designed for interworking with legacy RAN (eNB/gNB only), these methods could also be applied for interworking with a non-SRv6 capable UPF (e.g. L3-anchor is SRv6 capable but L2-anchor is not).</t>
         </section>
       </section>
     </section>
@@ -574,9 +574,9 @@ gNB_out : (Z,A)
  4.    store TEID in variable new_TEID                        ;; Ref2
  5.    pop IP header and all it's extension headers   
  6.    push new IPv6 header and GTP-U header
- 7.    set IPv6 DA to new_da
+ 7.    set IPv6 DA to new_DA
  8.    set GTP_TEID to new_TEID
- 9.    lookup the new_da and forward the packet accordingly
+ 9.    lookup the new_DA and forward the packet accordingly
 10. ELSE                                          
 11.    Drop the packet                            
           ]]></artwork></figure>
@@ -607,7 +607,7 @@ gNB_out : (Z,A)
         <figure title="End.M.GTP4.DN SID Encoding">
           <artwork align="center"><![CDATA[
 +----------------------+-------+-------+-------+
-|  SR-GW-IPv6-LOC-FUNC |IPv4DA |IPv4SA |TUN-ID |
+|  SRGW-IPv6-LOC-FUNC  |IPv4DA |IPv4SA |TUN-ID |
 +----------------------+-------+-------+-------+
         128-a-b-c          a      b       c
           ]]></artwork>
@@ -620,9 +620,9 @@ gNB_out : (Z,A)
         <t>When the SR Gateway node N receives a packet destined to a IW-IPv4-Prefix, N does:</t>
 
         <figure><artwork align="left"><![CDATA[
-1. IF P.PLOAD == TUN-PROTO & T.PLOAD == IPv6 THEN    ;; Ref1, Ref1bis
+1. IF P.PLOAD == TUN-PROTO THEN    ;; Ref1
 2.    pop the outer IPv4 header and tunnel headers                   
-3.    copy IPv4 DA, SA, TUN-ID to form SID B with IW-IPv6-Prefix     
+3.    copy IPv4 DA, SA, TUN-ID to form SID B with SRGW-IPv6-Prefix   
 4.    encapsulate the packet into a new IPv6 header  ;; Ref2, Ref2bis
 5.    set the IPv6 DA = B                                            
 6.    forward along the shortest path to B                           
@@ -630,22 +630,19 @@ gNB_out : (Z,A)
 8.    Drop the packet                                                
           ]]></artwork></figure>
         
-        <t>Ref1: P.PLOAD and T.PLOAD represent payload protocol of the receiving packet, and payload protocol of the tunnel respectively.</t>
-
-        <t>Ref1bis: First nibble of payload is used to determine payload protocol in GTP-U, since it has no payload
-        protocol indicator in the header.</t>
+        <t>Ref1: TUN-PROTO indicates target tunnel type.</t>
 
         <t>Note that B has the following format:</t>
         <figure title="End.M.GTP4.DN SID Encoding">
           <artwork align="center"><![CDATA[
 +----------------------+-------+-------+-------+
-|  SR-GW-IPv6-LOC-FUNC |IPv4DA |IPv4SA |TUN-ID |
+|  SRGW-IPv6-LOC-FUNC  |IPv4DA |IPv4SA |TUN-ID |
 +----------------------+-------+-------+-------+
         128-a-b-c          a      b       c
           ]]></artwork>
         </figure>
 
-        <t>Note that the B SID, is going to be an SRv6 BindingSID instantiated at the first UPF (anchor point). A static format is leveraged to instantiate this Binding SIDs in order to remove state from the SR-GW.</t>
+        <t>Note that the B SID, is going to be an SRv6 BindingSID instantiated at the first UPF (anchor point). A static format is leveraged to instantiate this Binding SIDs in order to remove state from the SRGW.</t>
       </section>
 
       <section title="End.Limit: Rate Limiting function">
@@ -675,7 +672,7 @@ gNB_out : (Z,A)
     </section>
 
     <section anchor="c-plane" title="Control Plane Considerations">
-        <t>This documents focuse on the dataplane behavior. The control planes could be based on the existing 3GPP based signaling, LISP/ILSR, DNS/reverse DNS lookup, MFA, etc., and to be discussed further.</t>
+        <t>This documents focuse on the dataplane behavior. The control planes could be based on the existing 3GPP based signaling for N4 interface <xref target="TS.29244"/>, LISP/ILSR, DNS/reverse DNS lookup, MFA, etc., and to be discussed further.</t>
 
         <t>Note that the IANA section of this document allocates the SRv6 endpoint function types for the new functions defined in this document. All control-plane protocols are expected to leverage these function type-codes to signal each function.</t>
 
