@@ -692,7 +692,7 @@ gNB_out : (Z,A)
     <section anchor="netslice" title="Network Slicing Considerations">
         <t>A mobile network may be required to implement "network slices", which logically separate network resources. User-plane functions represented as SRv6 segments would be part of a slice.</t>
         
-        <t>A simple way to represent slice would be to apply L2/L3 VPN described in <xref target="I-D.filsfils-spring-srv6-network-programming"/>. Segment Routing with <xref target="I-D.hegdeppsenak-isis-sr-flex-algo"/> also provides even more advanced separation based on metrics like link-delay. Thus, a service provider would be able to have network slices per required SLA.</t>
+        <t>A simple way to represent slice would be to apply L2/L3 VPN described in <xref target="I-D.filsfils-spring-srv6-network-programming"/>. Segment Routing with <xref target="I-D.hegdeppsenak-isis-sr-flex-algo"/> provides even more advanced separation based on metrics like link-delay. Thus, a service provider would be able to have network slices per required SLA.</t>
         
         <t>The SRv6 SID and quite a few SR extended capability would be a powerful tool for providing logical separation/integration within a network. Details are for further study.</t>
     </section>
