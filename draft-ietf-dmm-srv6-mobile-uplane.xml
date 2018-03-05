@@ -127,7 +127,7 @@
       architecture by eliminating the necessity of tunnels, such as 
       <xref target="TS.29281">GTP-U</xref>, <xref target="RFC5213"/>, 
       Mac-in-Mac, MPLS, and so on. In addition, Segment Routing provides 
-      an enhanced method for network slicing, which is briefly touched 
+      an enhanced method for network slicing, which is briefly introduced 
       by this document.</t>
       <t>SM: Need to mention what the straightforward manner looks like.</t>
       <t>Perhaps replace straightforward for simple?</t>
