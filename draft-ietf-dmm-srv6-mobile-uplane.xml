@@ -551,50 +551,6 @@ gNB_out : (Z,A)
       </section>
     </section>
 
-    <section anchor="pdu_sessions" title="SRv6 supported PDU session types">
-      <t>The 3GPP <xref target="TS.23501"/> defines the following PDU session types:
-      <list style='symbols'>
-        <t>IPv4</t>
-        <t>IPv6</t>
-        <t>Ethernet</t>
-        <t>Unstructured</t>
-      </list></t>
-      <t>SRv6 supports all the PDU session types without any protocol overhead by using the corresponding SRv6 functions (End.DX4, End.DT4 for IPv4 PDU sessions; End.DX6, End.DT6, End.T for IPv6 PDU sessions; End.DX2, End.DT2M for L2 PDU sessions).</t>
-    </section>
-
-    <section anchor="signalling" title="Signalling messages">
-      <t>The 3GPP <xref target="TR.29891"/> uses GTP-U to send signalling messages (e.g. End Marker, Echo Request, Error Indication) between peers. A future revision of this document will describe how these messages are conveyed in SRv6.</t>
-    </section>
-
-    <section anchor="container" title="5GS Container">
-      <t>The 3GPP <xref target="TR.29891"/> defines the &quot;5GS Container&quot; to send control information elements (i.e. the QFI and RQI), which are not related to the transport network layer, over the N3 and N9 interfaces. This is required in Stage 2.</t>
-      <t>SRv6 carries the 5GS Container in a new SRH <xref target="I-D.ietf-6man-segment-routing-header" />TLV called &quot;5GS Container TLV&quot;. This TLV has the following format:
-        <figure>
-          <artwork>
- 0                   1                   2                   3   
- 0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1     
-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+ 
-|      Type     |     Length    |     Flags     |          
-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
-//            5GS Container Object                             //
-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
-where:     </artwork>
-        </figure>
-        <list style="symbols">
-          <t>Type: to be assigned by IANA (suggested value 7).</t>
-
-          <t>Length: the total length of the TLV.</t>
-
-          <t>Flags: 8 bits. No flags are defined in this document. SHOULD
-          be set to 0 on transmission and MUST be ignored on receipt.</t>
-
-          <t>5GS Container Object: the content of the TLV which consists of
-          the 5GS Container as defined by 3GPP RAN3 in <xref target="TS.38415"/>.</t>
-        </list>
-      </t>
-      <t>The 5GS Container is not modified. There is no impact to the Radio Network Layer (RNL) as required by <xref target="TR.38801"/> subclause 7.3.2.</t>
-    </section>
-
     <section anchor="srv6_functions" title="SRv6 SID Mobility Functions">
       <!-- Add text on functions used on UPF1, UPF2,... -->
       
@@ -732,6 +688,51 @@ where:     </artwork>
         control-plane sets the limit rate associated to the
         SID.</t>
       </section>
+    </section>
+
+
+    <section anchor="pdu_sessions" title="SRv6 supported PDU session types">
+      <t>The 3GPP <xref target="TS.23501"/> defines the following PDU session types:
+      <list style='symbols'>
+        <t>IPv4</t>
+        <t>IPv6</t>
+        <t>Ethernet</t>
+        <t>Unstructured</t>
+      </list></t>
+      <t>SRv6 supports all the PDU session types without any protocol overhead by using the corresponding SRv6 functions (End.DX4, End.DT4 for IPv4 PDU sessions; End.DX6, End.DT6, End.T for IPv6 PDU sessions; End.DX2, End.DT2M for L2 PDU sessions).</t>
+    </section>
+
+    <section anchor="signalling" title="Signalling messages">
+      <t>The 3GPP <xref target="TR.29891"/> uses GTP-U to send signalling messages (e.g. End Marker, Echo Request, Error Indication) between peers. A future revision of this document will describe how these messages are conveyed in SRv6.</t>
+    </section>
+
+    <section anchor="container" title="5GS Container">
+      <t>The 3GPP <xref target="TR.29891"/> defines the &quot;5GS Container&quot; to send control information elements (i.e. the QFI and RQI), which are not related to the transport network layer, over the N3 and N9 interfaces. This is required in Stage 2.</t>
+      <t>SRv6 carries the 5GS Container in a new SRH <xref target="I-D.ietf-6man-segment-routing-header" />TLV called &quot;5GS Container TLV&quot;. This TLV has the following format:
+        <figure>
+          <artwork>
+ 0                   1                   2                   3   
+ 0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1     
++-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+ 
+|      Type     |     Length    |     Flags     |          
++-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
+//            5GS Container Object                             //
++-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
+where:     </artwork>
+        </figure>
+        <list style="symbols">
+          <t>Type: to be assigned by IANA (suggested value 7).</t>
+
+          <t>Length: the total length of the TLV.</t>
+
+          <t>Flags: 8 bits. No flags are defined in this document. SHOULD
+          be set to 0 on transmission and MUST be ignored on receipt.</t>
+
+          <t>5GS Container Object: the content of the TLV which consists of
+          the 5GS Container as defined by 3GPP RAN3 in <xref target="TS.38415"/>.</t>
+        </list>
+      </t>
+      <t>The 5GS Container is not modified. There is no impact to the Radio Network Layer (RNL) as required by <xref target="TR.38801"/> subclause 7.3.2.</t>
     </section>
 
     <section anchor="netslice" title="Network Slicing Considerations">
