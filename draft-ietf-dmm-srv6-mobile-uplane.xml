@@ -581,9 +581,9 @@ gNB_out : (Z,A)
         <figure><artwork align="left"><![CDATA[
 1.    look up the IPv6 DA in the mapping table 
 2.    update the IPv6 DA with the new mapped SID              ;; Ref1
-5.    forward according to the new mapped SID
-8. ELSE                                          
-9.    Drop the packet                            
+3.    forward according to the new mapped SID
+4. ELSE                                          
+5.    Drop the packet                            
           ]]></artwork></figure>
 
         <t>Ref1: Note that the SID in the SRH is NOT modified.</t>
@@ -641,10 +641,10 @@ gNB_out : (Z,A)
 2.    decrement SL                               
 3.    update the IPv6 DA with SRH[SL]
 4.    pop the SRH
-4.    push header of TUN-PROTO with tunnel ID from S          ;; Ref1
-5.    push outer IPv4 header with SA, DA from S  
-6. ELSE                                          
-7.    Drop the packet                            
+5.    push header of TUN-PROTO with tunnel ID from S          ;; Ref1
+6.    push outer IPv4 header with SA, DA from S  
+7. ELSE                                          
+8.    Drop the packet                            
           ]]></artwork></figure>
 
         <t>Ref1: TUN-PROTO indicates target tunnel type.</t>
