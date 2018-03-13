@@ -10,7 +10,7 @@
   <!ENTITY I-D.hegdeppsenak-isis-sr-flex-algo SYSTEM "http://xml.resource.org/public/rfc/bibxml3/reference.I-D.hegdeppsenak-isis-sr-flex-algo.xml">
   <!ENTITY I-D.ietf-dmm-fpc-cpdp SYSTEM "http://xml.resource.org/public/rfc/bibxml3/reference.I-D.ietf-dmm-fpc-cpdp.xml">
   <!ENTITY I-D.gundavelli-dmm-mfa SYSTEM "http://xml.resource.org/public/rfc/bibxml3/reference.I-D.gundavelli-dmm-mfa.xml">
-  <!ENTITY I-D.ietf-lisp-rfc6833bis-08 SYSTEM "http://xml.resource.org/public/rfc/bibxml3/reference.I-D.ietf-lisp-rfc6833bis-08.xml">
+  <!ENTITY I-D.ietf-lisp-rfc6833bis SYSTEM "http://xml.resource.org/public/rfc/bibxml3/reference.I-D.ietf-lisp-rfc6833bis.xml">
 ]>
 <?xml-stylesheet type='text/xsl' href='rfc2629.xslt' ?>
 
@@ -122,7 +122,7 @@
 
     <abstract>
       <t>This document discusses the applicability of SRv6 (Segment Routing
-      IPv6) to user-plane of mobile networks. The source routing capability 
+      IPv6) to user-plane of mobile networks (N3 and N9 interfaces). The source routing capability 
       and the network programming nature of SRv6, accomplish mobile
       user-plane functions in a simple manner. The statelessness and 
       the ability to control underlying layer will be even more beneficial 
@@ -725,11 +725,11 @@ gNB_out : (Z,A)
     </section>
 
     <section anchor="c-plane" title="Control Plane Considerations">
-        <t>This documents focuses on the dataplane behavior and its independent from the control plane.</t>
+        <t>This documents focuses on the dataplane behavior and it's independent from the control plane.</t>
 
-        <t>The control plane could be based on the existing 3GPP-defined control plane with slight modifications to the N4 interface <xref target="TS.29244"/>.</t>
+        <t>The control plane could be the current 3GPP-defined control plane with slight modifications to the N4 interface <xref target="TS.29244"/>.</t>
 
-        <t>Alternatively, SRv6 could be used in conjunction with a new mobility control plane such as LISP <xref target="I-D.ietf-lisp-rfc6833bis-08" />, FPC <xref target="I-D.ietf-dmm-fpc-cpdp"/>, MFA <xref target="I-D.gundavelli-dmm-mfa"/>, control-plane protocols described in [WHITEPAPER-5G-UP], or others. The analysis of new mobility control-planes and it's applicability to SRv6 is is out of the scope of this document.</t>
+        <t>Alternatively, SRv6 could be used in conjunction with a new mobility control plane such as LISP <xref target="I-D.ietf-lisp-rfc6833bis" />, FPC <xref target="I-D.ietf-dmm-fpc-cpdp"/>, MFA <xref target="I-D.gundavelli-dmm-mfa"/>, control-plane protocols described in [WHITEPAPER-5G-UP], or others. The analysis of new mobility control-planes and it's applicability to SRv6 is is out of the scope of this document.</t>
 
         <t>Note that the IANA section of this document allocates the SRv6 endpoint function types for the new functions defined in this document. All control-plane protocols are expected to leverage these function type-codes to signal each function.</t>
 
@@ -874,7 +874,7 @@ gNB_out : (Z,A)
     </section>
 
     <section anchor="acknowledge" title="Acknowledgements">
-      <t>The authors would like to thank Daisuke Yokota, Bart Peirens, Ryokichi Onishi, Kentaro Ebisawa, Peter Bosch, Darren Dukes and Francois Clad for their useful comments of this work.</t>
+      <t>The authors would like to thank Daisuke Yokota, Bart Peirens, Ryokichi Onishi, Kentaro Ebisawa, Peter Bosch, Darren Dukes, Francois Clad and Sridhar Bhaskaran for their useful comments of this work.</t>
     </section>
 
   </middle>
@@ -893,7 +893,7 @@ gNB_out : (Z,A)
         &I-D.ietf-dmm-fpc-cpdp;
         &I-D.hegdeppsenak-isis-sr-flex-algo;
         &I-D.gundavelli-dmm-mfa;
-        &I-D.ietf-lisp-rfc6833bis-08;
+        &I-D.ietf-lisp-rfc6833bis;
         &rfc5213;
         <reference anchor="TS.23501">
             <front>
