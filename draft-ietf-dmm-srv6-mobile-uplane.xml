@@ -10,6 +10,7 @@
   <!ENTITY I-D.hegdeppsenak-isis-sr-flex-algo SYSTEM "http://xml.resource.org/public/rfc/bibxml3/reference.I-D.hegdeppsenak-isis-sr-flex-algo.xml">
   <!ENTITY I-D.ietf-dmm-fpc-cpdp SYSTEM "http://xml.resource.org/public/rfc/bibxml3/reference.I-D.ietf-dmm-fpc-cpdp.xml">
   <!ENTITY I-D.gundavelli-dmm-mfa SYSTEM "http://xml.resource.org/public/rfc/bibxml3/reference.I-D.gundavelli-dmm-mfa.xml">
+  <!ENTITY I-D.ietf-lisp-rfc6833bis-08 SYSTEM "http://xml.resource.org/public/rfc/bibxml3/reference.I-D.ietf-lisp-rfc6833bis-08.xml">
 ]>
 <?xml-stylesheet type='text/xsl' href='rfc2629.xslt' ?>
 
@@ -288,7 +289,7 @@ UPF2_out: (A,Z)                  -> End.DT4 or End.DT6
             <artwork align="center"><![CDATA[
 UPF2_in : (Z,A)
 UPF2_out: (U2::, U1::1) (Z,A)    -> T.Encaps.Reduced <U1::1>
-UPF1_out: (U2::, gNB::1) (Z,A)      -> End.MAP
+UPF1_out: (U2::, gNB::1) (Z,A)   -> End.MAP
 gNB_out : (Z,A)                  -> End.DX4 or End.DX6
             ]]></artwork>
           </figure>
@@ -724,11 +725,15 @@ gNB_out : (Z,A)
     </section>
 
     <section anchor="c-plane" title="Control Plane Considerations">
-        <t>This documents focuses on the dataplane behavior. The control planes could be based on the existing 3GPP based signalling for N4 interface <xref target="TS.29244"/>, <xref target="I-D.ietf-dmm-fpc-cpdp"/>, control-plane protocols described in [WHITEPAPER-5G-UP], etc. and to be discussed further.</t>
+        <t>This documents focuses on the dataplane behavior and its independent from the control plane.</t>
+
+        <t>The control plane could be based on the existing 3GPP-defined control plane with slight modifications to the N4 interface <xref target="TS.29244"/>.</t>
+
+        <t>Alternatively, SRv6 could be used in conjunction with a new mobility control plane such as LISP <xref target="I-D.ietf-lisp-rfc6833bis-08" />, FPC <xref target="I-D.ietf-dmm-fpc-cpdp"/>, MFA <xref target="I-D.gundavelli-dmm-mfa"/>, control-plane protocols described in [WHITEPAPER-5G-UP], or others. The analysis of new mobility control-planes and it's applicability to SRv6 is is out of the scope of this document.</t>
 
         <t>Note that the IANA section of this document allocates the SRv6 endpoint function types for the new functions defined in this document. All control-plane protocols are expected to leverage these function type-codes to signal each function.</t>
 
-        <t>It's notable that SRv6's network programming nature allows a flexible and dynamic anchor placement. </t>
+        <t>It's notable that SRv6's network programming nature allows a flexible and dynamic anchor placement.</t>
     </section>
 <!--
     <section anchor="c-plane" title="Control Plane Considerations">
@@ -869,7 +874,7 @@ gNB_out : (Z,A)
     </section>
 
     <section anchor="acknowledge" title="Acknowledgements">
-      <t>The authors would like to thank Daisuke Yokota, Bart Peirens, Ryokichi Onishi, Kentaro Ebisawa, Peter Bosch and Darren Dukes for their useful comments of this work.</t>
+      <t>The authors would like to thank Daisuke Yokota, Bart Peirens, Ryokichi Onishi, Kentaro Ebisawa, Peter Bosch, Darren Dukes and Francois Clad for their useful comments of this work.</t>
     </section>
 
   </middle>
@@ -888,6 +893,7 @@ gNB_out : (Z,A)
         &I-D.ietf-dmm-fpc-cpdp;
         &I-D.hegdeppsenak-isis-sr-flex-algo;
         &I-D.gundavelli-dmm-mfa;
+        &I-D.ietf-lisp-rfc6833bis-08;
         &rfc5213;
         <reference anchor="TS.23501">
             <front>
