@@ -6,6 +6,7 @@
   <!ENTITY I-D.ietf-spring-segment-routing-central-epe SYSTEM "http://xml.resource.org/public/rfc/bibxml3/reference.I-D.ietf-spring-segment-routing-central-epe.xml">
   <!ENTITY I-D.filsfils-spring-segment-routing-policy SYSTEM "http://xml.resource.org/public/rfc/bibxml3/reference.I-D.filsfils-spring-segment-routing-policy.xml">
   <!ENTITY I-D.filsfils-spring-srv6-network-programming SYSTEM "http://xml.resource.org/public/rfc/bibxml3/reference.I-D.filsfils-spring-srv6-network-programming.xml">
+  <!ENTITY I-D.ietf-6man-segment-routing-header SYSTEM "http://xml.resource.org/public/rfc/bibxml3/reference.I-D.ietf-6man-segment-routing-header.xml">
   <!ENTITY I-D.ietf-pce-segment-routing SYSTEM "http://xml.resource.org/public/rfc/bibxml3/reference.I-D.ietf-pce-segment-routing.xml">
   <!ENTITY I-D.hegdeppsenak-isis-sr-flex-algo SYSTEM "http://xml.resource.org/public/rfc/bibxml3/reference.I-D.hegdeppsenak-isis-sr-flex-algo.xml">
   <!ENTITY I-D.ietf-dmm-fpc-cpdp SYSTEM "http://xml.resource.org/public/rfc/bibxml3/reference.I-D.ietf-dmm-fpc-cpdp.xml">
@@ -558,7 +559,7 @@ gNB_out : (Z,A)
         <t>Ethernet</t>
         <t>Unstructured</t>
       </list></t>
-      <t>SRv6 supports all the PDU session types without any protocol overhead by using the corresponding SRv6 functions (End.DX4, End.DT4 for IPv4 PDU sessions; End.DX6, End.DT6 for IPv6 PDU sessions; End.DX2, End.DT2M for L2 PDU sessions).</t>
+      <t>SRv6 supports all the PDU session types without any protocol overhead by using the corresponding SRv6 functions (End.DX4, End.DT4 for IPv4 PDU sessions; End.DX6, End.DT6, End.T for IPv6 PDU sessions; End.DX2, End.DT2M for L2 PDU sessions).</t>
     </section>
 
     <section anchor="signalling" title="Signalling messages">
@@ -566,9 +567,32 @@ gNB_out : (Z,A)
     </section>
 
     <section anchor="container" title="5GS Container">
-      <t>The 3GPP <xref target="TR.29891"/> defines a new &quot;5GS Container&quot; to send control information elements (i.e. the QFI and RQI), which are not related to the transport network layer, over the N3 and N9 interfaces. This is required in Stage 2.</t>
-      <t>SRv6 carries the 5GS Container as a new SRv6 TLV.</t>
-      <t>The 5GS Container, as defined by 3GPP RAN3 in <xref target="TS.38415"/>, is not modified. There is no impact to the Radio Network Layer (RNL) as required in 3GPP <xref target="TR.38801"/> subclause 7.3.2.</t>
+      <t>The 3GPP <xref target="TR.29891"/> defines the &quot;5GS Container&quot; to send control information elements (i.e. the QFI and RQI), which are not related to the transport network layer, over the N3 and N9 interfaces. This is required in Stage 2.</t>
+      <t>SRv6 carries the 5GS Container in a new SRH <xref target="I-D.ietf-6man-segment-routing-header" />TLV called &quot;5GS Container TLV&quot;. This TLV has the following format:
+        <figure>
+          <artwork>
+ 0                   1                   2                   3   
+ 0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1     
++-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+ 
+|      Type     |     Length    |     Flags     |          
++-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
+//            5GS Container Object                             //
++-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
+where:     </artwork>
+        </figure>
+        <list style="symbols">
+          <t>Type: to be assigned by IANA (suggested value 7).</t>
+
+          <t>Length: the total length of the TLV.</t>
+
+          <t>Flags: 8 bits. No flags are defined in this document. SHOULD
+          be set to 0 on transmission and MUST be ignored on receipt.</t>
+
+          <t>5GS Container Object: the content of the TLV which consists of
+          the 5GS Container as defined by 3GPP RAN3 in <xref target="TS.38415"/>.</t>
+        </list>
+      </t>
+      <t>The 5GS Container is not modified. There is no impact to the Radio Network Layer (RNL) as required by <xref target="TR.38801"/> subclause 7.3.2.</t>
     </section>
 
     <section anchor="srv6_functions" title="SRv6 SID Mobility Functions">
@@ -871,6 +895,8 @@ gNB_out : (Z,A)
           <c>End.Limit</c>
           <c>[This.ID]</c>
       </texttable>
+
+      <t>This I-D also request to IANA to allocate, within the &quot;Segment Routing Header TLVs&quot; registry, defined in <xref target="I-D.ietf-6man-segment-routing-header" />, a new TLV codepoint named &quot;5GS Container TLV&quot; with suggested codepoint value 7.</t>
     </section>
 
     <section anchor="acknowledge" title="Acknowledgements">
@@ -887,6 +913,7 @@ gNB_out : (Z,A)
         &I-D.filsfils-spring-segment-routing-policy;
         &I-D.ietf-spring-segment-routing-central-epe;
         &I-D.ietf-pce-segment-routing;
+        &I-D.ietf-6man-segment-routing-header;
     </references>
 
     <references title="Informative References">
