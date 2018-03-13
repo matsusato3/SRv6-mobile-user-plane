@@ -713,8 +713,8 @@ gNB_out : (Z,A)
           <artwork>
  0                   1                   2                   3   
  0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1     
-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+ 
-|      Type     |     Length    |     Flags     |          
++-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
+|      Type     |     Length    |
 +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
 //            5GS Container Object                             //
 +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
@@ -724,9 +724,6 @@ where:     </artwork>
           <t>Type: to be assigned by IANA (suggested value 7).</t>
 
           <t>Length: the total length of the TLV.</t>
-
-          <t>Flags: 8 bits. No flags are defined in this document. SHOULD
-          be set to 0 on transmission and MUST be ignored on receipt.</t>
 
           <t>5GS Container Object: the content of the TLV which consists of
           the 5GS Container as defined by 3GPP RAN3 in <xref target="TS.38415"/>.</t>
