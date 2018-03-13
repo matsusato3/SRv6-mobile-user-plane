@@ -3,7 +3,10 @@
   <!ENTITY rfc2119 SYSTEM "http://xml.resource.org/public/rfc/bibxml/reference.RFC.2119.xml">
   <!ENTITY rfc5213 SYSTEM "http://xml.resource.org/public/rfc/bibxml/reference.RFC.5213.xml">
   <!ENTITY I-D.ietf-spring-segment-routing SYSTEM "http://xml.resource.org/public/rfc/bibxml3/reference.I-D.ietf-spring-segment-routing.xml">
+  <!ENTITY I-D.ietf-spring-segment-routing-central-epe SYSTEM "http://xml.resource.org/public/rfc/bibxml3/reference.I-D.ietf-spring-segment-routing-central-epe.xml">
+  <!ENTITY I-D.filsfils-spring-segment-routing-policy SYSTEM "http://xml.resource.org/public/rfc/bibxml3/reference.I-D.filsfils-spring-segment-routing-policy.xml">
   <!ENTITY I-D.filsfils-spring-srv6-network-programming SYSTEM "http://xml.resource.org/public/rfc/bibxml3/reference.I-D.filsfils-spring-srv6-network-programming.xml">
+  <!ENTITY I-D.ietf-pce-segment-routing SYSTEM "http://xml.resource.org/public/rfc/bibxml3/reference.I-D.ietf-pce-segment-routing.xml">
   <!ENTITY I-D.hegdeppsenak-isis-sr-flex-algo SYSTEM "http://xml.resource.org/public/rfc/bibxml3/reference.I-D.hegdeppsenak-isis-sr-flex-algo.xml">
   <!ENTITY I-D.ietf-dmm-fpc-cpdp SYSTEM "http://xml.resource.org/public/rfc/bibxml3/reference.I-D.ietf-dmm-fpc-cpdp.xml">
   <!ENTITY I-D.gundavelli-dmm-mfa SYSTEM "http://xml.resource.org/public/rfc/bibxml3/reference.I-D.gundavelli-dmm-mfa.xml">
@@ -545,7 +548,28 @@ gNB_out : (Z,A)
         </section>
       </section>
     </section>
-    
+
+    <section anchor="pdu_sessions" title="SRv6 supported PDU session types">
+      <t>The 3GPP <xref target="TS.23501"/> defines the following PDU session types:
+      <list style='symbols'>
+        <t>IPv4</t>
+        <t>IPv6</t>
+        <t>Ethernet</t>
+        <t>Unstructured</t>
+      </list></t>
+      <t>SRv6 supports all the PDU session types without any protocol overhead by using the corresponding SRv6 functions (End.DX4, End.DT4 for IPv4 PDU sessions; End.DX6, End.DT6 for IPv6 PDU sessions; End.DX2, End.DT2M for L2 PDU sessions).</t>
+    </section>
+
+    <section anchor="signalling" title="Signalling messages">
+      <t>The 3GPP <xref target="TR.29891"/> uses GTP-U to send signalling messages (e.g. End Marker, Echo Request, Error Indication) between peers. A future revision of this document will describe how these messages are conveyed in SRv6.</t>
+    </section>
+
+    <section anchor="container" title="5GS Container">
+      <t>The 3GPP <xref target="TR.29891"/> defines a new &quot;5GS Container&quot; to send control information elements (i.e. the QFI and RQI), which are not related to the transport network layer, over the N3 and N9 interfaces. This is required in Stage 2.</t>
+      <t>SRv6 carries the 5GS Container as a new SRv6 TLV.</t>
+      <t>The 5GS Container, as defined by 3GPP RAN3 in <xref target="TS.38415"/>, is not modified. There is no impact to the Radio Network Layer (RNL) as required in 3GPP <xref target="TR.38801"/> subclause 7.3.2.</t>
+    </section>
+
     <section anchor="srv6_functions" title="SRv6 SID Mobility Functions">
       <!-- Add text on functions used on UPF1, UPF2,... -->
       
@@ -688,9 +712,15 @@ gNB_out : (Z,A)
     <section anchor="netslice" title="Network Slicing Considerations">
         <t>A mobile network may be required to implement "network slices", which logically separate network resources. User-plane functions represented as SRv6 segments would be part of a slice.</t>
         
-        <t>A simple way to represent slice would be to apply L2/L3 VPN described in <xref target="I-D.filsfils-spring-srv6-network-programming"/>. Segment Routing with <xref target="I-D.hegdeppsenak-isis-sr-flex-algo"/> provides even more advanced separation based on metrics like link-delay. Thus, a service provider would be able to have network slices per required SLA.</t>
+        <t><xref target="I-D.filsfils-spring-segment-routing-policy" /> describes a solution to build basic network slices with SR. Depending on the requirements, these slices can be further refined by leveraging the mechanisms from:
+          <list style="symbols">
+            <t>IGP Flex-Algo <xref target="I-D.hegdeppsenak-isis-sr-flex-algo"/></t>
+            <t>Inter-Domain policies <xref target="I-D.ietf-spring-segment-routing-central-epe"/></t>
+          </list></t>
         
-        <t>The SRv6 SID and quite a few SR extended capability would be a powerful tool for providing logical separation/integration within a network. Details are for further study.</t>
+        <t>Furthermore, these can be combined with ODN/AS <xref target="I-D.filsfils-spring-segment-routing-policy"/> for automated slice provisioning and traffic steering.</t>
+
+        <t>A separate document will explain in detail how each one of these tools is leveraged to build a network slice. TBD.</t>
     </section>
 
     <section anchor="c-plane" title="Control Plane Considerations">
@@ -849,6 +879,9 @@ gNB_out : (Z,A)
         &rfc2119;
         &I-D.ietf-spring-segment-routing;
         &I-D.filsfils-spring-srv6-network-programming;
+        &I-D.filsfils-spring-segment-routing-policy;
+        &I-D.ietf-spring-segment-routing-central-epe;
+        &I-D.ietf-pce-segment-routing;
     </references>
 
     <references title="Informative References">
@@ -856,15 +889,14 @@ gNB_out : (Z,A)
         &I-D.hegdeppsenak-isis-sr-flex-algo;
         &I-D.gundavelli-dmm-mfa;
         &rfc5213;
-        <reference anchor="TS.29281">
+        <reference anchor="TS.23501">
             <front>
-                <title>General Packet Radio System (GPRS) Tunnelling
-                Protocol User Plane (GTPv1-U)</title>
+                <title>System Architecture for the 5G System</title>
                 <author surname="3GPP" fullname="3GPP">
                 </author>
-                <date month="December" year="2017" />
+                <date month="November" year="2017" />
             </front>
-            <seriesInfo name="3GPP TS 29.281" value="15.1.0" />
+            <seriesInfo name="3GPP TS 23.501" value="15.0.0" />
         </reference>
         <reference anchor="TS.29244">
             <front>
@@ -876,15 +908,45 @@ gNB_out : (Z,A)
             </front>
             <seriesInfo name="3GPP TS 29.244" value="15.0.0" />
         </reference>
-        <reference anchor="TS.23501">
+        <reference anchor="TS.29281">
             <front>
-                <title>System Architecture for the 5G System</title>
+                <title>General Packet Radio System (GPRS) Tunnelling Protocol User Plane (GTPv1-U)</title>
                 <author surname="3GPP" fullname="3GPP">
                 </author>
-                <date month="November" year="2017" />
+                <date month="December" year="2017" />
             </front>
-            <seriesInfo name="3GPP TS 23.501" value="15.0.0" />
+            <seriesInfo name="3GPP TS 29.281" value="15.1.0" />
         </reference>
+
+        <reference anchor="TR.29891">
+            <front>
+                <title>5G System - Phase 1 CT WG4 Aspects</title>
+                <author surname="3GPP" fullname="3GPP">
+                </author>
+                <date month="December" year="2017" />
+            </front>
+            <seriesInfo name="3GPP TR 29.891" value="15.0.0" />
+        </reference>
+
+        <reference anchor="TS.38415">
+            <front>
+                <title>Draft Specification for 5GS container (TS 38.415)</title>
+                <author surname="3GPP" fullname="3GPP">
+                </author>
+                <date month="August" year="2017" />
+            </front>
+            <seriesInfo name="3GPP R3-174510" value="0.0.0" />
+        </reference>
+
+        <reference anchor="TR.38801">
+            <front>
+                <title>Study on new radio access technology: Radio access architecture and interfaces</title>
+                <author surname="3GPP" fullname="3GPP">
+                </author>
+                <date month="April" year="2017" />
+            </front>
+            <seriesInfo name="3GPP TR 38.801" value="14.0.0" />
+        </reference>        
     </references>
   </back>
 </rfc>
