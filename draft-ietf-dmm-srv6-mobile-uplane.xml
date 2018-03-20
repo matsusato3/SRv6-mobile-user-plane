@@ -642,7 +642,7 @@ gNB_out : (Z,A)
       </section>
             
       <section title="T.M.Tmap: Transit behavior with IPv4/GTP decapsulation and mapping into an SRv6 Policy">
-        <t>The "Transit with tunnel decapsulation and map to an SRv6 policy" function (T.Tmap for short) is used in the direction from legacy user-plane to SRv6 user-plane network.</t>
+        <t>The "Transit with mobile tunnel decapsulation and map to an SRv6 policy" function (T.M.Tmap for short) is used in the direction from legacy user-plane to SRv6 user-plane network.</t>
 
         <t>When the SR Gateway node N receives a packet destined to a IW-IPv4-Prefix, N does:</t>
 
