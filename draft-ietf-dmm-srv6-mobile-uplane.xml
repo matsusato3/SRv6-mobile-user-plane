@@ -2,39 +2,38 @@
 <!DOCTYPE rfc SYSTEM "rfc2629.dtd" [
   <!ENTITY rfc2119 SYSTEM "http://xml.resource.org/public/rfc/bibxml/reference.RFC.2119.xml">
   <!ENTITY rfc5213 SYSTEM "http://xml.resource.org/public/rfc/bibxml/reference.RFC.5213.xml">
-  <!ENTITY I-D.ietf-spring-segment-routing SYSTEM "http://xml.resource.org/public/rfc/bibxml3/reference.I-D.ietf-spring-segment-routing.xml">
-  <!ENTITY I-D.ietf-spring-segment-routing-central-epe SYSTEM "http://xml.resource.org/public/rfc/bibxml3/reference.I-D.ietf-spring-segment-routing-central-epe.xml">
+  <!ENTITY rfc8402 SYSTEM "http://xml.resource.org/public/rfc/bibxml/reference.RFC.8402.xml">
   <!ENTITY I-D.filsfils-spring-segment-routing-policy SYSTEM "http://xml.resource.org/public/rfc/bibxml3/reference.I-D.filsfils-spring-segment-routing-policy.xml">
   <!ENTITY I-D.filsfils-spring-srv6-network-programming SYSTEM "http://xml.resource.org/public/rfc/bibxml3/reference.I-D.filsfils-spring-srv6-network-programming.xml">
-  <!ENTITY I-D.xuclad-spring-sr-service-chaining SYSTEM "http://xml.resource.org/public/rfc/bibxml3/reference.I-D.xuclad-spring-sr-service-chaining.xml">
+  <!ENTITY I-D.xuclad-spring-sr-service-programming SYSTEM "http://xml.resource.org/public/rfc/bibxml3/reference.I-D.xuclad-spring-sr-service-programming.xml">
   <!ENTITY I-D.ietf-6man-segment-routing-header SYSTEM "http://xml.resource.org/public/rfc/bibxml3/reference.I-D.ietf-6man-segment-routing-header.xml">
-  <!ENTITY I-D.ietf-pce-segment-routing SYSTEM "http://xml.resource.org/public/rfc/bibxml3/reference.I-D.ietf-pce-segment-routing.xml">
+  <!ENTITY I-D.ietf-spring-segment-routing-central-epe SYSTEM "http://xml.resource.org/public/rfc/bibxml3/reference.I-D.ietf-spring-segment-routing-central-epe.xml">
   <!ENTITY I-D.hegdeppsenak-isis-sr-flex-algo SYSTEM "http://xml.resource.org/public/rfc/bibxml3/reference.I-D.hegdeppsenak-isis-sr-flex-algo.xml">
   <!ENTITY I-D.ietf-dmm-fpc-cpdp SYSTEM "http://xml.resource.org/public/rfc/bibxml3/reference.I-D.ietf-dmm-fpc-cpdp.xml">
   <!ENTITY I-D.gundavelli-dmm-mfa SYSTEM "http://xml.resource.org/public/rfc/bibxml3/reference.I-D.gundavelli-dmm-mfa.xml">
   <!ENTITY I-D.auge-dmm-hicn-mobility-deployment-options SYSTEM "http://xml.resource.org/public/rfc/bibxml3/reference.I-D.auge-dmm-hicn-mobility-deployment-options.xml">
-  <!ENTITY I-D.ietf-lisp-rfc6833bis SYSTEM "http://xml.resource.org/public/rfc/bibxml3/reference.I-D.ietf-lisp-rfc6833bis.xml">
+  <!ENTITY I-D.camarillo-dmm-srv6-mobile-pocs SYSTEM "http://xml.resource.org/public/rfc/bibxml3/reference.I-D.camarillo-dmm-srv6-mobile-pocs.xml">
+  <!ENTITY I-D.rodrigueznatal-lisp-srv6 SYSTEM "http://xml.resource.org/public/rfc/bibxml3/reference.I-D.rodrigueznatal-lisp-srv6.xml">
+  <!ENTITY I-D.camarilloelmalky-springdmm-srv6-mob-usecases SYSTEM "http://xml.resource.org/public/rfc/bibxml3/reference.I-D.camarilloelmalky-springdmm-srv6-mob-usecases.xml">
+  <!ENTITY I-D.ali-spring-network-slicing-building-blocks SYSTEM "http://xml.resource.org/public/rfc/bibxml3/reference.I-D.ali-spring-network-slicing-building-blocks.xml">
 ]>
 <?xml-stylesheet type='text/xsl' href='rfc2629.xslt' ?>
 
-<rfc category="std" docName="draft-ietf-dmm-srv6-mobile-uplane-02" ipr="trust200902">
+<rfc category="std" docName="draft-ietf-dmm-srv6-mobile-uplane-03"
+	ipr="trust200902">
   <?xml-stylesheet type='text/xsl' href='rfc2629.xslt' ?>
-
   <?rfc toc="yes" ?>
-
   <?rfc symrefs="yes" ?>
-
   <?rfc sortrefs="yes"?>
   <?rfc compact="yes" ?>
   <?rfc subcompact="yes" ?>
   <?rfc iprnotified="no" ?>
-
   <?rfc strict="yes" ?>
-
   <front>
-    <title abbrev="SRv6-mobile-uplane">Segment Routing IPv6 for Mobile User Plane</title>
+    <title abbrev="SRv6-mobile-uplane">
+			Segment Routing IPv6 for Mobile User Plane</title>
 
-     <author fullname="Satoru Matsushima" initials="S." surname="Matsushima">
+    <author fullname="Satoru Matsushima" initials="S." surname="Matsushima">
       <organization abbrev="SoftBank">SoftBank</organization>
 
       <address>
@@ -50,7 +49,8 @@
     </author>
     
     <author fullname="Clarence Filsfils" initials="C." surname="Filsfils">
-      <organization abbrev="Cisco Systems, Inc.">Cisco Systems, Inc.</organization>
+      <organization abbrev="Cisco Systems, Inc.">
+				Cisco Systems, Inc.</organization>
       <address>
         <postal>
           <street></street>
@@ -64,7 +64,8 @@
     </author>
 
     <author fullname="Miya Kohno" initials="M." surname="Kohno">
-      <organization abbrev="Cisco Systems, Inc.">Cisco Systems, Inc.</organization>
+      <organization abbrev="Cisco Systems, Inc.">
+		Cisco Systems, Inc.</organization>
       <address>
         <postal>
           <street></street>
@@ -78,7 +79,8 @@
     </author>
 
     <author fullname="Pablo Camarillo Garvia" initials="P." surname="Camarillo">
-      <organization abbrev="Cisco Systems, Inc.">Cisco Systems, Inc.</organization>
+      <organization abbrev="Cisco Systems, Inc.">
+			Cisco Systems, Inc.</organization>
       <address>
         <postal>
           <street></street>
@@ -106,7 +108,7 @@
     </author>
 
     <author fullname="Charles E. Perkins" initials="C.E." surname="Perkins">
-       <organization abbrev="Futurewei">Futurewei Inc. </organization>
+       <organization abbrev="Futurewei">Futurewei Inc.</organization>
        <address>
          <postal>
            <street>2330 Central Expressway</street>
@@ -124,78 +126,175 @@
     <workgroup>DMM Working Group</workgroup>
 
     <abstract>
-      <t>This document discusses the applicability of SRv6 (Segment Routing
-      IPv6) to user-plane of mobile networks (N3 and N9 interfaces). The source routing capability 
-      and the network programming nature of SRv6, accomplish mobile
-      user-plane functions in a simple manner. The statelessness and 
-      the ability to control underlying layer will be even more beneficial 
-      to the mobile user-plane, in terms of providing flexibility and SLA 
-      control for various applications. It also simplifies the network 
-      architecture by eliminating the necessity of tunnels, such as 
-      <xref target="TS.29281">GTP-U</xref>, PMIP <xref target="RFC5213"/>, 
-      Mac-in-Mac, MPLS, and so on. In addition, Segment Routing provides 
-      an enhanced method for network slicing, which is briefly introduced 
-      by this document.</t>
+      <t>
+        This document shows the applicability of SRv6 (Segment Routing IPv6)
+        to the user-plane of mobile networks. The network programming nature
+        of SRv6 accomplish mobile user-plane functions in a simple manner.
+        The statelessness of SRv6 and its ability to control both service
+        layer path and underlying transport can be beneficial to the mobile
+        user-plane, providing flexibility and SLA control for various applications.
+        This document describes the SRv6 mobile user plane behavior and 
+        defines the SID functions for that. It also provides a mechanism 
+        for end-to-end network slicing.
+      </t>
     </abstract>
   </front>
 
   <middle>
-    <section title="Introduction">
-        <t>In mobile networks, mobility management systems provide
-        connectivity while mobile nodes move around. While the
-        control-plane of the system signals movements of a mobile node,
-        user-plane establishes tunnel between the mobile node and anchor
-        node over IP based backhaul and core networks. </t>
+  <section title="Introduction">
+    <t> In mobile networks, mobility management systems provide
+        connectivity while mobile nodes move.  While the
+        control-plane of the system signals movements of a mobile node, the
+        user-plane establishes a tunnel between the mobile node and its anchor
+        node over IP-based backhaul and core networks. </t>
 
-        <t>This document discusses the applicability of SRv6 (Segment
+    <t> This document shows the applicability of SRv6 (Segment
         Routing IPv6) to those mobile networks. SRv6 provides source
-        routing to networks where operators can explicitly indicate a route
-        for the packets from and to the mobile node. SRv6 endpoint nodes
-        perform the roles of anchor of mobile user-plane. </t>
+        routing to networks so that operators can explicitly indicate a route
+        for the packets to and from the mobile node.  SRv6 endpoint nodes
+        serve as the anchors of mobile user-plane. </t>
+  </section>	<!-- End section "Introduction" -->
 
-    </section>
-
-    <section title="Conventions and Terminology">
-        <t>The key words "MUST", "MUST NOT", "REQUIRED", "SHALL", "SHALL NOT",
-        "SHOULD", "SHOULD NOT", "RECOMMENDED", "MAY", and "OPTIONAL" in this
-        document are to be interpreted as described in <xref
-        target="RFC2119"></xref>.</t>
+  <section title="Conventions and Terminology">
+        <t>The key words "MUST", "MUST NOT", "REQUIRED", "SHALL",
+	    "SHALL NOT", "SHOULD", "SHOULD NOT", "RECOMMENDED", "MAY", and
+	    "OPTIONAL" in this document are to be interpreted as described in
+	    <xref target="RFC2119"></xref>.
+	</t>
         
-        <t>SRH is the abbreviation for the Segment Routing Header. We assume that the SRH may be present multiple times inside each packet.</t>
-        <t>NH is the abbreviation of the IPv6 next-header field.</t>
-        <t>NH=SRH means that the next-header field is 43 with routing type 4.</t> 
-        <t>When there are multiple SRHs, they must follow each other: the next-header field of all SRH, except the last one, must be SRH.</t>
-        <t>The effective next-header (ENH) is the next-header field of the IP header when no SRH is present, or is the next-header field of the last SRH.</t>
-        <t>In this version of the document, we assume that there is no other extension header than the SRH. This will be lifted in future versions of the document.</t>
-        <t>SID: A Segment Identifier which represents a specific segment in segment routing domain. The SID type used in this document is IPv6 address (also referenced as SRv6 Segment or SRv6 SID).</t>
-        <t>A SID list is represented as &lt;S1, S2, S3&gt; where S1 is the first SID to visit, S2 is the second SID to visit and S3 is the last SID to visit along the SR path.</t>
-        <t>(SA,DA) (S3, S2, S1; SL) represents an IPv6 packet with:<list style="symbols">
-          <t>IPv6 header with source and destination addresses respectively SA and DA and next-header is SRH</t>
-          <t>SRH with SID list &lt;S1, S2, S3&gt; with SegmentsLeft = SL</t>
-          <t>Note the difference between the &lt;&gt; and () symbols: &lt;S1, S2, S3&gt; represents a SID list where S1 is the first SID and S3 is the last SID. (S3, S2, S1; SL) represents the same SID list but encoded in the SRH format where the rightmost SID in the SRH is the first SID and the leftmost SID in the SRH is the last SID. When referring to an SR policy in a high-level use-case, it is simpler to use the &lt;S1, S2, S3&gt; notation. When referring to an illustration of the detailed behavior, the (S3, S2, S1; SL) notation is more convenient.</t>
-          <t>The payload of the packet is omitted.</t>
+        <section anchor="terms" title="Terminology">
+        <t> <list style="symbols">
+            <t>AMBR: Aggregate Maximum Bit Rate </t>
+            <t>APN: Access Point Name (commonly used to identify a
+			network or class of service)</t>
+            <t>BSID: SR Binding SID <xref target="RFC8402"/></t>
+            <t>CNF: Cloud-native Network Function</t>
+            <t>gNB: gNodeB </t>
+            <t>NH: The IPv6 next-header field.</t>
+            <t>NFV: Network Function Virtualization </t>
+            <t>PDU: Packet Data Unit</t>
+            <t>Session: TBD...</t>
+            <t>SID: A Segment Identifier which represents a specific
+		segment in a segment routing domain.</t>
+            <t>SRH: The Segment Routing Header. <xref target="I-D.ietf-6man-segment-routing-header"/></t>
+            <t>TEID: Tunnel Endpoint Identifier </t>
+            <t>UE: User Equipment </t>
+            <t>UPF: User Plane Function </t>
+            <t>VNF: Virtual Network Function </t>
+            </list>
+	</t>
+    	</section>	<!-- End subsection "Terminology" -->
+
+        <section anchor="conventions" title="Conventions">
+	<t> <list style="symbols">
+        <t> NH=SRH means that NH is 43 with routing type 4.</t> 
+        <t> Multiple SRHs may be present inside each packet, but they must
+	    follow each other.  The next-header field of each SRH, except the
+	    last one, must be NH-SRH (43 type 4).</t>
+        <t> For simplicity, no other extension headers are shown except
+	    the SRH.</t>
+        <t> The SID type used in this document is IPv6 address
+	    (also called SRv6 Segment or SRv6 SID).</t>
+        <t> gNB::1 is an IPv6 address (SID) assigned to the gNB.</t> 
+        <t> U1::1 is an IPv6 address (SID) assigned to UPF1.</t> 
+        <t> U2::1 is an IPv6 address (SID) assigned to UPF2.</t> 
+        <t> U2:: is some other IPv6 address (SID) assigned to UPF2.</t> 
+        <t> A SID list is represented as &lt;S1, S2, S3&gt; where S1 is the
+	    first SID to visit, S2 is the second SID to visit and S3 is the
+	    last SID to visit along the SR path.</t>
+        <t> (SA,DA) (S3, S2, S1; SL) represents an IPv6 packet with:
+	    <list style="symbols">
+            <t> IPv6 header with source and destination addresses SA and DA
+		respectively, and next-header SRH, with SID list
+		&lt;S1, S2, S3&gt; with SegmentsLeft = SL</t>
+            <t>The payload of the packet is not represented.</t>
+            </list></t>
+        <t> Note the difference between the &lt;&gt; and () symbols:
+	    &lt;S1, S2, S3&gt; represents a SID list where S1 is the
+	    first SID and S3 is the last SID. (S3, S2, S1; SL) represents
+	    the same SID list but encoded in the SRH format where the
+	    rightmost SID in the SRH is the first SID and the leftmost
+	    SID in the SRH is the last SID. When referring to an SR
+	    policy in a high-level use-case, it is simpler to use the
+	    &lt;S1, S2, S3&gt; notation. When referring to an illustration
+	    of the detailed behavior, the (S3, S2, S1; SL) notation is
+	    more convenient.</t>
+        <t> SRH[SL] represents the SID pointed by the SL field in the first
+	    SRH. In our example, SRH[2] represents S1, SRH[1] represents S2
+	    and SRH[0] represents S3.</t>
+        <t> SRH[SL] can be different from the DA of the IPv6 header.</t>
         </list></t>
-        <t>SRH[SL] represents the SID pointed by the SL field in the first SRH. In our example, SRH[2] represents S1, SRH[1] represents S2 and SRH[0] represents S3.</t>
-        <t>FIB is the abbreviation for the forwarding table. A FIB lookup is a lookup in the forwarding table.
-          When a packet is intercepted on a wire, it is possible that SRH[SL] is different from the DA.</t>
-    </section>
+    	</section>	<!-- End subsection  "Conventions" -->
+
+        <section anchor="srv6-funcs" title="Predefined SRv6 Functions">
+        <t>
+	    The following functions are defined in
+	    <xref target="I-D.filsfils-spring-srv6-network-programming"/>.
+	    <list style="symbols">
+            <t> End.DT4 means to decapsulate and forward using
+		a specific IPv4 table lookup.</t>
+            <t> End.DT6 means to decapsulate and forward using
+		a specific IPv6 table lookup.</t>
+            <t> End.DX4 means to decapsulate and forward through
+    a particular link configured with the SID.</t>
+            <t> End.DX6 means to decapsulate and forward through
+    a particular link configured with the SID.</t>
+            <t> End.T means to forward using a specific IPv6 table lookup.</t>
+            <t> End.X means to forward through a link configured
+		with the SID.</t>
+            <t> T.Encaps.Red means encapsulation without pushing SRH
+		(resulting in "Reduced" packet size).</t>
+            <t> PSP means Penultimate Segment Pop.  The packet is
+		subsequently forwarded without the popped SRH.</t>
+            </list>
+	    New SRv6 functions are defined in <xref target="srv6_functions"/>
+	    to support the needs of the mobile user plane.
+	</t>
+    	</section>	<!-- End section "Predefined SRv6 Functions" -->
+
+    </section>	<!-- End section "Conventions and Terminology" -->
 
     <section anchor="motivations" title="Motivation">
-        <t>Every day mobility networks are getting more challenging to operate: on one hand, traffic is constantly growing, and latency requirements are more strict; on the other-hand, there are new use-cases like NFV that are also challenging network management.</t>
-        <t>Problem comes from the fact that the current architecture of mobile networks is agnostic to the underlying transport. Indeed, it rigidly fragments the user-plane into radio access, core and service networks and connects them by tunneling techniques through the user-plane roles such as access and anchor nodes. Such agnosticism and rigidness make it difficult for the operator to optimize and operate the data-path.</t>
+    <t> Mobility networks are becoming more challenging to operate.
+	On one hand, traffic is constantly growing, and latency requirements
+	are more strict; on the other-hand, there are new use-cases like
+	NFV that are also challenging network management.</t>
+    <t> The current architecture of mobile networks does not take into account
+	the underlying transport.  The user-plane is rigidly fragmented into
+	radio access, core and service networks, connected by tunneling
+	according to user-plane roles such as access and anchor nodes. These
+	factors have made it difficult for the operator
+	to optimize and operate the data-path.
+    </t>
+    <t> In the meantime,
+	applications have shifted to use IPv6, and network operators
+	have started adopting IPv6 as their IP transport.
+        SRv6, the IPv6 dataplane instantiation of Segment Routing
+	<xref target="RFC8402"/>, integrates both
+	the application data-path and the underlying transport layer into
+	a single protocol, allowing operators to optimize the network in a
+	simplified manner and removing forwarding state from the network. It is also
+  suitable for virtualized environments, VNF/CNF to VNF/CNF networking.</t>
+    <t> SRv6 specifies network-programming (see
+  <xref target="I-D.filsfils-spring-srv6-network-programming"/>).
+  Applied to mobility, SRv6 can provide the user-plane functions needed
+  for mobility management.  SRv6 takes advantage of underlying transport
+  awareness and flexibility to improve mobility user-plane functions.</t>
+    <t>The use-cases for SRv6 mobility are discussed in <xref target="I-D.camarilloelmalky-springdmm-srv6-mob-usecases"/>.</t>
+    </section>	<!-- End section "Motivation" -->
 
-        <t>While the mobile network industry has been trying to solve those problems, applications have shifted to use IPv6, and network operators have started adopting IPv6 as their IP transport as well.  SRv6, the IPv6 instantiation of Segment Routing <xref target="I-D.ietf-spring-segment-routing"/>, integrates both the application data-path and the underlying transport layer into one single protocol, allowing operators to optimize the network in a simplified manner and removing forwarding state from the network.</t>
-        <t>Further on, SRv6 introduces the notion of network-programming <xref target="I-D.filsfils-spring-srv6-network-programming"/>, that applied to mobility fulfils the user-plane functions of mobility management. SRv6 takes advantage of underlying transport awareness and flexibility to deploy mobility user-plane functions in an optimized manner. Those are the motivations to adopt SRv6 for mobile user-plane.</t>
-    </section>
-
-    <section anchor="scenarios" title="Reference Architecture">
-        <t>This section describes a reference architecture and possible deployment
+    <section anchor="scenarios" title="A 3GPP Reference Architecture">
+    <t> This section presents a reference architecture and possible deployment
         scenarios.</t>
         
-        <t><xref target="fig_ref-arch"/> shows a reference architecture, based
-        on 5G packet core architecture <xref target="TS.23501"/>.</t>
-        <t>Please note that all the user-plane described in this document does not depend on any specific architecture. This architecture is just used as a reference based on the latest 3GPP standards at the time of writing this draft. Other type of architectures can be seen in <xref target="I-D.gundavelli-dmm-mfa"/> and [WHITEPAPER-5G-UP].</t>
-        <figure anchor="fig_ref-arch" title="Reference Architecture">
+    <t> <xref target="fig_5g-ref-arch"/> shows a reference diagram from
+        the 5G packet core architecture <xref target="TS.23501"/>.</t>
+    <t> The user plane described in this document does not depend on any
+	specific architecture.  The 5G packet core architecture as shown is
+	based on the latest 3GPP standards at the time of writing this draft.
+	Other architectures can be seen in
+	<xref target="I-D.gundavelli-dmm-mfa"/> and [WHITEPAPER-5G-UP].</t>
+    <figure anchor="fig_5g-ref-arch" title="3GPP 5G Reference Architecture">
           <artwork align="center"><![CDATA[
                                +-----+
                                | AMF |
@@ -212,51 +311,83 @@
 |UE|------| gNB |------| UPF1 |--------| UPF2 |--------- \    DN    /
 +--+      +-----+      +------+        +------+           \________/
             ]]></artwork>
-        </figure>
-        <t>
+    </figure>
+    <t>
           <list style="symbols">
-            <t>UE  : User Equipment </t>
-            <t>gNB : gNodeB </t>
-            <t>UPF : User Plane Function
-              <list style="symbols">
-                <t>UPF1: Interfaces N3 and N9</t>
-                <t>UPF2: Interfaces N9 and N6</t>
-                <t>Note: For simplicity we don't depict a UPF that is only connected to N9 interfaces, although the techniques described in this document are also valid in such case.</t>
-              </list>
-            </t>
-            <t>SMF : Session Management Function </t>
-            <t>AMF : Access and Mobility Management Function </t>
-            <t>DN  : Data Network e.g. operator services, Internet access </t>
+            <t>gNB: gNodeB </t>
+            <t>UPF1: UPF with Interfaces N3 and N9</t>
+            <t>UPF2: UPF with Interfaces N9 and N6</t>
+            <t>SMF: Session Management Function </t>
+            <t>AMF: Access and Mobility Management Function </t>
+            <t>DN: Data Network e.g. operator services, Internet access </t>
           </list>
-        </t>
+    </t>
         
-        <t>A session from an UE gets assigned to an UPF. Sometimes more than 
-        one UPF may be used for providing a certain kind of richer service 
-        functions. UE gets its IP address from the DHCP block of its UPF. 
-        The UPF advertises the IP address block towards the Internet ensuring 
-        that return traffic is routed to the right UPF. </t>
-    </section>
+    <t> This reference diagram does not depict a UPF that is only connected
+	to N9 interfaces, although the description in this document
+	also work for such UPFs.</t>
+    <t> Each session from an UE gets assigned to a UPF. Sometimes multiple 
+        UPFs may be used, providing richer service functions.  A UE gets its
+	IP address from the DHCP block of its UPF. 
+        The UPF advertises that IP address block toward the Internet,
+	ensuring that return traffic is routed to the right UPF. </t>
+    </section>	<!-- End section "A 3GPP Reference Architecture" -->
 
     <section anchor="uplane-functions" title="User-plane behaviors">
-      <t>This section describes the mobile user-plane behaviors using SRv6.</t>
+    <t>This section describes some mobile user-plane behaviors using SRv6.</t>
       
-      <t>In order to simplify the SRv6 adoption, we present two different &quot;modes&quot; that vary with respect the SRv6 SID allocation. The first one is the "Traditional mode", which inherits the traditional mobile user-plane. In this mode there is no change to mobility networks architecture, except for the pure replacement of <xref target="TS.29281">GTP-U</xref> for SRv6.</t>
-      <t>The second mode is the "Enhanced mode", which aggregates the mobile sessions and allocates SID on a per policy basis. The benefit of the latter is that the SR policy contains SIDs for Traffic Engineering and VNFs. Both of these modes assume both the gNB and UPFs are SR-aware (N3 and N9 interfaces are SRv6).</t>
+    <t> In order to simplify the adoption of SRv6, we present two different
+	"modes" that vary with respect to the use of SRv6.
+	The first one is the "Traditional mode", which inherits the
+	current 3GPP mobile user-plane. In this mode there is no change to
+	mobility networks architecture, except that
+	<xref target="TS.29281">GTP-U</xref> is replaced by SRv6.</t>
+    <t> The second mode is the "Enhanced mode". In this mode
+      the SR policy contains SIDs for Traffic Engineering
+	    and VNFs, which results in effective end-to-end network slices.</t>
 
-      <t>Additionally, we introduce a new "Enhanced mode with unchanged gNB GTP behavior". This mode consists of two mechanisms for interworking with legacy access networks -interface N3 unmodified-. One of these mechanism is designed to interwork with legacy gNBs using GTP/IPv4. The second method is designed to interwork with legacy gNBs using GTP/IPv6.</t>
+    <t>In both, the Traditional and the Enhanced modes, we assume that the 
+      gNB as well as the UPFs are SR-aware (N3, N9 and -potentially- N6
+       interfaces are SRv6).</t>
 
-      <t>This section makes reference to already existing SRv6 functions defined in <xref target="I-D.filsfils-spring-srv6-network-programming"/> as well as new SRv6 functions designed for the mobile userplane. The new SRv6 functions are detailed in the <xref target="srv6_functions"/>.</t>
+    <t>We introduce two mechanisms for interworking with legacy
+    access networks (N3 interface is unmodified). In these document we 
+    introduce them applied to the Enhanced mode, although they could be used 
+    in combination with the Traditional mode as well.</t>
+	   <t>One of these mechanisms is designed to interwork with legacy gNBs
+	using GTP/IPv4. The second method is designed to interwork with
+	legacy gNBs using GTP/IPv6.</t>
+
+    <t> This document uses SRv6 functions defined in
+	<xref target="I-D.filsfils-spring-srv6-network-programming"/> as well
+	as new SRv6 functions designed for the mobile user plane. The new SRv6
+	functions are detailed in <xref target="srv6_functions"/>.
+    </t>
     
-      <section anchor="traditional_mode" title="Traditional mode (formerly Basic mode)">
-        <t>In the traditional mode, we assume that mobile user-plane functions are the same as existing ones except the use of SRv6 as the data plane instead of GTP-U. No impact to the rest of mobile system should be expected.</t>
+        <section anchor="traditional_mode"
+			title="Traditional mode">
+        <t> In the traditional mode, the existing mobile UPFs remain unchanged
+	    except for the use of SRv6 as the data
+	    plane instead of GTP-U.  There is no impact to the rest of
+	    mobile system.</t>
 
-        <t>In the traditional mobile network, an UE session is mapped 1-for-1 with a specific GTP tunnel (TEID). This 1-for-1 mapping is replicated here to replace the GTP encaps with the SRv6 encaps, while not changing anything else.</t>
+        <t> In existing 3GPP mobile networks, an UE session is mapped 1-for-1
+	    with a specific GTP tunnel (TEID). This 1-for-1 mapping is
+	    replicated here to replace GTP encapsulation with the SRv6
+	    encapsulation, while not changing anything else.</t>
 
-        <t>This mode minimizes the changes required to the entire system and it is a good starting point for forming the common basis. Note that in this mode the TEID is embedded in each SID.</t>
+        <t> The traditional mode minimizes the changes required to the mobile
+	    system; it is a good starting point for forming a common basis.</t>
 
-        <t>Our reference topology is shown in <xref target="fig_traditional"/>. In this mode we assume that the gNB and the UPFs are SR-aware.</t>
+        <t> Our example topology is shown in <xref target="fig_traditional"/>.
+	    In traditional mode the gNB and the UPFs are SR-aware.
+	    In the descriptions of the uplink and downlink packet flow,
+	    A is an IPv6 address of the UE, and Z is an IPv6 address reachable
+	    within the Data Network DN.  A new SRv6 function End.MAP, defined
+	    in <xref target="end-map-function"/>, is used.</t>
 
-        <figure anchor="fig_traditional" title="Traditional mode - Reference topology">
+        <figure anchor="fig_traditional"
+	    title="Traditional mode - example topology">
           <artwork align="center"><![CDATA[    
                                                            ________
                   SRv6           SRv6                     /        \
@@ -267,64 +398,101 @@
                 ]]></artwork>
         </figure>
 
-        <section anchor="traditional_up" title="Packet flow - Uplink">
-          <t>The uplink packet flow is the following:</t>
+          <section anchor="traditional_up" title="Packet flow - Uplink">
+          <t> The uplink packet flow is as follows:</t>
           <figure>
             <artwork align="center"><![CDATA[
 UE_out  : (A,Z)
-gNB_out : (gNB, U1::1) (A,Z)     -> T.Encaps.Reduced <U1::1>
+gNB_out : (gNB, U1::1) (A,Z)     -> T.Encaps.Red <U1::1>
 UPF1_out: (gNB, U2::1) (A,Z)     -> End.MAP
-UPF2_out: (A,Z)                  -> End.DT4 or End.DT6
-            ]]></artwork>
+UPF2_out: (A,Z)                  -> End.DT4 or End.DT6]]></artwork>
           </figure>
 
-          <t>The UE packet arrives to the gNB. The gNB performs a T.Encaps.Reduced operations. Since there is only one SID, there is no need to push an SRH. gNB only adds an outer IPv6 header with IPv6 DA U1::1. U1::1 represents an anchoring SID specific for that session at UPF1. The SID U1::1 is retrieved through the existing control plane (N2 interface).</t>
+          <t> When the UE packet arrives at the gNB, the gNB performs a
+	      T.Encaps.Red operation. Since there is only one SID,
+	      there is no need to push an SRH. gNB only adds an outer IPv6
+	      header with IPv6 DA U1::1. U1::1 represents an anchoring
+	      SID specific for that session at UPF1. gNB obtains the SID
+	      U1::1 from the existing control plane (N2 interface).</t>
 
-          <t>Upon packet arrival on UPF1, the SID U1::1 is a local End.MAP function. This function maps the SID with the next anchoring point and replaces U1::1 by U2::1, that belongs to the next anchoring point.</t>
+          <t> When the packet arrives at UPF1, the SID U1::1 identifies a
+	      local End.MAP function.  End.MAP replaces U1::1 by U2::1, that
+	      belongs to the next UPF (U2).</t>
 
-          <t>Upon packet arrival on UPF2, the SID U2::1 corresponds to an End.DT function. UPF2 decapsulates the packet, performs a lookup in a specific table and forwards the packet towards the data network.</t>
+          <t> When the packet arrives at UPF2, the SID U2::1 corresponds to
+	      an End.DT function.  UPF2 decapsulates the packet, performs a
+	      lookup in a specific table and forwards the packet toward
+	      the data network (DN).</t>
 
-        </section>
+          </section>	<!-- End section "Packet flow - Uplink" -->
 
-        <section anchor="traditional_dn" title="Packet flow - Downlink">
-          <t>The downlink packet flow is the following:</t>
+          <section anchor="traditional_dn" title="Packet flow - Downlink">
+          <t>The downlink packet flow is as follows:</t>
           <figure>
             <artwork align="center"><![CDATA[
 UPF2_in : (Z,A)
-UPF2_out: (U2::, U1::1) (Z,A)    -> T.Encaps.Reduced <U1::1>
+UPF2_out: (U2::, U1::1) (Z,A)    -> T.Encaps.Red <U1::1>
 UPF1_out: (U2::, gNB::1) (Z,A)   -> End.MAP
 gNB_out : (Z,A)                  -> End.DX4 or End.DX6
             ]]></artwork>
           </figure>
 
-          <t>When the packet arrives to the UPF2, the UPF2 will map that particular flow into a UE session. This UE session is associated with the policy &lt;U1::1&gt;. The UPF2 performs a T.Encaps.Reduced operation, encapsulating the packet into a new IPv6 header with no SRH since there is only one SID.</t>
+          <t> When the packet arrives at the UPF2, the UPF2 maps that flow into
+	      a UE session. This UE session is associated with the segment
+	      endpoint &lt;U1::1&gt;.  UPF2 performs
+	      a T.Encaps.Red operation, encapsulating the packet into
+	      a new IPv6 header with no SRH since there is only one SID.</t>
 
-          <t>Upon packet arrival on UPF1, the SID U1::1 is a local End.MAP function. This function maps the SID with the next anchoring point and replaces U1::1 by gNB::1, that belongs to the next anchoring point.</t>
+          <t> Upon packet arrival on UPF1, the SID U1::1 is a local End.MAP
+	      function. This function maps the SID to the next anchoring
+	      point and replaces U1::1 by gNB::1, that belongs to the next
+	      hop.</t>
 
-          <t>Upon packet arrival on gNB, the SID gNB::1 corresponds to an End.DX4/End.DX6 function. The gNB will decapsulates the packet, removing the IPv6 header and all it's extensions headers and will forward the traffic towards the UE.</t>
-        </section>
+          <t> Upon packet arrival on gNB, the SID gNB::1 corresponds to an
+	      End.DX4 or End.DX6 function. The gNB decapsulates the packet,
+	      removing the IPv6 header and all its extensions headers, and
+	      forwards the traffic toward the UE.</t>
+        </section>	<!-- End section "Packet flow - Downlink" -->
 
         <section title="IPv6 user-traffic">
-          <t>For IPv6 user-traffic it is RECOMMENDED to perform encapsulation. However based on local policy, a service provider MAY choose to do SRH insertion. The main benefit is a lower overhead. In such case, the functions used are T.Insert.Red at gNB, End.MAP at UPF1 and End.T at UPF2 on Uplink, T.Insert.Red at UPF2, End.MAP at UPF1 and End.X at gNB on Downlink.</t>
-        </section>
-      </section>
+          <t>For IPv6 user-traffic it is RECOMMENDED to perform encapsulation.
+	      However based on local policy, a service provider MAY choose to
+	      do SRH insertion. The main benefit is a lower overhead. In such
+	      case, the functions used are T.Insert.Red at gNB, End.MAP at
+	      UPF1 and End.T at UPF2 on Uplink, T.Insert.Red at UPF2, End.MAP
+	      at UPF1 and End.X at gNB on Downlink.</t>
+        </section>	<!-- End section "IPv6 user-traffic" -->
+      </section>	<!-- End section "Traditional mode" -->
       
-      <section anchor="enhanced_mode" title="Enhanced Mode (formerly Aggregate mode)">
-        <t>This mode improves the scalability. In addition, it provides key improvements in terms of traffic steering and service programming <xref target="I-D.xuclad-spring-sr-service-chaining"/> , thanks to the use of an SR policy of multiple SIDs, instead of single one in the Traditional mode.</t>
+      <section anchor="enhanced_mode" title="Enhanced Mode">
+        <t> Enhanced mode improves scalability, traffic steering and service
+	    programming <xref target="I-D.xuclad-spring-sr-service-programming"/>,
+	    thanks to the use of multiple SIDs, instead of a single
+	    SID as done in the Traditional mode.</t>
 
-        <t>Key points:
-        <list style='symbols'>
-          <t>Several UE share the same SR Policy (and it's composing SID)</t>
-          <t>The SR policy MAY include SIDs for traffic engineering and service programming on top of the UPF anchor.</t>
-        </list></t>
-        <t>The gNB control-plane (N2 interface) is unchanged, specifically a single IPv6 address is given to the gNB.
-        <list style='symbols'>        
-          <t>The gNB MAY resolve the IP address into a SID list through a mechanism like PCEP, DNS-lookup, small augment for LISP control-plane, etc.</t>
-        </list></t>
+        <t> The main difference is that the SR policy MAY 
+          include SIDs for traffic engineering and service programming
+           in addition to the UPFs SIDs.</t>
 
-        <t>Our reference topology is shown in <xref target="fig_enhanced"/>. In this mode we assume that the gNB and the UPF are SR-aware. We also assume that we have two services segments, S1 and C1. S1 represents a VNF in the network, and C1 represents a constraint path on a router over which we are going to perform Traffic Engineering. Note that S1 and C1 belong to the underlay and don't have an N4 interface. For this reason we don't consider them UPFs.</t>
+        <t> The gNB control-plane (N2 interface) is unchanged, specifically
+	    a single IPv6 address is given to the gNB.
+            <list style='symbols'>        
+              <t> The gNB MAY resolve the IP address into a SID list using
+	          a mechanism like PCEP, DNS-lookup, small augment for LISP
+	          control-plane, etc.</t>
+            </list></t>
+        <t> Note that the SIDs MAY use the arguments Args.Mob.Session if
+        required by the UPFs.</t>
+        <t> <xref target="fig_enhanced"/> shows an Enhanced mode topology.
+	    In the Enhanced mode, the gNB and the UPF are SR-aware.
+	    The Figure shows two service segments, S1 and C1.
+	    S1 represents a VNF in the network, and C1 represents a constraint
+	    path on a router requiring Traffic Engineering. S1 and C1 belong
+	    to the underlay and don't have an N4 interface, so they are not
+	    considered UPFs.</t>
 
-        <figure anchor="fig_enhanced" title="Enhanced mode - Reference topology">
+        <figure anchor="fig_enhanced"
+			title="Enhanced mode - Example topology">
           <artwork align="center"><![CDATA[    
                                  +----+  SRv6               _______
                  SRv6          --| C1 |--[N3]              /       \
@@ -335,13 +503,12 @@ gNB_out : (Z,A)                  -> End.DX4 or End.DX6
                    -| S1 |-
                     +----+
                    SRv6 node
-                     VNF
+                     CNF
                 ]]></artwork>
         </figure>
                
         <section anchor="enhanced_uplink" title="Packet flow - Uplink">
-          <t>The uplink packet flow is the following:</t>
-
+          <t>The uplink packet flow is as follows:</t>
           <figure>
             <artwork align="center"><![CDATA[
 UE_out  : (A,Z)
@@ -351,14 +518,24 @@ C1_out  : (gNB, U2::1)(A,Z)              -> PSP
 UPF2_out: (A,Z)                          -> End.DT4 or End.DT6
             ]]></artwork>
           </figure>
-          <t>UE sends its packet (A,Z) on a specific bearer session to its gNB. gNB's CP associates that session from the UE(A) with the IPv6 address B and GTP TEID T. gNB's CP does a lookup on B (by reverseDNS, LISP, etc.) to find the related SID list &lt;S1, C1, U2::1&gt;.</t>
-          <t>Once the packet leaves the gNB, it already contains all the segments of the SR policy. This SR policy contains segments for traffic engineering (C1) and for service programming (S1).</t>
-          <t>The nodes S1 and C1 perform their related Endpoint functionality and forward.</t>
-          <t>When the packet arrives to UPF2, the active segment (U2::1) is an End.DT4/6 which performs the decapsulation (removing the IPv6 header with all it's extension headers) and forward towards the data network.</t>
-          <t>Note that in case several APNs are using duplicated IPv4 private address spaces, then the aggregated SR policies are unique per APNs.</t>
-        </section>
+          <t> UE sends its packet (A,Z) on a specific bearer to its gNB.
+	      gNB's control plane associates that session from the UE(A) with
+	      the IPv6 address B and GTP TEID T.  gNB's control plane does a
+	      lookup on B to find the related SID list
+	      &lt;S1, C1, U2::1&gt;. </t>
+          <t> When gNB transmits the packet, it contains all the segments of
+	      the SR policy. The SR policy can include segments for
+	      traffic engineering (C1) and for service programming (S1). </t>
+          <t> Nodes S1 and C1 perform their related Endpoint functionality
+	      and forward the packet.</t>
+          <t> When the packet arrives at UPF2, the active segment (U2::1) is
+	      an End.DT4/6 which performs the decapsulation (removing the
+	      IPv6 header with all its extension headers) and forwards toward
+	      the data network.</t>
+        </section>	<!-- End section "Packet flow - Uplink" -->
+
         <section title="Packet flow - Downlink">
-          <t>The downlink packet flow is the following:</t>
+          <t>The downlink packet flow is as follows:</t>
           <figure>
             <artwork align="center"><![CDATA[
 UPF2_in : (Z,A)                              -> UPF2 maps the flow w/
@@ -369,21 +546,43 @@ S1_out  : (U2::1, gNB)(Z,A)                  -> PSP
 gNB_out : (Z,A)                              -> End.DX4 or End.DX6
             ]]></artwork>
           </figure>
-          <t>When the packet arrives to the UPF2, the UPF2 will map that particular flow into a UE session. This UE session is associated with the policy &lt;C1, S1, gNB&gt;. The UPF2 performs a T.Encaps.Reduced operation, encapsulating the packet into a new IPv6 header with its corresponding SRH.</t>
+          <t>When the packet arrives at the UPF2, the UPF2 maps that
+	      particular flow into a UE session. This UE session is associated
+	      with the policy &lt;C1, S1, gNB&gt;. The UPF2 performs a
+	      T.Encaps.Red operation, encapsulating the packet into a
+	      new IPv6 header with its corresponding SRH.</t>
           <t>The nodes C1 and S1 perform their related Endpoint processing.</t>
-          <t>Once the packet arrives to the gNB, the IPv6 DA corresponds to an End.DX4 or End.DX6 (depending on the underlying traffic). The gNB will decapsulate the packet, removing the IPv6 header and all it's extensions headers and will forward the traffic towards the UE.</t>
-        </section>
+          <t>Once the packet arrives at the gNB, the IPv6 DA corresponds to
+	      an End.DX4 or End.DX6 (depending on the underlying traffic).
+	      The gNB decapsulates the packet, removing the IPv6 header
+	      and all its extensions headers and forwards the traffic
+	      toward the UE.</t>
+        </section>	<!-- End section "Packet flow - Downlink" -->
 
         <section title="IPv6 user-traffic">
-          <t>For IPv6 user-traffic it is RECOMMENDED to perform encapsulation. However based on local policy, a service provider MAY choose to do SRH insertion. The main benefit is a lower overhead. In such case, the functions used are T.Insert.Red at gNB and End.T at UPF2 on Uplink, T.Insert.Red at UPF2 and End.X at gNB on Downlink.</t>
-        </section>
-      </section>
+          <t>For IPv6 user-traffic it is RECOMMENDED to perform encapsulation.
+	      However based on local policy, a service provider MAY choose to
+	      do SRH insertion. The main benefit is a lower overhead. In such
+	      case, the functions used are T.Insert.Red at gNB and End.T at
+	      UPF2 on Uplink, T.Insert.Red at UPF2 and End.X at gNB on
+	      Downlink.</t>
+        </section>	<!-- End section "IPv6 user-traffic" -->
+      </section>	<!-- End section "Enhanced Mode" -->
 
-      <section anchor="enhanced_gtp" title="Enhanced mode with unchanged gNB GTP behavior">
-        <t>In this section we introduce two mechanisms for interworking with legacy gNBs that still use GTP. One of the mechanisms is valid for IPv4 while the other for IPv6.</t>
-        <t>In this scenario, it is assumed that gNB does not support SRv6. It just supports GTP encapsulation over IPv4 or IPv6. Hence in order to achieve interworking we are going to add a new SR Gateway (SRGW-UPF1) entity. This SRGW is going to map the GTP traffic into SRv6. Note that the SR GW is not an anchor point.</t>
-        <t>The SRGW maintains very little state on it. For this reason, both of these methods (IPv4 and IPv6) scale to millions of UEs.</t>
-        <figure anchor="fig_interworking" title="Reference topology for interworking">
+      <section anchor="enhanced_gtp"
+		title="Enhanced mode with unchanged gNB GTP behavior">
+        <t> This section describes two mechanisms for interworking with legacy
+	    gNBs that still use GTP: one for IPv4, the other for IPv6.</t>
+        <t> In the interworking scenarios as illustrated in
+	    <xref target="fig_interworking"/>, gNB does not support SRv6.
+	    gNB supports GTP encapsulation over IPv4 or IPv6.  To achieve
+	    interworking, a SR Gateway (SRGW-UPF1) entity is added.  The SRGW
+	    maps the GTP traffic into SRv6.</t>
+        <t> The SRGW is not an anchor point, and maintains very little state.
+	    For this reason,
+	    both IPv4 and IPv6 methods scale to millions of UEs.</t>
+        <figure anchor="fig_interworking"
+				title="Example topology for interworking">
             <artwork align="center"><![CDATA[
                                                           _______
                  IP GTP          SRv6                    /       \
@@ -395,20 +594,35 @@ gNB_out : (Z,A)                              -> End.DX4 or End.DX6
         </figure>
 
         <section title="Interworking with IPv6 GTP">
-          <t>In this interworking mode we assume that the gNB is using GTP over IPv6 in the N3 interface</t>
+          <t>In this interworking mode the gNB uses GTP
+	      over IPv6 via the N3 interface</t>
           <t>Key points:
           <list style='symbols'>
-            <t>gNB is unchanged (control-plane or user-plane) and encaps into GTP (N3 interface is not modified).</t>
-            <t>5G Control-Plane (N2 interface) is unmodified: 1 IPv6 address (i.e. a BSID at the SRGW)</t>
-            <t>SRGW removes GTP, finds SID list related to DA, add SRH with the SID list.</t>
-            <t>There is NO state for the downlink at the SRGW.</t>
-            <t>There is simple state in the uplink at the SRGW (leveraging the enhanced mode results in few SR policies on this node. A SR policy can be shared across UEs).</t>
-            <t>As soon as the packet leaves the gNB (uplink), the traffic is SR-routed. This simplifies considerably network slicing <xref target="I-D.hegdeppsenak-isis-sr-flex-algo"/>.</t>
-            <t>In the uplink, we use the IPv6 DA BSID to steer the traffic into an SR policy when it arrives at the SRGW-UPF1-.</t>
+            <t> The gNB is unchanged (control-plane or user-plane) and
+		encapsulates into GTP (N3 interface is not modified).</t>
+            <t> The 5G Control-Plane (N2 interface) is unmodified;
+		one IPv6 address is needed (i.e. a BSID at the SRGW).</t>
+            <t> The SRGW removes GTP, finds the SID list related to DA,
+	        and adds SRH with the SID list.</t>
+            <t> There is no state for the downlink at the SRGW.</t>
+            <t> There is simple state in the uplink at the SRGW; using
+		Enhanced mode results in fewer SR policies on this node.
+		A SR policy can be shared across UEs.</t>
+            <t> When a packet from the UE leaves the gNB, it is SR-routed.
+		This simplifies network slicing
+		<xref target="I-D.hegdeppsenak-isis-sr-flex-algo"/>.</t>
+            <t> In the uplink, the IPv6 DA BSID steers traffic
+		into an SR policy when it arrives at the SRGW-UPF1.</t>
           </list></t>
-          <t>Our reference topology is shown in <xref target="fig_interworking_ipv6"/>. In this mode we assume that the gNB is an unmodified gNB using IPv6/GTP. The UPFs are SR-aware. Also, as explained before, we introduce a new SRGW entity that is going to map the IPv6/GTP traffic to SRv6.</t> 
-          <t>We also assume that we have two service segment, S1 and C1. S1 represents a VNF in the network, and C1 represents a router over which we are going to perform Traffic Engineering.</t>
-          <figure anchor="fig_interworking_ipv6" title="Enhanced mode with unchanged gNB IPv6/GTP behavior">
+          <t> An example topology is shown in
+	      <xref target="fig_interworking_ipv6"/>. In this mode
+	      the gNB is an unmodified gNB using IPv6/GTP. The UPFs are
+	      SR-aware.  As before, the SRGW maps IPv6/GTP traffic to SRv6.</t> 
+          <t> S1 and C1 are two service segments.
+	      S1 represents a VNF in the network, and C1 represents a router
+	      configured for Traffic Engineering.</t>
+          <figure anchor="fig_interworking_ipv6"
+		title="Enhanced mode with unchanged gNB IPv6/GTP behavior">
             <artwork align="center"><![CDATA[    
                                +----+
              IPv6/GTP         -| S1 |-                            ___
@@ -423,7 +637,7 @@ gNB_out : (Z,A)                              -> End.DX4 or End.DX6
           </figure>
 
           <section title="Packet flow - Uplink">
-            <t>The uplink packet flow is the following:</t>
+            <t>The uplink packet flow is as follows:</t>
             <figure>
               <artwork align="center"><![CDATA[
 UE_out  : (A,Z)
@@ -436,15 +650,31 @@ C1_out  : (SRGW, U2::1)(A,Z)               -> PSP
 UPF2_out: (A,Z)                            -> End.DT4 or End.DT6 
               ]]></artwork>
             </figure>
-            <t>The UE sends a packet destined to Z towards the gNB on a specific bearer for that session. The gNB, which is unmodified, encapsulates the packet into a new IPv6, UDP and GTP headers. The IPv6 DA B, and the GTP TEID T are the ones received in the N2 interface.</t>
-            <t>The IPv6 address that was signalled over the N2 interface for that UE session, B, is now the IPv6 DA. B is an SRv6 Binding SID instantiated at the SRGW. Hence the packet, will be routed up to the SRGW.</t>
-            <t>When the packet arrives at the SRGW, the SRGW realises that B is an End.M.GTP6.D BindingSID. Hence, the SRGW will remove the IPv6, UDP and GTP headers, and will push a new IPv6 header with its own SRH containing the SIDs bound to the SR policy associated with this BindingSID. Note that there will be one instance of the End.M.GTP6.D SID per PDU type.</t>
-            <t>The nodes S1 and C1 perform their related Endpoint functionality and forward.</t>
-            <t>When the packet arrives to UPF2, the active segment is (U2::1) which bound to End.DT4/6 which is going to perform the decapsulation (removing the outer IPv6 header with all it's extension headers) and forward towards the data network.</t>
-          </section>
+            <t> The UE sends a packet destined to Z toward the gNB on a
+	        specific bearer for that session. The gNB, which is unmodified,
+	        encapsulates the packet into IPv6, UDP and GTP headers.
+	        The IPv6 DA B, and the GTP TEID T are the ones received in the
+	        N2 interface.</t>
+            <t> The IPv6 address that was signalled over the N2 interface for
+	        that UE session, B, is now the IPv6 DA. B is an SRv6 Binding
+	        SID at the SRGW.  Hence the packet is routed to the SRGW.</t>
+            <t> When the packet arrives at the SRGW, the SRGW identifies
+	        B as an End.M.GTP6.D Binding SID
+		(see <xref target="End-M-GTP6-D"/>).  Hence, the SRGW removes
+	        the IPv6, UDP and GTP headers, and pushes an IPv6
+	        header with its own SRH containing the SIDs bound to the
+	        SR policy associated with this BindingSID.  There
+	        is one instance of the End.M.GTP6.D SID per PDU type.</t>
+            <t> S1 and C1 perform their related Endpoint functionality
+	        and forward the packet.</t>
+            <t> When the packet arrives at UPF2, the active segment is (U2::1)
+	        which is bound to End.DT4/6.  UPF2 then decapsulates
+		(removing the outer IPv6 header with all its extension headers)
+		and forwards the packet toward the data network.</t>
+          </section>	<!-- End section "Packet flow - Uplink" -->
 
           <section title="Packet flow - Downlink">
-            <t>The downlink packet flow is the following:</t>
+            <t>The downlink packet flow is as follows:</t>
             <figure>
               <artwork align="center"><![CDATA[
 UPF2_in : (Z,A)                           -> UPF2 maps the flow with
@@ -456,35 +686,72 @@ SRGW_out: (SRGW, gNB)(GTP: TEID=T)(Z,A)   -> SRGW/96 is End.M.GTP6.E
 gNB_out : (Z,A)
               ]]></artwork>
             </figure>
-            <t>When a packet destined to A arrives at the UPF2, the UPF2 performs a lookup in the associated table to A and finds the SID list &lt;C1, S1, SRGW::TEID, gNB&gt;. The UPF2 performs a T.Encaps.Reduced operation, encapsulating the packet into a new IPv6 header with its corresponding SRH.</t>
-            <t>The nodes C1 and S1 perform their related Endpoint processing.</t>
-            <t>Once the packet arrives to the SRGW, the SRGW realizes the active SID is an End.M.GTP6.E function. The SRGW removes the IPv6 header and all it's extensions headers. The SRGW generates an IPv6, UDP and GTP headers. The new IPv6 DA is the gNB which is the last SID in the received SRH. The TEID in the generated GTP header is the arguments of the received End.M.GTP6.E SID. The SRGW pushes the headers to the packet and forwards the packet towards the gNB. Note that there will be one instance of the End.M.GTP6.E SID per PDU type.</t>
-            <t>Once the packet arrives to the gNB, the packet is a regular IPv6/GTP packet. The gNB looks for the specific radio bearer for that TEID and forward it on the bearer. This gNB behavior  is not modified from current and previous generations.</t>
-          </section>
+            <t> When a packet destined to A arrives at the UPF2, the UPF2
+		performs a lookup in the table associated to A and finds the
+		SID list &lt;C1, S1, SRGW::TEID, gNB&gt;. The UPF2 performs
+		a T.Encaps.Red operation, encapsulating the packet into
+		a new IPv6 header with its corresponding SRH.</t>
+            <t> C1 and S1 perform their related Endpoint processing.</t>
+            <t> Once the packet arrives at the SRGW, the SRGW identifies the
+		active SID as an End.M.GTP6.E function. The SRGW removes
+		the IPv6 header and all its extensions headers. The SRGW
+		generates new IPv6, UDP and GTP headers. The new IPv6 DA
+		is the gNB which is the last SID in the received SRH.
+		The TEID in the generated GTP header is an argument of the
+		received End.M.GTP6.E SID. The SRGW pushes the headers to
+		the packet and forwards the packet toward the gNB.  There
+		is one instance of the End.M.GTP6.E SID per PDU type.</t>
+            <t> Once the packet arrives at the gNB, the packet is a regular
+		IPv6/GTP packet. The gNB looks for the specific radio bearer
+		for that TEID and forward it on the bearer. This gNB behavior
+		is not modified from current and previous generations.</t>
+          </section>	<!-- End section "Packet flow - Downlink" -->
 
           <section title="Scalability">
-            <t>For the downlink traffic, the SRGW is stateless. All the state is in the SRH imposed by the UPF2. The UPF2 must have the UE states as the session anchor point.</t>
-            <t>For the uplink traffic, the state at the SRGW does not necessarily need to be per UE session basis. A state of SR policy of which state can be shared among UE's. Hence it is possible to deploy SRGW in very scalable way compared to hold millions of states per UE session basis.</t>
-          </section>
+            <t> For the downlink traffic, the SRGW is stateless. All the state
+		is in the SRH inserted by the UPF2.  The UPF2 must have the UE
+		states since it is the UE's session anchor point.</t>
+            <t> For the uplink traffic, the state at the SRGW does not
+		necessarily need to be unique per UE session; the state
+		state can be shared among UEs.  This enables much more
+		scalable SRGW deployments compared to a
+		solution holding millions of states, one or more per UE.</t>
+          </section>	<!-- End section "Scalability" -->
 
           <section title="IPv6 user-traffic">
-            <t>For IPv6 user-traffic it is RECOMMENDED to perform encapsulation. However based on local policy, a service provider MAY choose to do SRH insertion. The main benefit is a lower overhead.</t>
-          </section>
-        </section>
+            <t> For IPv6 user-traffic it is RECOMMENDED to perform
+		encapsulation. However based on local policy, a service
+		provider MAY choose to do SRH insertion. The main benefit
+		is lower overhead.</t>
+          </section>	<!-- End section "IPv6 user-traffic" -->
+        </section>	<!-- End section "Interworking with IPv6 GTP" -->
 
         <section title="Interworking with IPv4 GTP">
-          <t>In this interworking mode we assume that the gNB is using GTP over IPv4 in the N3 interface</t>
-          <t>Key points:
+          <t> In this interworking mode the gNB uses GTP
+		over IPv4 in the N3 interface</t>
+          <t> Key points:
           <list style='symbols'>
-            <t>gNB is unchanged and encaps into GTP (N3 interface is not modified).</t>
-            <t>In the uplink, traffic is classified at SRGW by UL CL(Uplink Classifier) and steered into an SR policy. The SRGW is a UPF1 functionality, hence it can coexist with UPF UL CL functionality.</t>
-            <t>SRGW removes GTP, finds SID list related to DA, add SRH with SID list.</t>
+            <t> The gNB is unchanged and encapsulates packets into GTP
+		(the N3 interface is not modified).</t>
+            <t> In the uplink, traffic is classified by SRGW's
+		Uplink Classifier and steered into an SR policy.
+		The SRGW is a UPF1 functionality and can coexist
+		with UPF1's Uplink Classifier functionality.</t>
+            <t> SRGW removes GTP, finds the SID list related to DA, and adds
+		a SRH with the SID list.</t>
           </list></t>
 
-          <t>Our reference topology is shown in <xref target="fig_interworking_ipv4"/>. In this mode we assume that the gNB is an unmodified gNB using IPv4/GTP. The UPFs are SR-aware. Also, as explained before, we introduce a new SRGW entity that is going to map the IPv4/GTP traffic to SRv6.</t> 
-          <t>We also assume that we have two service segment, S1 and C1. S1 represents a VNF in the network, and C1 represents a router over which we are going to perform Traffic Engineering.</t>
+          <t> An example topology is shown in
+		<xref target="fig_interworking_ipv4"/>. In this mode
+		the gNB is an unmodified gNB using IPv4/GTP.
+		The UPFs are SR-aware.  As before, the SRGW maps the
+		IPv4/GTP traffic to SRv6.</t> 
+          <t> S1 and C1 are two service segment endpoints.
+		S1 represents a VNF in the network, and C1 represents a router
+		configured for Traffic Engineering.</t>
 
-          <figure anchor="fig_interworking_ipv4" title="Enhanced mode with unchanged gNB IPv4/GTP behavior">
+          <figure anchor="fig_interworking_ipv4"
+		title="Enhanced mode with unchanged gNB IPv4/GTP behavior">
             <artwork align="center"><![CDATA[    
                                +----+
              IPv4/GTP         -| S1 |-                            ___
@@ -499,7 +766,7 @@ gNB_out : (Z,A)
           </figure>
 
           <section title="Packet flow - Uplink">
-            <t>The uplink packet flow is the following:</t>             
+            <t>The uplink packet flow is as follows:</t>             
             <figure>
               <artwork align="center"><![CDATA[
 gNB_out : (gNB, B)(GTP: TEID T)(A,Z)          -> Interface N3
@@ -510,14 +777,28 @@ C1_out  : (SRGW, U2::1) (A,Z)                 -> PSP
 UPF2_out: (A,Z)                               -> End.DT4 or End.DT6
               ]]></artwork>
             </figure>
-            <t>The UE sends a packet destined to Z towards the gNB on a specific bearer for that session. The gNB, which is unmodified, encapsulates the packet into a new IPv4, UDP and GTP headers. The IPv4 DA, B, and the GTP TEID are the ones received at the N2 interface.</t>
-            <t>When the packet arrives to the SRGW -UPF1-, the SRGW has an UL CL (uplink classifier) rule for incoming traffic from the gNB that steers the traffic into an SR policy by using the function T.M.TMap. The SRGW removes the IPv4, UDP and GTP headers and pushes an IPv6 header with its own SRH containing the SIDs related to the SR policy associated with this traffic. The SRGW forwards according to the new IPv6 DA.</t>
-            <t>The nodes S1 and C1 perform their related Endpoint functionality and forward.</t>
-            <t>When the packet arrives at UPF2, the active segment is (U2::1) which is bound to End.DT4/6 which performs the decapsulation (removing the outer IPv6 header with all it's extension headers) and forwards towards the data network.</t>
-          </section>
+            <t> The UE sends a packet destined to Z toward the gNB on a
+		specific bearer for that session. The gNB, which is unmodified,
+		encapsulates the packet into a new IPv4, UDP and GTP headers.
+		The IPv4 DA, B, and the GTP TEID are the ones received at the
+		N2 interface.</t>
+            <t> When the packet arrives at the SRGW for UPF1, the SRGW has an
+		Uplink Classifier rule for incoming traffic from the
+		gNB, that steers the traffic into an SR policy by using the
+		function T.M.TMap. The SRGW removes the IPv4, UDP and GTP
+		headers and pushes an IPv6 header with its own SRH containing
+		the SIDs related to the SR policy associated with this traffic.
+		The SRGW forwards according to the new IPv6 DA.</t>
+            <t> S1 and C1 perform their related Endpoint
+		functionality and forward the packet.</t>
+            <t> When the packet arrives at UPF2, the active segment is (U2::1)
+		which is bound to End.DT4/6 which performs the decapsulation
+		(removing the outer IPv6 header with all its extension headers)
+		and forwards toward the data network.</t>
+          </section>	<!-- End section "Packet flow - Uplink" -->
 
           <section title="Packet flow - Downlink">
-            <t>The downlink packet flow is the following:</t>
+            <t>The downlink packet flow is as follows:</t>
             <figure>
               <artwork align="center"><![CDATA[
 UPF2_in : (Z,A)                            -> UPF2 maps flow with SID
@@ -529,53 +810,125 @@ SRGW_out: (SA, DA)(GTP: TEID=T)(Z,A)       -> End.M.GTP4.E
 gNB_out : (Z,A)
               ]]></artwork>
             </figure>
-            <t>When a packet destined to A arrives to the UPF2, the UPF2 performs a lookup in the associated table to A and finds the SID list &lt;C1, S1, SRGW::SA:DA:TEID&gt;. The UPF2 performs a T.Encaps.Reduced operation, encapsulating the packet into a new IPv6 header with its corresponding SRH.</t>
-            <t>The nodes C1 and S1 perform their related Endpoint processing.</t>
-            <t>Once the packet arrives to the SRGW, the SRGW realizes the active SID is an End.M.GTP4.E function. The SRGW removes the IPv6 header and all it's extensions headers. The SRGW generates an IPv4, UDP and GTP headers. The IPv4 SA and DA will the ones received as part of the SID arguments. The TEID in the generated GTP header is also the arguments of the received End.M.GTP4.E SID The SRGW pushes the headers to the packet and forwards the packet towards the gNB.</t>
-            <t>Once the packet arrives to the gNB, the packet is a regular IPv4/GTP packet. The gNB looks  for the specific radio bearer for that TEID and forward it on the bearer. This gNB behavior is not modified from current and previous generations.</t>
-          </section>
+            <t>When a packet destined to A arrives at the UPF2, the UPF2
+		performs a lookup in the table associated to A and finds the
+		SID list &lt;C1, S1, SRGW::SA:DA:TEID&gt;. The UPF2 performs
+		a T.Encaps.Red operation, encapsulating the packet into
+		a new IPv6 header with its corresponding SRH.</t>
+            <t>The nodes C1 and S1 perform their related Endpoint
+		processing.</t>
+            <t>Once the packet arrives at the SRGW, the SRGW identifies the
+		active SID as an End.M.GTP4.E function. The SRGW removes
+		the IPv6 header and all its extensions headers. The SRGW
+		generates an IPv4, UDP and GTP headers. The IPv4 SA and
+		DA are received as SID arguments.
+		The TEID in the generated GTP header is also the arguments
+		of the received End.M.GTP4.E SID.  The SRGW pushes the headers
+		to the packet and forwards the packet toward the gNB.</t>
+            <t> When the packet arrives at the gNB, the packet is a regular
+		IPv4/GTP packet. The gNB looks for the specific radio bearer
+		for that TEID and forward it on the bearer. This gNB behavior
+		is not modified from current and previous generations.</t>
+          </section>	<!-- End section "Packet flow - Downlink" -->
 
           <section title="Scalability">
-            <t>For the downlink traffic, the SRGW is stateless. All the state is in the SRH imposed by the UPF. The UPF must have this UE-base state anyway (it is its anchor point).</t>
-            <t>For the uplink traffic, the state at the SRGW is dedicated on a per UE/session basis. This is an UL CL (uplink classifier). There is state for steering the different sessions on a SR policies. Notice however that the SR policies are shared among several UE/sessions.</t>
-          </section>
+            <t>For the downlink traffic, the SRGW is stateless. All the
+		state is in the SRH inserted by the UPF. The UPF must have
+		this UE-base state anyway (since it is its anchor point).</t>
+            <t>For the uplink traffic, the state at the SRGW is dedicated on a
+		per UE/session basis according to an Uplink Classifier.
+		There is state for steering the different sessions on a SR
+		policies.  However, SR policies are shared
+		among several UE/sessions.</t>
+          </section>	<!-- End section "Scalability" -->
 
           <section title="IPv6 user-traffic">
-            <t>For IPv6 user-traffic it is RECOMMENDED to perform encapsulation. However based on local policy, a service provider MAY choose to do SRH insertion. The main benefit is a lower overhead.</t>
-          </section>
-        </section>
+            <t>For IPv6 user-traffic it is RECOMMENDED to perform
+		encapsulation.  Based on local policy, a service
+		provider MAY choose to do SRH insertion. The main benefit
+		is a lower overhead.</t>
+          </section>	<!-- End section "IPv6 user-traffic" -->
+        </section>	<!-- End section "Interworking with IPv4 GTP" -->
 
         <section title="Extensions to the interworking mechanisms">
-          <t>In this section we presented two mechanisms for interworking with gNBs that do not support SRv6. These mechanism are done to support GTP over IPv4 and GTP over IPv6.</t>
-          <t>Even though we have presented these methods as an extension to the &quot;Enhanced mode&quot;, it is straightforward in its applicability to the &quot;Traditional mode&quot;.</t>
-          <t>Furthermore, although these mechanisms are designed for interworking with legacy RAN at the N3 interface, these methods could also be applied for interworking with a non-SRv6 capable UPF at the N9 interface (e.g. L3-anchor is SRv6 capable but L2-anchor is not).</t>
-        </section>
-      </section>
-    </section>
+          <t>In this section we presented two mechanisms for interworking
+	      with gNBs that do not support SRv6. These mechanism are done
+	      to support GTP over IPv4 and GTP over IPv6.</t>
+          <t>Even though we have presented these methods as an extension to
+	      the "Enhanced mode", it is straightforward in its
+	      applicability to the "Traditional mode".</t>
+          <t>Furthermore, although these mechanisms are designed for
+	      interworking with legacy RAN at the N3 interface, these methods
+	      could also be applied for interworking with a non-SRv6 capable
+	      UPF at the N9 interface (e.g. L3-anchor is SRv6 capable but
+	      L2-anchor is not).</t>
+        </section> <!-- End section "Extensions .. interworking mechanisms" -->
+      </section>  <!-- End "Enhanced mode with unchanged gNB GTP ..." -->
+    </section>	<!-- End section "User-plane behaviors" -->
 
     <section anchor="srv6_functions" title="SRv6 SID Mobility Functions">
       <!-- Add text on functions used on UPF1, UPF2,... -->
+      <section anchor="arguments-for-mobility" title="Args.Mob.Session">
+        <t>Args.Mob.Session provide per-session information for charging, buffering and 
+          lawful intercept (among others) required by some mobile nodes. 
+          The Args.Mob.Session argument format is used in combination with End.Map,
+          End.DT and End.DX functions.
+        <figure title="Args.Mob.Session format">
+          <artwork align="center"><![CDATA[
+ 0                   1                   2                   3
+ 0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1
++-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
+|   QFI     |R|U|                PDU Session ID                 |
++-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
+|PDU Sess(cont')|
++-+-+-+-+-+-+-+-+
+          ]]></artwork>
+        </figure>
+        <list style="symbols">
+          <t> QFI: QoS Flow Identifier <xref target="TS.38415"/></t>
+
+          <t> R: Reflective QoS Indication  <xref target="TS.23501"/>.
+          This parameter indicates the activaton of reflective QoS towards the UE for the transfered packet. Reflective QoS enables the UE to map UL User Plane traffic to QoS Flows without SMF provided QoS rules.</t>
+
+          <t>U: Unused and for future use. MUST be 0 on transmission and
+              ignored on receipt.</t>
+
+          <t>PDU Session ID: Identifier of PDU Session. The GTP-U equivalent is TEID.</t>
+        </list>
+      </t>
+      <t>Since the SRv6 function is likely NOT to be instantiated per PDU session, Args.Mob.Session helps the UPF to perform the functions which require per QFI and/or per PDU Session granularity.</t>
+      </section>
       
-      <section title="End.MAP: Endpoint function with SID mapping">
-        <t>The "Endpoint function with SID mapping" function (End.MAP for short) is used in several scenarios. Particularly in mobility, it is used in the UPFs for the anchor functionality in some of the use-cases.</t>
-    
-        <t>When a SR node N receives a packet destined to S and S is a local End.MAP SID, N does:</t>
+      <section anchor="end-map-function" title="End.MAP">
+        <t>The "Endpoint function with SID mapping" function (End.MAP for
+	    short) is used in several scenarios. Particularly in mobility,
+      End.MAP is used in the UPFs for the PDU Session anchor functionality.</t>
+
+        <t>When a SR node N receives a packet destined to S and S is a local
+      End.MAP SID, N does the following:</t>
 
         <figure><artwork align="left"><![CDATA[
 1.    look up the IPv6 DA in the mapping table 
-2.    update the IPv6 DA with the new mapped SID              ;; Ref1
-3.    forward according to the new mapped SID
-4. ELSE                                          
-5.    Drop the packet                            
+2.    update the IPv6 DA with the new mapped SID            ;; Note 1
+3.    IF segment_list > 1
+4.       insert a new SRH
+5.    forward according to the new mapped SID
+6. ELSE                                          
+7.    Drop the packet                            
           ]]></artwork></figure>
 
-        <t>Ref1: Note that the SID in the SRH is NOT modified.</t>
-      </section>
+        <t>Note 1: The SID in the SRH is NOT modified.</t>
+      </section>	<!-- End section "End.MAP" -->
 
-      <section title="End.M.GTP6.D: Endpoint function with decapsulation from IPv6/GTP tunnel">
-        <t>The "Endpoint function with IPv6/GTP decapsulation into SR policy" function (End.M.GTP6.D for short) is used in interworking scenario for the uplink towards from the legacy gNB using IPv6/GTP. This SID is associated with an SR policy &lt;S1, S2, S3&gt; and an IPv6 Source Address A.</t>
-    
-        <t>When the SR Gateway node N receives a packet destined to S and S is a local End.M.GTP6.D SID, N does:</t>
+      <section anchor="End-M-GTP6-D" title="End.M.GTP6.D">
+        <t>The "Endpoint function with IPv6/GTP decapsulation into SR policy"
+	    function (End.M.GTP6.D for short) is used in interworking scenario
+	    for the uplink toward from the legacy gNB using IPv6/GTP.
+	    Suppose, for example, this SID is associated with an SR
+	    policy &lt;S1, S2, S3&gt;
+	    and an IPv6 Source Address A.</t>
+        <t>When the SR Gateway node N receives a packet destined to S and
+	    S is a local End.M.GTP6.D SID, N does:</t>
 
         <figure><artwork align="left"><![CDATA[
 1. IF NH=UDP & UDP_PORT = GTP THEN            
@@ -583,25 +936,29 @@ gNB_out : (Z,A)
 3.    push a new IPv6 header with its own SRH <S2, S3>
 4.    set the outer IPv6 SA to A
 5.    set the outer IPv6 DA to S1
-6.    forward according to the first segment of the SRv6 Policy
+6.    forward according to the S1 segment of the SRv6 Policy
 7. ELSE                                          
 8.    Drop the packet                            
           ]]></artwork></figure>
-      </section>
+      </section>	<!-- End section "End.M.GTP6.D" -->
 
-      <section title="End.M.GTP6.E: Endpoint function with encapsulation for IPv6/GTP tunnel">
-        <t>The "Endpoint function with encapsulation for IPv6/GTP tunnel" function (End.M.GTP6.E for short) is used in interworking scenario for the downlink towards the legacy gNB using IPv6/GTP.</t>
+      <section title="End.M.GTP6.E">
+        <t>The "Endpoint function with encapsulation for IPv6/GTP tunnel"
+	    function (End.M.GTP6.E for short) is used in interworking scenario
+	    for the downlink toward the legacy gNB using IPv6/GTP.</t>
 
-        <t>The End.M.GTP6.E function has a 32-bit argument space. This argument corresponds to the GTP TEID.</t>
+        <t>The End.M.GTP6.E function has a 32-bit argument space which is used
+          to provide the GTP TEID.</t>
     
-        <t>When the SR Gateway node N receives a packet destined to S and S is a local End.M.GTP6.E SID, N does:</t>
+        <t>When the SR Gateway node N receives a packet destined to S, and S
+	    is a local End.M.GTP6.E SID, N does the following:</t>
 
         <figure><artwork align="left"><![CDATA[
- 1. IF NH=SRH & SL = 1  THEN                                  ;; Ref1
+ 1. IF NH=SRH & SL = 1  THEN                                ;; Note 1
  2.    decrement SL                               
  3.    store SRH[SL] in variable new_DA
- 4.    store TEID in variable new_TEID                        ;; Ref2
- 5.    pop IP header and all it's extension headers   
+ 4.    store TEID in variable new_TEID                      ;; Note 2
+ 5.    pop IP header and all its extension headers   
  6.    push new IPv6 header and GTP-U header
  7.    set IPv6 DA to new_DA
  8.    set GTP_TEID to new_TEID
@@ -610,29 +967,31 @@ gNB_out : (Z,A)
 11.    Drop the packet                            
           ]]></artwork></figure>
 
-        <t>Ref1: An End.M.GTP6.E SID MUST always be the penultimate SID.</t>
-        <t>Ref2: TEID is extracted from the argument space of the current SID.</t>
-      </section>
+        <t>Note 1: An End.M.GTP6.E SID MUST always be the penultimate SID.</t>
+        <t>Note 2: TEID is extracted from the argument space of the current
+	    SID.</t>
+      </section>	<!-- End section "End.M.GTP6.E" -->
 
-      <section title="End.M.GTP4.E: Endpoint function with encapsulation for IPv4/GTP tunnel">
-        <t>The "Endpoint function with encapsulation for IPv4/GTP tunnel" function (End.M.GTP4.UP for short) is used in the downlink when doing interworking with legacy gNB using IPv4/GTP.</t>
+      <section title="End.M.GTP4.E">
+        <t>The "Endpoint function with encapsulation for IPv4/GTP tunnel"
+	    function (End.M.GTP4.E for short) is used in the downlink when
+	    doing interworking with legacy gNB using IPv4/GTP.</t>
     
-        <t>When the SR Gateway node N receives a packet destined to S and S is a local End.M.GTP4.E SID, N does:</t>
+        <t>When the SR Gateway node N receives a packet destined to S and S
+	    is a local End.M.GTP4.E SID, N does:</t>
 
         <figure><artwork align="left"><![CDATA[
 1. IF NH=SRH & SL > 0 THEN                   
 2.    decrement SL                               
 3.    update the IPv6 DA with SRH[SL]
 4.    pop the SRH
-5.    push header of TUN-PROTO with tunnel ID from S          ;; Ref1
+5.    push UDP/GTP headers with tunnel ID from S
 6.    push outer IPv4 header with SA, DA from S  
 7. ELSE                                          
 8.    Drop the packet                            
           ]]></artwork></figure>
 
-        <t>Ref1: TUN-PROTO indicates target tunnel type.</t>
-
-        <t>Note that S has the following format:</t>
+        <t>S has the following format:</t>
         <figure title="End.M.GTP4.E SID Encoding">
           <artwork align="center"><![CDATA[
 +----------------------+-------+-------+-------+
@@ -641,27 +1000,28 @@ gNB_out : (Z,A)
         128-a-b-c          a      b       c
           ]]></artwork>
         </figure>   
-      </section>
+      </section>	<!-- End section "End.M.GTP4.E" -->
             
-      <section title="T.M.Tmap: Transit behavior with IPv4/GTP decapsulation and mapping into an SRv6 Policy">
-        <t>The "Transit with mobile tunnel decapsulation and map to an SRv6 policy" function (T.M.Tmap for short) is used in the direction from legacy user-plane to SRv6 user-plane network.</t>
+      <section title="T.M.Tmap">
+        <t>The "Transit with tunnel decapsulation and map to an SRv6 policy"
+	    function (T.M.Tmap for short) is used in the direction from legacy
+	    user-plane to SRv6 user-plane network.</t>
 
-        <t>When the SR Gateway node N receives a packet destined to a IW-IPv4-Prefix, N does:</t>
+        <t>When the SR Gateway node N receives a packet destined to a
+	    IW-IPv4-Prefix, N does:</t>
 
         <figure><artwork align="left"><![CDATA[
-1. IF P.PLOAD == TUN-PROTO THEN    ;; Ref1
-2.    pop the outer IPv4 header and tunnel headers                   
-3.    copy IPv4 DA, SA, TUN-ID to form SID B with SRGW-IPv6-Prefix   
-4.    encapsulate the packet into a new IPv6 header  ;; Ref2, Ref2bis
+1. IF Payload == UDP/GTP THEN
+2.    pop the outer IPv4 header and UDP/GTP headers                   
+3.    copy IPv4 DA, SA, TUN-ID to form SID B   
+4.    encapsulate the packet into a new IPv6 header
 5.    set the IPv6 DA = B                                            
 6.    forward along the shortest path to B                           
 7. ELSE                                                              
 8.    Drop the packet                                                
           ]]></artwork></figure>
         
-        <t>Ref1: TUN-PROTO indicates target tunnel type.</t>
-
-        <t>Note that B has the following format:</t>
+        <t>B has the following format:</t>
         <figure title="End.M.GTP4.E SID Encoding">
           <artwork align="center"><![CDATA[
 +----------------------+-------+-------+-------+
@@ -671,12 +1031,21 @@ gNB_out : (Z,A)
           ]]></artwork>
         </figure>
 
-        <t>Note that the B SID, is going to be an SRv6 BindingSID instantiated at the first UPF (anchor point). A static format is leveraged to instantiate this Binding SIDs in order to remove state from the SRGW.</t>
-      </section>
+        <t> The SID B is an SRv6 BindingSID
+	    instantiated at the first UPF (U1). A static format
+	    is used for this Binding SIDs in order to
+	    remove state from the SRGW.</t>
+      </section>	<!-- End section "T.M.Tmap" -->
 
       <section title="End.Limit: Rate Limiting function">
-        <t>Mobile user-plane requires a rate-limit feature. SID is
-        able to encode limiting rate as an argument in SID. Multiple flows of packets should have same group identifier in SID when those flows are in an same AMBR group. This helps to keep user-plane stateless. That enables SRv6 endpoint nodes which are unaware from the mobile control-plane information. Encoding format of rate limit segment SID is following:</t>
+        <t> The mobile user-plane requires a rate-limit feature. For this 
+          purpose, we define a new function "End.Limit".
+          The "End.Limit" function encodes in its arguments the 
+          rate limiting parameter that should be applied to this packet.
+          Multiple flows of packets should have the same group identifier
+           in the SID when those flows are in an same AMBR group.
+          The encoding format of the rate limit
+	    segment SID is as follows:</t>
         <figure title="End.Limit: Rate limiting function argument format">
           <artwork align="center"><![CDATA[
 +----------------------+----------+-----------+
@@ -685,16 +1054,17 @@ gNB_out : (Z,A)
       128-i-j                i          j
               ]]></artwork>
         </figure>
-        <t>In case of j bit length is zero in SID, the node should
-        not do rate limiting unless static configuration or
-        control-plane sets the limit rate associated to the
-        SID.</t>
-      </section>
-    </section>
+        <t> If the j bit length is zero, the node should
+            not do rate limiting unless static configuration or
+            control-plane sets the limit rate associated to the SID.</t>
+      </section>    <!-- End section "End.Limit: Rate Limiting function" -->
+    </section>	<!-- End section "" -->
 
 
-    <section anchor="pdu_sessions" title="SRv6 supported PDU session types">
-      <t>The 3GPP <xref target="TS.23501"/> defines the following PDU session types:
+    <section anchor="pdu_sessions"
+		title="SRv6 supported 3GPP PDU session types">
+      <t>The 3GPP <xref target="TS.23501"/> defines the following PDU session
+		types:
       <list style='symbols'>
         <t>IPv4</t>
         <t>IPv6</t>
@@ -702,73 +1072,77 @@ gNB_out : (Z,A)
         <t>Ethernet</t>
         <t>Unstructured</t>
       </list></t>
-      <t>SRv6 supports all the PDU session types without any protocol overhead by using the corresponding SRv6 functions (End.DX4, End.DT4 for IPv4 PDU sessions; End.DX6, End.DT6, End.T for IPv6 PDU sessions; End.DT46 for IPv4v6 PDU sessions; End.DX2, End.DT2M for L2 PDU sessions; End.DX2 for Unstructured PDU sessions).</t>
-    </section>
-<!--
-    <section anchor="signalling" title="Signalling messages">
-      <t>The 3GPP <xref target="TR.29891"/> uses GTP-U to send signalling messages (e.g. End Marker, Echo Request, Error Indication) between peers. A future revision of this document will describe how these messages are conveyed in SRv6.</t>
-    </section>
+      <t> SRv6 supports all the 3GPP PDU session types without any protocol
+	    overhead by using the corresponding SRv6 functions (End.DX4,
+	    End.DT4 for IPv4 PDU sessions; End.DX6, End.DT6, End.T for IPv6
+	    PDU sessions; End.DT46 for IPv4v6 PDU sessions; End.DX2, End.DT2M
+	    for L2 PDU sessions; End.DX2 for Unstructured PDU sessions).</t>
+    </section>	<!-- End section "SRv6 supported PDU session types" -->
 
-    <section anchor="container" title="5GS Container">
-      <t>The 3GPP <xref target="TR.29891"/> defines the &quot;5GS Container&quot; to send control information elements (i.e. the QFI and RQI), which are not related to the transport network layer, over the N3 and N9 interfaces. This is required in Stage 2.</t>
-      <t>SRv6 carries the 5GS Container in a new SRH <xref target="I-D.ietf-6man-segment-routing-header" />TLV called &quot;5GS Container TLV&quot;. This TLV has the following format:
-        <figure>
-          <artwork>
- 0                   1                   2                   3   
- 0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1     
-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
-|      Type     |     Length    |
-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
-//            5GS Container Object                             //
-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
-where:     </artwork>
-        </figure>
-        <list style="symbols">
-          <t>Type: to be assigned by IANA (suggested value 7).</t>
-
-          <t>Length: the total length of the TLV.</t>
-
-          <t>5GS Container Object: the content of the TLV which consists of
-          the 5GS Container as defined by 3GPP RAN3 in <xref target="TS.38415"/>.</t>
-        </list>
-      </t>
-      <t>The 5GS Container is not modified. There is no impact to the Radio Network Layer (RNL) as required by <xref target="TR.38801"/> subclause 7.3.2.</t>
-    </section>
--->
     <section anchor="netslice" title="Network Slicing Considerations">
-        <t>A mobile network may be required to implement "network slices", which logically separate network resources. User-plane functions represented as SRv6 segments would be part of a slice.</t>
+        <t>A mobile network may be required to implement "network slices",
+	    which logically separate network resources. User-plane functions
+	    represented as SRv6 segments would be part of a slice.</t>
         
-        <t><xref target="I-D.filsfils-spring-segment-routing-policy" /> describes a solution to build basic network slices with SR. Depending on the requirements, these slices can be further refined by leveraging the mechanisms from:
+        <t><xref target="I-D.filsfils-spring-segment-routing-policy" />
+	    describes a solution to build basic network slices with SR.
+	    Depending on the requirements, these slices can be further
+	    refined by adopting the mechanisms from:
           <list style="symbols">
-            <t>IGP Flex-Algo <xref target="I-D.hegdeppsenak-isis-sr-flex-algo"/></t>
-            <t>Inter-Domain policies <xref target="I-D.ietf-spring-segment-routing-central-epe"/></t>
+            <t>IGP Flex-Algo
+		<xref target="I-D.hegdeppsenak-isis-sr-flex-algo"/></t>
+            <t>Inter-Domain policies
+	       <xref target="I-D.ietf-spring-segment-routing-central-epe"/></t>
           </list></t>
         
-        <t>Furthermore, these can be combined with ODN/AS <xref target="I-D.filsfils-spring-segment-routing-policy"/> for automated slice provisioning and traffic steering.</t>
+        <t>Furthermore, these can be combined with ODN/AS
+	    <xref target="I-D.filsfils-spring-segment-routing-policy"/> for
+	    automated slice provisioning and traffic steering.</t>
 
-        <t>A separate document will explain in detail how each one of these tools is leveraged to build a network slice.</t>
-    </section>
+        <t>Further details on how these tools can be used to create
+          end to end network slices are documented in 
+          <xref target="I-D.ali-spring-network-slicing-building-blocks"/>.</t>
+    </section>	<!-- End section "Network Slicing Considerations" -->
 
     <section anchor="c-plane" title="Control Plane Considerations">
-        <t>This documents focuses on the user-plane behavior and it's independent from the control plane.</t>
+        <t>This document focuses on user-plane behavior and its
+	    independence from the control plane.</t>
 
-        <t>The control plane could be the current 3GPP-defined control plane with slight modifications to the N4 interface <xref target="TS.29244"/>.</t>
+        <t>The control plane could be the current 3GPP-defined control plane
+	    with slight modifications to the N4 interface
+	    <xref target="TS.29244"/>.</t>
 
-        <t>Alternatively, SRv6 could be used in conjunction with a new mobility control plane as described in LISP -TBD- <xref target="I-D.ietf-lisp-rfc6833bis" />, hICN <xref target="I-D.auge-dmm-hicn-mobility-deployment-options"/>, MFA <xref target="I-D.gundavelli-dmm-mfa"/> or in cunjunction with FPC <xref target="I-D.ietf-dmm-fpc-cpdp"/>. The analysis of new mobility control-planes and it's applicability to SRv6 is is out of the scope of this document.</t>
+        <t>Alternatively, SRv6 could be used in conjunction with a new
+	    mobility control plane as described in LISP 
+	    <xref target="I-D.rodrigueznatal-lisp-srv6" />, hICN
+	    <xref target="I-D.auge-dmm-hicn-mobility-deployment-options"/>,
+	    MFA <xref target="I-D.gundavelli-dmm-mfa"/> or in conjunction
+	    with FPC <xref target="I-D.ietf-dmm-fpc-cpdp"/>. The analysis
+	    of new mobility control-planes and its applicability to SRv6 is
+	    out of the scope of this document.</t>
 
-        <t>Note that the IANA section of this document allocates the SRv6 endpoint function types for the new functions defined in this document. All control-plane protocols are expected to leverage these function type-codes to signal each function.</t>
+        <t> <xref target="IANA"/> allocates SRv6
+	    endpoint function types for the new functions defined in this
+	    document.  Control-plane protocols are expected to use
+	    these function type codes to signal each function.</t>
 
-        <t>It's notable that SRv6's network programming nature allows a flexible and dynamic anchor placement.</t>
-    </section>
+        <t> SRv6's network programming nature allows a
+	    flexible and dynamic UPF placement.</t>
+    </section>	<!-- End section "Control Plane Considerations" -->
 
     <section title="Security Considerations">
         <t>TBD</t>
-    </section>
+    </section>	<!-- End section "Security Considerations" -->
 
     <section anchor="IANA" title="IANA Considerations">
-      <t>This I-D requests to IANA to allocate, within the &quot;SRv6 Endpoint Types&quot; sub-registry belonging to the top-level &quot;Segment-routing with IPv6 dataplane (SRv6) Parameters&quot; registry <xref target="I-D.filsfils-spring-srv6-network-programming"/>, the following allocations:</t>
+      <t> IANA is requested to allocate, within the "SRv6 Endpoint Types"
+	  sub-registry belonging to the top-level
+	  "Segment-routing with IPv6 dataplane (SRv6) Parameters" registry
+	  <xref target="I-D.filsfils-spring-srv6-network-programming"/>,
+	  the following values:</t>
 
-      <texttable anchor="endpoint_opcodes" title="SRv6 Mobile User-plane Endpoint Types">
+      <texttable anchor="endpoint_opcodes"
+			title="SRv6 Mobile User-plane Endpoint Types">
           <ttcol align="left">Value/Range</ttcol>
           <ttcol align="center">Hex</ttcol>
           <ttcol align="center">Endpoint function</ttcol>
@@ -778,60 +1152,66 @@ where:     </artwork>
           <c>TBA</c>
           <c>End.MAP</c>
           <c>[This.ID]</c>  
+
           <c>TBA</c>
           <c>TBA</c>
           <c>End.M.GTP6.D</c>
           <c>[This.ID]</c>
+
           <c>TBA</c>
           <c>TBA</c>
           <c>End.M.GTP6.E</c>
           <c>[This.ID]</c>
+
           <c>TBA</c>
           <c>TBA</c>
           <c>End.M.GTP4.E</c>
           <c>[This.ID]</c>
+
           <c>TBA</c>
           <c>TBA</c>
           <c>End.Limit</c>
           <c>[This.ID]</c>
       </texttable>
-<!--
-      <t>This I-D also request to IANA to allocate, within the &quot;Segment Routing Header TLVs&quot; registry, defined in <xref target="I-D.ietf-6man-segment-routing-header" />, a new TLV codepoint named &quot;5GS Container TLV&quot; with suggested codepoint value 7.</t>
--->
-    </section>
+    </section>	<!-- End section "IANA Considerations" -->
 
     <section anchor="acknowledge" title="Acknowledgements">
-      <t>The authors would like to thank Daisuke Yokota, Bart Peirens, Ryokichi Onishi, Kentaro Ebisawa, Peter Bosch, Darren Dukes, Francois Clad, Sridhar Bhaskaran and Arashmid Akhavain for their useful comments of this work.</t>
-    </section>
+      <t>The authors would like to thank Daisuke Yokota, Bart Peirens,
+	  Ryokichi Onishi, Kentaro Ebisawa, Peter Bosch, Darren Dukes,
+	  Francois Clad, Sri Gundavelli, Sridhar Bhaskaran, Arashmid Akhavain, 
+    Ravi Shekhar and Aeneas Dodd-Noble for their useful comments of 
+    this work.</t>
+    </section>	<!-- End section "Acknowledgements" -->
 
     <section title="Contributors">
       <t>Kentaro Ebisawa<vspace blankLines="0" />
       Ponto Networks<vspace blankLines="0" />
       Japan</t>
       <t>Email: ebiken@pontonetworks.com<vspace blankLines="0" /></t>
-    </section>
+    </section>	<!-- End section "Contributors" -->
 
   </middle>
 
   <back>
     <references title="Normative References">
         &rfc2119;
-        &I-D.ietf-spring-segment-routing;
+        &rfc8402;
         &I-D.filsfils-spring-srv6-network-programming;
         &I-D.filsfils-spring-segment-routing-policy;
-        &I-D.ietf-spring-segment-routing-central-epe;
-        &I-D.ietf-pce-segment-routing;
         &I-D.ietf-6man-segment-routing-header;
-        &I-D.xuclad-spring-sr-service-chaining;
-        &I-D.auge-dmm-hicn-mobility-deployment-options;
     </references>
 
     <references title="Informative References">
         &I-D.ietf-dmm-fpc-cpdp;
         &I-D.hegdeppsenak-isis-sr-flex-algo;
         &I-D.gundavelli-dmm-mfa;
-        &I-D.ietf-lisp-rfc6833bis;
-        &rfc5213;
+        &I-D.ietf-spring-segment-routing-central-epe;
+        &I-D.xuclad-spring-sr-service-programming;
+        &I-D.auge-dmm-hicn-mobility-deployment-options;
+        &I-D.camarillo-dmm-srv6-mobile-pocs;
+        &I-D.rodrigueznatal-lisp-srv6;
+        &I-D.camarilloelmalky-springdmm-srv6-mob-usecases;
+        &I-D.ali-spring-network-slicing-building-blocks;
         <reference anchor="TS.23501">
             <front>
                 <title>System Architecture for the 5G System</title>
@@ -861,16 +1241,6 @@ where:     </artwork>
             <seriesInfo name="3GPP TS 29.281" value="15.1.0" />
         </reference>
 
-        <reference anchor="TR.29891">
-            <front>
-                <title>5G System - Phase 1 CT WG4 Aspects</title>
-                <author surname="3GPP" fullname="3GPP">
-                </author>
-                <date month="December" year="2017" />
-            </front>
-            <seriesInfo name="3GPP TR 29.891" value="15.0.0" />
-        </reference>
-
         <reference anchor="TS.38415">
             <front>
                 <title>Draft Specification for 5GS container (TS 38.415)</title>
@@ -879,21 +1249,33 @@ where:     </artwork>
                 <date month="August" year="2017" />
             </front>
             <seriesInfo name="3GPP R3-174510" value="0.0.0" />
-        </reference>
-
-        <reference anchor="TR.38801">
-            <front>
-                <title>Study on new radio access technology: Radio access architecture and interfaces</title>
-                <author surname="3GPP" fullname="3GPP">
-                </author>
-                <date month="April" year="2017" />
-            </front>
-            <seriesInfo name="3GPP TR 38.801" value="14.0.0" />
-        </reference>        
+        </reference>       
     </references>
 
     <section anchor="Implementations" title="Implementations">
-      <t>This I-D introduces new SRv6 functions. These functions have an open-source P4 implementation available in <eref target="https://github.com/ebiken/p4srv6" />.</t>
-    </section>
+      <t> This document introduces new SRv6 functions. These functions have an
+	  open-source P4 implementation available in
+	  <eref target="https://github.com/ebiken/p4srv6" />.</t>
+      <t>There are also implementations in M-CORD NGIC and Open Air Interface (OAI). Further details can be found in <xref target="I-D.camarillo-dmm-srv6-mobile-pocs"/>.</t>
+    </section>	<!-- End section "Implementations" -->
+
+    <section title="Changes from revision 02 to revision 03"
+	anchor="changes_02_03">
+
+    <t>
+      This section lists the changes between draft-ietf-dmm-srv6-mobile-uplane
+	revisions ...-02 and ...-03.
+    <list style="symbols">
+        <t>Added new terminology section for abbreviations.</t>
+        <t>Added new terminology section for predefined SRv6 functions.</t>
+        <t>Made terminology section for conventions used in the document.</t>
+        <t>Renamed "Basic" mode to be called "Traditional" mode.</t>
+        <t>Renamed "Aggregate" mode to be called "Enhanced" mode.</t>
+        <t>Added new Args.Mob.Session format to supply QFI, RQI indication and PDU Session ID.</t>
+        <t>Modified End.MAP function to define the SID argument format and support more than one SID</t>
+        <t>Added missing references.</t>
+        <t>Editorial updates to improve readability.</t>
+      </list></t>
+    </section><!-- End of section "Changes from revision 02 to revision 03" -->
   </back>
 </rfc>
