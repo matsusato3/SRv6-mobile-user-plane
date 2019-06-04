@@ -3,8 +3,8 @@
   <!ENTITY rfc2119 SYSTEM "http://xml.resource.org/public/rfc/bibxml/reference.RFC.2119.xml">
   <!ENTITY rfc5213 SYSTEM "http://xml.resource.org/public/rfc/bibxml/reference.RFC.5213.xml">
   <!ENTITY rfc8402 SYSTEM "http://xml.resource.org/public/rfc/bibxml/reference.RFC.8402.xml">
-  <!ENTITY I-D.filsfils-spring-segment-routing-policy SYSTEM "http://xml.resource.org/public/rfc/bibxml3/reference.I-D.filsfils-spring-segment-routing-policy.xml">
-  <!ENTITY I-D.filsfils-spring-srv6-network-programming SYSTEM "http://xml.resource.org/public/rfc/bibxml3/reference.I-D.filsfils-spring-srv6-network-programming.xml">
+  <!ENTITY I-D.ietf-spring-segment-routing-policy SYSTEM "http://xml.resource.org/public/rfc/bibxml3/reference.I-D.ietf-spring-segment-routing-policy.xml">
+  <!ENTITY I-D.ietf-spring-srv6-network-programming SYSTEM "http://xml.resource.org/public/rfc/bibxml3/reference.I-D.ietf-spring-srv6-network-programming.xml">
   <!ENTITY I-D.xuclad-spring-sr-service-programming SYSTEM "http://xml.resource.org/public/rfc/bibxml3/reference.I-D.xuclad-spring-sr-service-programming.xml">
   <!ENTITY I-D.ietf-6man-segment-routing-header SYSTEM "http://xml.resource.org/public/rfc/bibxml3/reference.I-D.ietf-6man-segment-routing-header.xml">
   <!ENTITY I-D.ietf-spring-segment-routing-central-epe SYSTEM "http://xml.resource.org/public/rfc/bibxml3/reference.I-D.ietf-spring-segment-routing-central-epe.xml">
@@ -229,7 +229,7 @@
         <section anchor="srv6-funcs" title="Predefined SRv6 Functions">
         <t>
 	    The following functions are defined in
-	    <xref target="I-D.filsfils-spring-srv6-network-programming"/>.
+	    <xref target="I-D.ietf-spring-srv6-network-programming"/>.
 	    <list style="symbols">
             <t> End.DT4 means to decapsulate and forward using
 		a specific IPv4 table lookup.</t>
@@ -278,7 +278,7 @@
 	simplified manner and removing forwarding state from the network. It is also
   suitable for virtualized environments, VNF/CNF to VNF/CNF networking.</t>
     <t> SRv6 specifies network-programming (see
-  <xref target="I-D.filsfils-spring-srv6-network-programming"/>).
+  <xref target="I-D.ietf-spring-srv6-network-programming"/>).
   Applied to mobility, SRv6 can provide the user-plane functions needed
   for mobility management.  SRv6 takes advantage of underlying transport
   awareness and flexibility to improve mobility user-plane functions.</t>
@@ -361,7 +361,7 @@
 	legacy gNBs using GTP/IPv6.</t>
 
     <t> This document uses SRv6 functions defined in
-	<xref target="I-D.filsfils-spring-srv6-network-programming"/> as well
+	<xref target="I-D.ietf-spring-srv6-network-programming"/> as well
 	as new SRv6 functions designed for the mobile user plane. The new SRv6
 	functions are detailed in <xref target="srv6_functions"/>.
     </t>
@@ -1087,7 +1087,7 @@ gNB_out : (Z,A)
 	    which logically separate network resources. User-plane functions
 	    represented as SRv6 segments would be part of a slice.</t>
         
-        <t><xref target="I-D.filsfils-spring-segment-routing-policy" />
+        <t><xref target="I-D.ietf-spring-segment-routing-policy" />
 	    describes a solution to build basic network slices with SR.
 	    Depending on the requirements, these slices can be further
 	    refined by adopting the mechanisms from:
@@ -1099,7 +1099,7 @@ gNB_out : (Z,A)
           </list></t>
         
         <t>Furthermore, these can be combined with ODN/AS
-	    <xref target="I-D.filsfils-spring-segment-routing-policy"/> for
+	    <xref target="I-D.ietf-spring-segment-routing-policy"/> for
 	    automated slice provisioning and traffic steering.</t>
 
         <t>Further details on how these tools can be used to create
@@ -1141,7 +1141,7 @@ gNB_out : (Z,A)
       <t> IANA is requested to allocate, within the "SRv6 Endpoint Types"
 	  sub-registry belonging to the top-level
 	  "Segment-routing with IPv6 dataplane (SRv6) Parameters" registry
-	  <xref target="I-D.filsfils-spring-srv6-network-programming"/>,
+	  <xref target="I-D.ietf-spring-srv6-network-programming"/>,
 	  the following values:</t>
 
       <texttable anchor="endpoint_opcodes"
@@ -1199,8 +1199,8 @@ gNB_out : (Z,A)
     <references title="Normative References">
         &rfc2119;
         &rfc8402;
-        &I-D.filsfils-spring-srv6-network-programming;
-        &I-D.filsfils-spring-segment-routing-policy;
+        &I-D.ietf-spring-srv6-network-programming;
+        &I-D.ietf-spring-segment-routing-policy;
         &I-D.ietf-6man-segment-routing-header;
     </references>
 
