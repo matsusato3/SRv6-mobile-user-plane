@@ -235,10 +235,12 @@
 		a specific IPv4 table lookup.</t>
             <t> End.DT6 means to decapsulate and forward using
 		a specific IPv6 table lookup.</t>
-            <t> End.DX4 means to decapsulate and forward through
-    a particular link configured with the SID.</t>
+            <t> End.DX4 means to decapsulate the packet and forward through
+    a particular outgoing interface -or set of OIFs- configured with the SID.</t>
             <t> End.DX6 means to decapsulate and forward through
-    a particular link configured with the SID.</t>
+    a particular outgoing interface -or set of OIFs- configured with the SID.</t>
+            <t> End.DX2 means to decapsulate the L2 frame and forward through a 
+            particular outgoing interface -or set of OIFs- configured with the SID.</t>
             <t> End.T means to forward using a specific IPv6 table lookup.</t>
             <t> End.X means to forward through a link configured
 		with the SID.</t>
@@ -373,8 +375,9 @@
 
         <t> In existing 3GPP mobile networks, an UE session is mapped 1-for-1
 	    with a specific GTP tunnel (TEID). This 1-for-1 mapping is
-	    replicated here to replace GTP encapsulation with the SRv6
-	    encapsulation, while not changing anything else.</t>
+	    mirrored here to replace GTP encapsulation with the SRv6
+	    encapsulation, while not changing anything else. There will be a unique SRv6 SID
+	    associated with each UE session.</t>
 
         <t> The traditional mode minimizes the changes required to the mobile
 	    system; it is a good starting point for forming a common basis.</t>
@@ -421,8 +424,8 @@ UPF2_out: (A,Z)                  -> End.DT4 or End.DT6]]></artwork>
 
           <t> When the packet arrives at UPF2, the SID U2::1 corresponds to
 	      an End.DT function.  UPF2 decapsulates the packet, performs a
-	      lookup in a specific table and forwards the packet toward
-	      the data network (DN).</t>
+	      lookup in a specific table associated with that mobile network and 
+	      forwards the packet toward the data network (DN).</t>
 
           </section>	<!-- End section "Packet flow - Uplink" -->
 
@@ -457,7 +460,7 @@ gNB_out : (Z,A)                  -> End.DX4 or End.DX6
         <section title="IPv6 user-traffic">
           <t>For IPv6 user-traffic it is RECOMMENDED to perform encapsulation.
 	      However based on local policy, a service provider MAY choose to
-	      do SRH insertion. The main benefit is a lower overhead. In such
+	      do SRH insertion. The main benefit is a lower overhead(40B less). In such
 	      case, the functions used are T.Insert.Red at gNB, End.MAP at
 	      UPF1 and End.T at UPF2 on Uplink, T.Insert.Red at UPF2, End.MAP
 	      at UPF1 and End.X at gNB on Downlink.</t>
@@ -872,7 +875,8 @@ gNB_out : (Z,A)
         <t>Args.Mob.Session provide per-session information for charging, buffering and 
           lawful intercept (among others) required by some mobile nodes. 
           The Args.Mob.Session argument format is used in combination with End.Map,
-          End.DT and End.DX functions.
+          End.DT and End.DX functions. Note that proposed format is applicable for 
+          5G networks, while similar formats could be proposed for legacy networks.
         <figure title="Args.Mob.Session format">
           <artwork align="center"><![CDATA[
  0                   1                   2                   3
@@ -932,7 +936,7 @@ gNB_out : (Z,A)
 
         <figure><artwork align="left"><![CDATA[
 1. IF NH=UDP & UDP_PORT = GTP THEN            
-2.    pop the IP, UDP and GTP headers
+2.    pop the IPv6, UDP and GTP headers
 3.    push a new IPv6 header with its own SRH <S2, S3>
 4.    set the outer IPv6 SA to A
 5.    set the outer IPv6 DA to S1
@@ -981,14 +985,13 @@ gNB_out : (Z,A)
 	    is a local End.M.GTP4.E SID, N does:</t>
 
         <figure><artwork align="left"><![CDATA[
-1. IF NH=SRH & SL > 0 THEN                   
-2.    decrement SL                               
-3.    update the IPv6 DA with SRH[SL]
-4.    pop the SRH
-5.    push UDP/GTP headers with tunnel ID from S
-6.    push outer IPv4 header with SA, DA from S  
-7. ELSE                                          
-8.    Drop the packet                            
+1. IF NH=SRH & SL = 0 THEN                   
+2.    store SRH[0] in buffer S
+3.    pop the IPv6 header and its extension headers
+4.    push UDP/GTP headers with GTP TEID from S
+5.    push outer IPv4 header with SA, DA from S  
+6. ELSE                                          
+7.    Drop the packet                            
           ]]></artwork></figure>
 
         <t>S has the following format:</t>
@@ -1054,7 +1057,7 @@ gNB_out : (Z,A)
       128-i-j                i          j
               ]]></artwork>
         </figure>
-        <t> If the j bit length is zero, the node should
+        <t> If the limit-rate bits are set to zero, the node should
             not do rate limiting unless static configuration or
             control-plane sets the limit rate associated to the SID.</t>
       </section>    <!-- End section "End.Limit: Rate Limiting function" -->
@@ -1075,7 +1078,7 @@ gNB_out : (Z,A)
       <t> SRv6 supports all the 3GPP PDU session types without any protocol
 	    overhead by using the corresponding SRv6 functions (End.DX4,
 	    End.DT4 for IPv4 PDU sessions; End.DX6, End.DT6, End.T for IPv6
-	    PDU sessions; End.DT46 for IPv4v6 PDU sessions; End.DX2, End.DT2M
+	    PDU sessions; End.DT46 for IPv4v6 PDU sessions; End.DX2 
 	    for L2 PDU sessions; End.DX2 for Unstructured PDU sessions).</t>
     </section>	<!-- End section "SRv6 supported PDU session types" -->
 
