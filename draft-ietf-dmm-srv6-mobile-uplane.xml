@@ -1188,9 +1188,9 @@ gNB_out : (Z,A)
 
     <section title="Contributors">
       <t>Kentaro Ebisawa<vspace blankLines="0" />
-      Ponto Networks<vspace blankLines="0" />
+      Toyota Motor Corporation<vspace blankLines="0" />
       Japan</t>
-      <t>Email: ebiken@pontonetworks.com<vspace blankLines="0" /></t>
+      <t>Email: ebisawa@toyota-tokyo.tech<vspace blankLines="0" /></t>
     </section>	<!-- End section "Contributors" -->
 
   </middle>
