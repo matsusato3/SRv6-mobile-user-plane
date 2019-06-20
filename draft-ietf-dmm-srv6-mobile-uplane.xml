@@ -774,7 +774,7 @@ gNB_out : (Z,A)
               <artwork align="center"><![CDATA[
 gNB_out : (gNB, B)(GTP: TEID T)(A,Z)          -> Interface N3
                                                  unchanged IPv4/GTP
-SRGW_out: (SRGW, S1)(U2::1, C1; SL=2)(A,Z)    -> T.M.Tmap function
+SRGW_out: (SRGW, S1)(U2::1, C1; SL=2)(A,Z)    -> T.M.GTP4.D function
 S1_out  : (SRGW, C1)(U2::1, C1; SL=1)(A,Z)
 C1_out  : (SRGW, U2::1) (A,Z)                 -> PSP
 UPF2_out: (A,Z)                               -> End.DT4 or End.DT6
@@ -788,7 +788,7 @@ UPF2_out: (A,Z)                               -> End.DT4 or End.DT6
             <t> When the packet arrives at the SRGW for UPF1, the SRGW has an
 		Uplink Classifier rule for incoming traffic from the
 		gNB, that steers the traffic into an SR policy by using the
-		function T.M.TMap. The SRGW removes the IPv4, UDP and GTP
+    function T.M.GTP4.D. The SRGW removes the IPv4, UDP and GTP
 		headers and pushes an IPv6 header with its own SRH containing
 		the SIDs related to the SR policy associated with this traffic.
 		The SRGW forwards according to the new IPv6 DA.</t>
@@ -951,8 +951,8 @@ gNB_out : (Z,A)
 	    function (End.M.GTP6.E for short) is used in interworking scenario
 	    for the downlink toward the legacy gNB using IPv6/GTP.</t>
 
-        <t>The End.M.GTP6.E function has a 32-bit argument space which is used
-          to provide the GTP TEID.</t>
+        <t>The End.M.GTP6.E function MUST contain the Arg.Mob.Session argument space which is used
+          to provide the session identifiers.</t>
     
         <t>When the SR Gateway node N receives a packet destined to S, and S
 	    is a local End.M.GTP6.E SID, N does the following:</t>
@@ -985,29 +985,44 @@ gNB_out : (Z,A)
 	    is a local End.M.GTP4.E SID, N does:</t>
 
         <figure><artwork align="left"><![CDATA[
-1. IF NH=SRH & SL = 0 THEN                   
-2.    store SRH[0] in buffer S
-3.    pop the IPv6 header and its extension headers
-4.    push UDP/GTP headers with GTP TEID from S
-5.    push outer IPv4 header with SA, DA from S  
-6. ELSE                                          
-7.    Drop the packet                            
+1. IF NH=SRH and SL > 0 THEN                   
+2.    Drop the packet
+3. ELSE                                          
+4.    store IPv6 DA in buffer S
+5.    store IPv6 SA in buffer S'
+6.    pop the IPv6 header and its extension headers
+7.    push UDP/GTP headers with GTP TEID from S
+8.    push outer IPv4 header with SA, DA from S' and S                           
           ]]></artwork></figure>
 
         <t>S has the following format:</t>
         <figure title="End.M.GTP4.E SID Encoding">
           <artwork align="center"><![CDATA[
-+----------------------+-------+-------+-------+
-|  SRGW-IPv6-LOC-FUNC  |IPv4DA |IPv4SA |TUN-ID |
-+----------------------+-------+-------+-------+
-        128-a-b-c          a      b       c
+0                                                         127
++-----------------------+-------+----------------+---------+
+|  SRGW-IPv6-LOC-FUNC   |IPv4DA |Args.Mob.Session|0 Padded |
++-----------------------+-------+----------------+---------+
+       128-a-b-c            a            b           c
+
+          ]]></artwork>
+        </figure>   
+        
+        <t>S' has the following format:</t>
+        <figure title="IPv6 SA Encoding for End.M.GTP4.E">
+          <artwork align="center"><![CDATA[
+0                                                         127
++----------------------+--------+--------------------------+
+|  Source UPF Prefix   |IPv4 SA | any bit pattern(ignored) |
++----------------------+--------+--------------------------+
+         128-a-b            a                  b        
+
           ]]></artwork>
         </figure>   
       </section>	<!-- End section "End.M.GTP4.E" -->
             
-      <section title="T.M.Tmap">
+      <section title="T.M.GTP4.D">
         <t>The "Transit with tunnel decapsulation and map to an SRv6 policy"
-	    function (T.M.Tmap for short) is used in the direction from legacy
+	    function (T.M.GTP4.D for short) is used in the direction from legacy
 	    user-plane to SRv6 user-plane network.</t>
 
         <t>When the SR Gateway node N receives a packet destined to a
@@ -1017,20 +1032,22 @@ gNB_out : (Z,A)
 1. IF Payload == UDP/GTP THEN
 2.    pop the outer IPv4 header and UDP/GTP headers                   
 3.    copy IPv4 DA, SA, TUN-ID to form SID B   
-4.    encapsulate the packet into a new IPv6 header
-5.    set the IPv6 DA = B                                            
-6.    forward along the shortest path to B                           
+4.    encapsulate the packet into a new IPv6 header   ;;Ref1
+5.    set the IPv6 DA = B                           
+6.    forward along the shortest path to B                       
 7. ELSE                                                              
 8.    Drop the packet                                                
           ]]></artwork></figure>
-        
-        <t>B has the following format:</t>
-        <figure title="End.M.GTP4.E SID Encoding">
+        <t>Ref1: The NH value is identified by inspecting the first nibble of the inner payload.</t>
+        <t>The SID B has the following format:</t>
+        <figure title="T.M.GTP4.D SID Encoding">
           <artwork align="center"><![CDATA[
-+----------------------+-------+-------+-------+
-|  SRGW-IPv6-LOC-FUNC  |IPv4DA |IPv4SA |TUN-ID |
-+----------------------+-------+-------+-------+
-        128-a-b-c          a      b       c
++0                                                         127
+++-----------------------+-------+----------------+---------+
++|Destination UPF Prefix |IPv4DA |Args.Mob.Session|0 Padded |
+++-----------------------+-------+----------------+---------+
++       128-a-b-c            a            b           c
++
           ]]></artwork>
         </figure>
 
