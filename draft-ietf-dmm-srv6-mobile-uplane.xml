@@ -1276,24 +1276,5 @@ gNB_out : (Z,A)
 	  <eref target="https://github.com/ebiken/p4srv6" />.</t>
       <t>There are also implementations in M-CORD NGIC and Open Air Interface (OAI). Further details can be found in <xref target="I-D.camarillo-dmm-srv6-mobile-pocs"/>.</t>
     </section>	<!-- End section "Implementations" -->
-
-    <section title="Changes from revision 02 to revision 03"
-	anchor="changes_02_03">
-
-    <t>
-      This section lists the changes between draft-ietf-dmm-srv6-mobile-uplane
-	revisions ...-02 and ...-03.
-    <list style="symbols">
-        <t>Added new terminology section for abbreviations.</t>
-        <t>Added new terminology section for predefined SRv6 functions.</t>
-        <t>Made terminology section for conventions used in the document.</t>
-        <t>Renamed "Basic" mode to be called "Traditional" mode.</t>
-        <t>Renamed "Aggregate" mode to be called "Enhanced" mode.</t>
-        <t>Added new Args.Mob.Session format to supply QFI, RQI indication and PDU Session ID.</t>
-        <t>Modified End.MAP function to define the SID argument format and support more than one SID</t>
-        <t>Added missing references.</t>
-        <t>Editorial updates to improve readability.</t>
-      </list></t>
-    </section><!-- End of section "Changes from revision 02 to revision 03" -->
   </back>
 </rfc>
