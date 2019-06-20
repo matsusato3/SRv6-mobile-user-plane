@@ -373,11 +373,11 @@
 	    plane instead of GTP-U.  There is no impact to the rest of
 	    mobile system.</t>
 
-        <t> In existing 3GPP mobile networks, an UE session is mapped 1-for-1
+        <t> In existing 3GPP mobile networks, an UE PDU Session is mapped 1-for-1
 	    with a specific GTP tunnel (TEID). This 1-for-1 mapping is
 	    mirrored here to replace GTP encapsulation with the SRv6
 	    encapsulation, while not changing anything else. There will be a unique SRv6 SID
-	    associated with each UE session.</t>
+	    associated with each UE PDU Session.</t>
 
         <t> The traditional mode minimizes the changes required to the mobile
 	    system; it is a good starting point for forming a common basis.</t>
@@ -441,7 +441,7 @@ gNB_out : (Z,A)                  -> End.DX4 or End.DX6
           </figure>
 
           <t> When the packet arrives at the UPF2, the UPF2 maps that flow into
-	      a UE session. This UE session is associated with the segment
+	      a UE PDU Session. This UE PDU Session is associated with the segment
 	      endpoint &lt;U1::1&gt;.  UPF2 performs
 	      a T.Encaps.Red operation, encapsulating the packet into
 	      a new IPv6 header with no SRH since there is only one SID.</t>
@@ -550,7 +550,7 @@ gNB_out : (Z,A)                              -> End.DX4 or End.DX6
             ]]></artwork>
           </figure>
           <t>When the packet arrives at the UPF2, the UPF2 maps that
-	      particular flow into a UE session. This UE session is associated
+	      particular flow into a UE PDU Session. This UE PDU Session is associated
 	      with the policy &lt;C1, S1, gNB&gt;. The UPF2 performs a
 	      T.Encaps.Red operation, encapsulating the packet into a
 	      new IPv6 header with its corresponding SRH.</t>
@@ -659,7 +659,7 @@ UPF2_out: (A,Z)                            -> End.DT4 or End.DT6
 	        The IPv6 DA B, and the GTP TEID T are the ones received in the
 	        N2 interface.</t>
             <t> The IPv6 address that was signalled over the N2 interface for
-	        that UE session, B, is now the IPv6 DA. B is an SRv6 Binding
+	        that UE PDU Session, B, is now the IPv6 DA. B is an SRv6 Binding
 	        SID at the SRGW.  Hence the packet is routed to the SRGW.</t>
             <t> When the packet arrives at the SRGW, the SRGW identifies
 	        B as an End.M.GTP6.D Binding SID
@@ -715,7 +715,7 @@ gNB_out : (Z,A)
 		is in the SRH inserted by the UPF2.  The UPF2 must have the UE
 		states since it is the UE's session anchor point.</t>
             <t> For the uplink traffic, the state at the SRGW does not
-		necessarily need to be unique per UE session; the state
+		necessarily need to be unique per UE PDU Session; the state
 		state can be shared among UEs.  This enables much more
 		scalable SRGW deployments compared to a
 		solution holding millions of states, one or more per UE.</t>
