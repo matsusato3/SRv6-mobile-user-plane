@@ -912,16 +912,14 @@ gNB_out : (Z,A)
       End.MAP SID, N does the following:</t>
 
         <figure><artwork align="left"><![CDATA[
-1.    look up the IPv6 DA in the mapping table 
+1.    Lookup the IPv6 DA in the mapping table 
 2.    update the IPv6 DA with the new mapped SID            ;; Note 1
 3.    IF segment_list > 1
 4.       insert a new SRH
-5.    forward according to the new mapped SID
-6. ELSE                                          
-7.    Drop the packet                            
+5.    forward according to the new mapped SID                         
           ]]></artwork></figure>
 
-        <t>Note 1: The SID in the SRH is NOT modified.</t>
+        <t>Note 1: The SIDs in the SRH are NOT modified.</t>
       </section>	<!-- End section "End.MAP" -->
 
       <section anchor="End-M-GTP6-D" title="End.M.GTP6.D">
