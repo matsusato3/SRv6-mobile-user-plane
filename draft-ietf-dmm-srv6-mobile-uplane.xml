@@ -1040,12 +1040,12 @@ gNB_out : (Z,A)
         <t>The SID B has the following format:</t>
         <figure title="T.M.GTP4.D SID Encoding">
           <artwork align="center"><![CDATA[
-+0                                                         127
-++-----------------------+-------+----------------+---------+
-+|Destination UPF Prefix |IPv4DA |Args.Mob.Session|0 Padded |
-++-----------------------+-------+----------------+---------+
-+       128-a-b-c            a            b           c
-+
+0                                                         127
++-----------------------+-------+----------------+---------+
+|Destination UPF Prefix |IPv4DA |Args.Mob.Session|0 Padded |
++-----------------------+-------+----------------+---------+
+       128-a-b-c            a            b           c
+
           ]]></artwork>
         </figure>
 
