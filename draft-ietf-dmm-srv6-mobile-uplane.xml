@@ -1029,12 +1029,13 @@ gNB_out : (Z,A)
         <figure><artwork align="left"><![CDATA[
 1. IF Payload == UDP/GTP THEN
 2.    pop the outer IPv4 header and UDP/GTP headers                   
-3.    copy IPv4 DA, SA, TUN-ID to form SID B   
-4.    encapsulate the packet into a new IPv6 header   ;;Ref1
-5.    set the IPv6 DA = B                           
-6.    forward along the shortest path to B                       
-7. ELSE                                                              
-8.    Drop the packet                                                
+3.    copy IPv4 DA, TUN-ID to form SID B   
+4.     copy IPv4 SA to form IPv6 SA B'
+5.    encapsulate the packet into a new IPv6 header   ;;Ref1
+6.    set the IPv6 DA = B                           
+7.    forward along the shortest path to B                       
+8. ELSE                                                              
+9.    Drop the packet                                                
           ]]></artwork></figure>
         <t>Ref1: The NH value is identified by inspecting the first nibble of the inner payload.</t>
         <t>The SID B has the following format:</t>
@@ -1049,10 +1050,13 @@ gNB_out : (Z,A)
           ]]></artwork>
         </figure>
 
-        <t> The SID B is an SRv6 BindingSID
-	    instantiated at the first UPF (U1). A static format
-	    is used for this Binding SIDs in order to
-	    remove state from the SRGW.</t>
+        <t> The SID B MAY be an SRv6 Binding SID instantiated at the first
+        UPF (U1) to bind a SR policy <xref
+        target="I-D.ietf-spring-segment-routing-policy"/>.</t>
+
+        <t> The prefix of B' SHOULD be an End.M.GTP4.E SID with its format
+        instantiated at an SR gateway with the IPv4 SA of the receiving packet.</t>
+
       </section>	<!-- End section "T.M.Tmap" -->
 
       <section title="End.Limit: Rate Limiting function">
