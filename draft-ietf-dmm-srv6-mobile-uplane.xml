@@ -1030,7 +1030,7 @@ gNB_out : (Z,A)
 1. IF Payload == UDP/GTP THEN
 2.    pop the outer IPv4 header and UDP/GTP headers                   
 3.    copy IPv4 DA, TUN-ID to form SID B   
-4.     copy IPv4 SA to form IPv6 SA B'
+4.    copy IPv4 SA to form IPv6 SA B'
 5.    encapsulate the packet into a new IPv6 header   ;;Ref1
 6.    set the IPv6 DA = B                           
 7.    forward along the shortest path to B                       
