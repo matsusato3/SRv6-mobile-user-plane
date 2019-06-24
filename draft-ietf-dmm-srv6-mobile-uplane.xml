@@ -933,16 +933,22 @@ gNB_out : (Z,A)
 	    S is a local End.M.GTP6.D SID, N does:</t>
 
         <figure><artwork align="left"><![CDATA[
-1. IF NH=UDP & UDP_PORT = GTP THEN            
+1. IF NH=UDP & UDP_DST_PORT = GTP THEN
 2.    pop the IPv6, UDP and GTP headers
 3.    push a new IPv6 header with its own SRH <S2, S3>
-4.    set the outer IPv6 SA to A
-5.    set the outer IPv6 DA to S1
-6.    forward according to the S1 segment of the SRv6 Policy
-7. ELSE                                          
-8.    Drop the packet                            
+4.    copy TUN-ID to the last SID S3
+5.    set the outer IPv6 SA to A
+6.    set the outer IPv6 DA to S1
+7.    forward according to the S1 segment of the SRv6 Policy
+8. ELSE                                          
+9.    Drop the packet                            
           ]]></artwork></figure>
-      </section>	<!-- End section "End.M.GTP6.D" -->
+
+        <t>The prefix of last segment(S3 in above example) SHOULD be
+        followed by an Arg.Mob.Session argument space which is used to
+        provide the session identifiers.</t>
+
+     </section>	<!-- End section "End.M.GTP6.D" -->
 
       <section title="End.M.GTP6.E">
         <t>The "Endpoint function with encapsulation for IPv6/GTP tunnel"
