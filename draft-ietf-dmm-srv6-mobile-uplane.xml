@@ -913,13 +913,13 @@ gNB_out : (Z,A)
 
         <figure><artwork align="left"><![CDATA[
 1.    Lookup the IPv6 DA in the mapping table 
-2.    update the IPv6 DA with the new mapped SID            ;; Note 1
+2.    update the IPv6 DA with the new mapped SID            ;; Ref1
 3.    IF segment_list > 1
 4.       insert a new SRH
 5.    forward according to the new mapped SID                         
           ]]></artwork></figure>
 
-        <t>Note 1: The SIDs in the SRH are NOT modified.</t>
+        <t>Ref1: The SIDs in the SRH are NOT modified.</t>
       </section>	<!-- End section "End.MAP" -->
 
       <section anchor="End-M-GTP6-D" title="End.M.GTP6.D">
@@ -962,10 +962,10 @@ gNB_out : (Z,A)
 	    is a local End.M.GTP6.E SID, N does the following:</t>
 
         <figure><artwork align="left"><![CDATA[
- 1. IF NH=SRH & SL = 1  THEN                                ;; Note 1
+ 1. IF NH=SRH & SL = 1  THEN                                ;; Ref1
  2.    decrement SL                               
  3.    store SRH[SL] in variable new_DA
- 4.    store TEID in variable new_TEID                      ;; Note 2
+ 4.    store TEID in variable new_TEID                      ;; Ref2
  5.    pop IP header and all its extension headers   
  6.    push new IPv6 header and GTP-U header
  7.    set IPv6 DA to new_DA
@@ -975,8 +975,8 @@ gNB_out : (Z,A)
 11.    Drop the packet                            
           ]]></artwork></figure>
 
-        <t>Note 1: An End.M.GTP6.E SID MUST always be the penultimate SID.</t>
-        <t>Note 2: TEID is extracted from the argument space of the current
+        <t>Ref1: An End.M.GTP6.E SID MUST always be the penultimate SID.</t>
+        <t>Ref2: TEID is extracted from the argument space of the current
 	    SID.</t>
       </section>	<!-- End section "End.M.GTP6.E" -->
 
