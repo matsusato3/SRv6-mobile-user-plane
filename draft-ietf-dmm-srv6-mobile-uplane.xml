@@ -934,9 +934,9 @@ gNB_out : (Z,A)
 
         <figure><artwork align="left"><![CDATA[
 1. IF NH=UDP & UDP_DST_PORT = GTP THEN
+4.    copy TEID to form SID S3
 2.    pop the IPv6, UDP and GTP headers
-3.    push a new IPv6 header with its own SRH <S2, S3>
-4.    copy TUN-ID to the last SID S3
+3.    push a new IPv6 header with a SR policy in SRH <S1, S2, S3>
 5.    set the outer IPv6 SA to A
 6.    set the outer IPv6 DA to S1
 7.    forward according to the S1 segment of the SRv6 Policy
