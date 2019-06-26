@@ -948,27 +948,31 @@ gNB_out : (Z,A)
         followed by an Arg.Mob.Session argument space which is used to
         provide the session identifiers.</t>
 
+        <t> The prefix of A SHOULD be an End.M.GTP6.E SID instantiated
+        at an SR gateway.</t>
+
      </section>	<!-- End section "End.M.GTP6.D" -->
 
       <section title="End.M.GTP6.E">
         <t>The "Endpoint function with encapsulation for IPv6/GTP tunnel"
-	    function (End.M.GTP6.E for short) is used in interworking scenario
-	    for the downlink toward the legacy gNB using IPv6/GTP.</t>
+        function (End.M.GTP6.E for short) is used in interworking scenario
+        for the downlink toward the legacy gNB using IPv6/GTP.</t>
 
-        <t>The End.M.GTP6.E function MUST contain the Arg.Mob.Session argument space which is used
-          to provide the session identifiers.</t>
+        <t>The prefix of End.M.GTP6.E SID MUST be followed by the
+        Arg.Mob.Session argument space which is used to provide the session
+        identifiers.</t>
     
-        <t>When the SR Gateway node N receives a packet destined to S, and S
-	    is a local End.M.GTP6.E SID, N does the following:</t>
+        <t>When the SR Gateway node N receives a packet destined to S, and
+        S is a local End.M.GTP6.E SID, N does the following:</t>
 
         <figure><artwork align="left"><![CDATA[
  1. IF NH=SRH & SL = 1  THEN                                ;; Ref1
- 2.    decrement SL                               
- 3.    store SRH[SL] in variable new_DA
- 4.    store TEID in variable new_TEID                      ;; Ref2
- 5.    pop IP header and all its extension headers   
- 6.    push new IPv6 header and GTP-U header
- 7.    set IPv6 DA to new_DA
+ 2.    store SRH[0] in variable new_DA
+ 3.    store TEID in variable new_TEID from IPv6 DA         ;; Ref2
+ 4.    pop IP header and all its extension headers   
+ 5.    push new IPv6 header and GTP-U header
+ 6.    set IPv6 DA to new_DA
+ 7.    set IPv6 SA to A
  8.    set GTP_TEID to new_TEID
  9.    lookup the new_DA and forward the packet accordingly
 10. ELSE                                          
@@ -977,7 +981,11 @@ gNB_out : (Z,A)
 
         <t>Ref1: An End.M.GTP6.E SID MUST always be the penultimate SID.</t>
         <t>Ref2: TEID is extracted from the argument space of the current
-	    SID.</t>
+        SID.</t>
+
+        <t> The source address A SHOULD be an End.M.GTP6.D SID instantiated
+        at an SR gateway.</t>
+
       </section>	<!-- End section "End.M.GTP6.E" -->
 
       <section title="End.M.GTP4.E">
@@ -999,7 +1007,7 @@ gNB_out : (Z,A)
 8.    Drop the packet
           ]]></artwork></figure>
 
-        <t>S has the following format:</t>
+        <t>The End.M.GTP4.E SID in S has the following format:</t>
         <figure title="End.M.GTP4.E SID Encoding">
           <artwork align="center"><![CDATA[
 0                                                         127
@@ -1025,17 +1033,17 @@ gNB_out : (Z,A)
       </section>	<!-- End section "End.M.GTP4.E" -->
             
       <section title="T.M.GTP4.D">
-        <t>The "Transit with tunnel decapsulation and map to an SRv6 policy"
-	    function (T.M.GTP4.D for short) is used in the direction from legacy
-	    user-plane to SRv6 user-plane network.</t>
+        <t>The "Transit with tunnel decapsulation and map to an SRv6
+        policy" function (T.M.GTP4.D for short) is used in the direction
+        from legacy user-plane to SRv6 user-plane network.</t>
 
         <t>When the SR Gateway node N receives a packet destined to a
-	    IW-IPv4-Prefix, N does:</t>
+        IW-IPv4-Prefix, N does:</t>
 
         <figure><artwork align="left"><![CDATA[
 1. IF Payload == UDP/GTP THEN
 2.    pop the outer IPv4 header and UDP/GTP headers                   
-3.    copy IPv4 DA, TUN-ID to form SID B   
+3.    copy IPv4 DA, TEID to form SID B   
 4.    copy IPv4 SA to form IPv6 SA B'
 5.    encapsulate the packet into a new IPv6 header   ;;Ref1
 6.    set the IPv6 DA = B                           
@@ -1043,7 +1051,8 @@ gNB_out : (Z,A)
 8. ELSE                                                              
 9.    Drop the packet                                                
           ]]></artwork></figure>
-        <t>Ref1: The NH value is identified by inspecting the first nibble of the inner payload.</t>
+        <t>Ref1: The NH value is identified by inspecting the first nibble
+        of the inner payload.</t>
         <t>The SID B has the following format:</t>
         <figure title="T.M.GTP4.D SID Encoding">
           <artwork align="center"><![CDATA[
