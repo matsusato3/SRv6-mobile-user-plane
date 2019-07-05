@@ -933,16 +933,23 @@ gNB_out : (Z,A)
 	    S is a local End.M.GTP6.D SID, N does:</t>
 
         <figure><artwork align="left"><![CDATA[
-1. IF NH=UDP & UDP_DST_PORT = GTP THEN
-4.    copy TEID to form SID S3
-2.    pop the IPv6, UDP and GTP headers
-3.    push a new IPv6 header with a SR policy in SRH <S1, S2, S3>
-5.    set the outer IPv6 SA to A
-6.    set the outer IPv6 DA to S1
-7.    forward according to the S1 segment of the SRv6 Policy
-8. ELSE                                          
-9.    Drop the packet                            
+ 1. IF NH=UDP & UDP_DST_PORT = GTP THEN
+ 2.    copy TEID to form SID S3
+ 3.    pop the IPv6, UDP and GTP headers
+ 4.    push a new IPv6 header with a SR policy in SRH <S1, S2, S3>
+ 5.    set the outer IPv6 SA to A
+ 6.    set the outer IPv6 DA to S1
+ 7.    set the outer IPv6 NH                                    ;; Ref1
+ 8.    forward according to the S1 segment of the SRv6 Policy
+ 9. ELSE                                          
+10.    Drop the packet                            
           ]]></artwork></figure>
+
+        <t>Ref1: The NH is set based on the SID parameter. There is one
+          instantiation of the End.M.GTP6.D SID per PDU Session Type,
+          hence the NH is already known in advance. For the IPv4v6 PDU
+          Session Type, in addition we inspect the first nibble of the 
+          PDU to know the NH value.</t>
 
         <t>The prefix of last segment(S3 in above example) SHOULD be
         followed by an Arg.Mob.Session argument space which is used to
