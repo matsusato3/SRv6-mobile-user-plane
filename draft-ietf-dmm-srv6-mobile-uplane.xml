@@ -19,7 +19,7 @@
 ]>
 <?xml-stylesheet type='text/xsl' href='rfc2629.xslt' ?>
 
-<rfc category="std" docName="draft-ietf-dmm-srv6-mobile-uplane-05"
+<rfc category="std" docName="draft-ietf-dmm-srv6-mobile-uplane-06"
 	ipr="trust200902">
   <?xml-stylesheet type='text/xsl' href='rfc2629.xslt' ?>
   <?rfc toc="yes" ?>
@@ -456,15 +456,6 @@ gNB_out : (Z,A)                  -> End.DX4 or End.DX6
 	      removing the IPv6 header and all its extensions headers, and
 	      forwards the traffic toward the UE.</t>
         </section>	<!-- End section "Packet flow - Downlink" -->
-
-        <section title="IPv6 user-traffic">
-          <t>For IPv6 user-traffic it is RECOMMENDED to perform encapsulation.
-	      However based on local policy, a service provider MAY choose to
-	      do SRH insertion. The main benefit is a lower overhead(40B less). In such
-	      case, the functions used are T.Insert.Red at gNB, End.MAP at
-	      UPF1 and End.T at UPF2 on Uplink, T.Insert.Red at UPF2, End.MAP
-	      at UPF1 and End.X at gNB on Downlink.</t>
-        </section>	<!-- End section "IPv6 user-traffic" -->
       </section>	<!-- End section "Traditional mode" -->
       
       <section anchor="enhanced_mode" title="Enhanced Mode">
@@ -561,15 +552,6 @@ gNB_out : (Z,A)                              -> End.DX4 or End.DX6
 	      and all its extensions headers and forwards the traffic
 	      toward the UE.</t>
         </section>	<!-- End section "Packet flow - Downlink" -->
-
-        <section title="IPv6 user-traffic">
-          <t>For IPv6 user-traffic it is RECOMMENDED to perform encapsulation.
-	      However based on local policy, a service provider MAY choose to
-	      do SRH insertion. The main benefit is a lower overhead. In such
-	      case, the functions used are T.Insert.Red at gNB and End.T at
-	      UPF2 on Uplink, T.Insert.Red at UPF2 and End.X at gNB on
-	      Downlink.</t>
-        </section>	<!-- End section "IPv6 user-traffic" -->
       </section>	<!-- End section "Enhanced Mode" -->
 
       <section anchor="enhanced_gtp"
