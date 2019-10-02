@@ -165,6 +165,7 @@
         <section anchor="terms" title="Terminology">
         <t> <list style="symbols">
             <t>AMBR: Aggregate Maximum Bit Rate </t>
+            <t>Anchor: An topological endpoint of an UE</t>
             <t>APN: Access Point Name (commonly used to identify a
 			network or class of service)</t>
             <t>BSID: SR Binding SID <xref target="RFC8402"/></t>
