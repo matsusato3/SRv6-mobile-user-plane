@@ -703,13 +703,6 @@ gNB_out : (Z,A)
 		scalable SRGW deployments compared to a
 		solution holding millions of states, one or more per UE.</t>
           </section>	<!-- End section "Scalability" -->
-
-          <section title="IPv6 user-traffic">
-            <t> For IPv6 user-traffic it is RECOMMENDED to perform
-		encapsulation. However based on local policy, a service
-		provider MAY choose to do SRH insertion. The main benefit
-		is lower overhead.</t>
-          </section>	<!-- End section "IPv6 user-traffic" -->
         </section>	<!-- End section "Interworking with IPv6 GTP" -->
 
         <section title="Interworking with IPv4 GTP">
@@ -827,13 +820,6 @@ gNB_out : (Z,A)
 		policies.  However, SR policies are shared
 		among several UE/sessions.</t>
           </section>	<!-- End section "Scalability" -->
-
-          <section title="IPv6 user-traffic">
-            <t>For IPv6 user-traffic it is RECOMMENDED to perform
-		encapsulation.  Based on local policy, a service
-		provider MAY choose to do SRH insertion. The main benefit
-		is a lower overhead.</t>
-          </section>	<!-- End section "IPv6 user-traffic" -->
         </section>	<!-- End section "Interworking with IPv4 GTP" -->
 
         <section title="Extensions to the interworking mechanisms">
