@@ -883,7 +883,11 @@ gNB_out : (Z,A)
           <t>PDU Session ID: Identifier of PDU Session. The GTP-U equivalent is TEID.</t>
         </list>
       </t>
-      <t>Since the SRv6 function is likely NOT to be instantiated per PDU session, Args.Mob.Session helps the UPF to perform the functions which require per QFI and/or per PDU Session granularity.</t>
+      <t>Arg.Mob.Session is required in case that one SID aggregates
+      multiple PDU Session. Since the SRv6 function is likely NOT to be
+      instantiated per PDU session, Args.Mob.Session helps the UPF to
+      perform the functions which require per QFI and/or per PDU Session
+      granularity.</t>
       </section>
       
       <section anchor="end-map-function" title="End.MAP">
