@@ -8,7 +8,7 @@
   <!ENTITY I-D.xuclad-spring-sr-service-programming SYSTEM "http://xml.resource.org/public/rfc/bibxml3/reference.I-D.xuclad-spring-sr-service-programming.xml">
   <!ENTITY I-D.ietf-6man-segment-routing-header SYSTEM "http://xml.resource.org/public/rfc/bibxml3/reference.I-D.ietf-6man-segment-routing-header.xml">
   <!ENTITY I-D.ietf-spring-segment-routing-central-epe SYSTEM "http://xml.resource.org/public/rfc/bibxml3/reference.I-D.ietf-spring-segment-routing-central-epe.xml">
-  <!ENTITY I-D.hegdeppsenak-isis-sr-flex-algo SYSTEM "http://xml.resource.org/public/rfc/bibxml3/reference.I-D.hegdeppsenak-isis-sr-flex-algo.xml">
+  <!ENTITY I-D.ietf-lsr-flex-algo SYSTEM "http://xml.resource.org/public/rfc/bibxml3/reference.I-D.ietf-lsr-flex-algo.xml">
   <!ENTITY I-D.ietf-dmm-fpc-cpdp SYSTEM "http://xml.resource.org/public/rfc/bibxml3/reference.I-D.ietf-dmm-fpc-cpdp.xml">
   <!ENTITY I-D.gundavelli-dmm-mfa SYSTEM "http://xml.resource.org/public/rfc/bibxml3/reference.I-D.gundavelli-dmm-mfa.xml">
   <!ENTITY I-D.auge-dmm-hicn-mobility-deployment-options SYSTEM "http://xml.resource.org/public/rfc/bibxml3/reference.I-D.auge-dmm-hicn-mobility-deployment-options.xml">
@@ -596,7 +596,7 @@ gNB_out : (Z,A)                              -> End.DX4 or End.DX6
 		A SR policy can be shared across UEs.</t>
             <t> When a packet from the UE leaves the gNB, it is SR-routed.
 		This simplifies network slicing
-		<xref target="I-D.hegdeppsenak-isis-sr-flex-algo"/>.</t>
+		<xref target="I-D.ietf-lsr-flex-algo"/>.</t>
             <t> In the uplink, the IPv6 DA BSID steers traffic
 		into an SR policy when it arrives at the SRGW-UPF1.</t>
           </list></t>
@@ -1107,7 +1107,7 @@ gNB_out : (Z,A)
 	    refined by adopting the mechanisms from:
           <list style="symbols">
             <t>IGP Flex-Algo
-		<xref target="I-D.hegdeppsenak-isis-sr-flex-algo"/></t>
+		<xref target="I-D.ietf-lsr-flex-algo"/></t>
             <t>Inter-Domain policies
 	       <xref target="I-D.ietf-spring-segment-routing-central-epe"/></t>
           </list></t>
@@ -1220,7 +1220,7 @@ gNB_out : (Z,A)
 
     <references title="Informative References">
         &I-D.ietf-dmm-fpc-cpdp;
-        &I-D.hegdeppsenak-isis-sr-flex-algo;
+        &I-D.ietf-lsr-flex-algo;
         &I-D.gundavelli-dmm-mfa;
         &I-D.ietf-spring-segment-routing-central-epe;
         &I-D.xuclad-spring-sr-service-programming;
