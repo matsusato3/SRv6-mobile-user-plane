@@ -867,7 +867,7 @@ S1_out       : (SRGW-A, C1)(U2b::, U1b::TEID, C1; SL=2)(A,Z)
 C1_out       : (SRGW-A, U1b::TEID)(U2b::, U1b::TEID, C1; SL=1)(A,Z)
 SRGW-B_out   : (SRGW-B, U2b::)(GTP: TEID T)(A,Z)             -> U1b::TEID is an
                                                                 End.M.GTP6.E
-                                                                SID at UPF2b
+                                                                SID at SRGW-B
 UPF2b_out    : (A,Z)
               ]]></artwork>
             </figure>
