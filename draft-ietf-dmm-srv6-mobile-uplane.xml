@@ -822,9 +822,95 @@ gNB_out : (Z,A)
           </section>	<!-- End section "Scalability" -->
         </section>	<!-- End section "Interworking with IPv4 GTP" -->
 
+        <section anchor="drop_in" title="SRv6 Drop-in Interworking">
+          <t>SRv6 drop-in interworking mode provides SRv6 user plane in between
+          GTP-U tunnel endpoints. This mode employs two SRGWs to do GTP-U
+          traffic to SRv6 mapping on one SRGW, and vice versa.</t>
+
+          <t>Unlike other interworking modes, each uplink and downlink has both
+          of GTP-U to SRv6 and SRv6 to GTP-U in this mode. The SRGWs may be
+          deployed in both between gNB and UPF, or between UPFs.</t>
+
+          <t>The SRGW behaviors for this mode are equivalent with other modes
+          except in IPv6 GTP case on the GTP-U to SRv6 direction. Due to that
+          only one exception, it is enough that this section focuses to describe
+          IPv6 GTP case on one direction with an illustration.</t>
+
+          <figure anchor="fig_drop_in"
+  				title="Example topology for SRv6 Drop-in">
+              <artwork align="center"><![CDATA[
+
+                               +----+
+                              -| S1 |-
++-----------+                / +----+ \
+| UPF2a/gNB |-         SRv6 /   SRv6   \ +----+   +------+      +-------+
++-----------+ \        [N9]/     VNF    -| C1 |---| UPF1b|------| UPF2b |
+    GTP        \ +------+ /              +----+   +------+      +-------+
+                -| UPF1a|-                SRv6   SR Gateway-B       GTP
+                 +------+                  TE
+               SR Gateway-A
+
+                ]]></artwork>
+          </figure>
+
+          <section title="Packet flow">
+            <t>The packet flow of <xref target="fig_drop_in"/> is as
+            follows:</t>
+
+            <figure>
+              <artwork align="center"><![CDATA[
+UPF2a/gNB_out: (UPF2a/gNB, U2b::)(GTP: TEID T)(A,Z)
+SRGW-A_out   : (SRGW-A, S1)(U2b::, U1b::TEID, C1; SL=3)(A,Z) -> U2b:: is an
+                                                                End.M.GTP6.D.Di
+                                                                SID at SRGW-A
+S1_out       : (SRGW-A, C1)(U2b::, U1b::TEID, C1; SL=2)(A,Z)
+C1_out       : (SRGW-A, U1b::TEID)(U2b::, U1b::TEID, C1; SL=1)(A,Z)
+SRGW-B_out   : (SRGW-B, U2b::)(GTP: TEID T)(A,Z)             -> U1b::TEID is an
+                                                                End.M.GTP6.E
+                                                                SID at UPF2b
+UPF2b_out    : (A,Z)
+              ]]></artwork>
+            </figure>
+
+          <t>When a packet destined to Z arrives at the UPF2a, or gNB, which is
+          unmodified, performs encapsulates the packet into a new IPv6, UDP and
+          GTP headers.  The IPv6 DA, U2b::, and the GTP TEID are the ones
+          received at the N2 interface.</t>
+
+          <t>The IPv6 address that was signalled over the N2 interface for that
+          UE PDU Session, U2b::, is now the IPv6 DA.  U2b:: is an SRv6 Binding
+          SID at SRGW-A.  Hence the packet is routed to the SRGW.</t>
+
+          <t>When the packet arrives at SRGW-A, the SRGW identifies U2b:: as an
+          End.M.GTP6.D.Di Binding SID (see <xref target="End-M-GTP6-D-Di"/>).
+          Hence, the SRGW removes the IPv6, UDP and GTP headers, and pushes an
+          IPv6 header with its own SRH containing the SIDs bound to the SR
+          policy associated with this Binding SID. There is one instance of the
+          End.M.GTP6.D.Di SID per PDU type.</t>
+
+          <t>S1 and C1 perform their related Endpoint functionality and forward
+          the packet.</t>
+
+          <t>Once the packet arrives at SRGW-B, the SRGW identifies the active
+          SID as an End.M.GTP6.E function. The SRGW removes the IPv6 header and
+          all its extensions headers. The SRGW generates new IPv6, UDP and GTP
+          headers. The new IPv6 DA is U2b:: which is the last SID in the
+          received SRH. The TEID in the generated GTP header is an argument of
+          the received End.M.GTP6.E SID. The SRGW pushes the headers to the
+          packet and forwards the packet toward UPF2b.  There is one instance of
+          the End.M.GTP6.E SID per PDU type.</t>
+
+          <t>Once the packet arrives at UPF2b, the packet is a regular IPv6/GTP
+          packet. The UPF looks for the specific rule for that TEID to forward
+          the packet. This UPF behavior is not modified from current and
+          previous generations.</t>
+
+          </section> <!-- End section "Packet flow" -->
+        </section> <!-- End section "SRv6 Drop-in Interworking" -->
+
         <section title="Extensions to the interworking mechanisms">
-          <t>In this section we presented two mechanisms for interworking
-	      with gNBs that do not support SRv6. These mechanism are done
+          <t>In this section we presented three mechanisms for interworking
+	      with gNBs and UPFs that do not support SRv6. These mechanism are done
 	      to support GTP over IPv4 and GTP over IPv6.</t>
           <t>Even though we have presented these methods as an extension to
 	      the "Enhanced mode", it is straightforward in its
@@ -932,6 +1018,48 @@ gNB_out : (Z,A)
         at an SR gateway.</t>
 
      </section>	<!-- End section "End.M.GTP6.D" -->
+
+     <section anchor="End-M-GTP6-D-Di" title="End.M.GTP6.D.Di">
+        <t>The "Endpoint function with IPv6/GTP decapsulation into SR policy for
+        Drop-in Mode" function (End.M.GTP6.D.Di for short) is used in SRv6
+        drop-in interworking scenario described in <xref target="drop_in"/>. The
+        difference between End.M.GTP6.D as another variant of IPv6/GTP
+        decapsulation function is that the original IPv6 DA of GTP packet is
+        preserved as the last SID in SRH.  Suppose, for example, this SID is
+        associated with an SR policy &lt;S1, S2, S3&gt; and an IPv6 Source
+        Address A.</t>
+
+        <t>When the SR Gateway node N receives a packet destined to S and
+        S is a local End.M.GTP6.D.Di SID, N does:</t>
+
+       <figure><artwork align="left"><![CDATA[
+1. IF NH=UDP & UDP_DST_PORT = GTP THEN
+2.    preserve S and copy TEID to form SID S3
+3.    pop the IPv6, UDP and GTP headers
+4.    push a new IPv6 header with a SR policy in SRH <S1, S2, S3, S>
+5.    set the outer IPv6 SA to A
+6.    set the outer IPv6 DA to S1
+7.    set the outer IPv6 NH                                  ;; Ref1
+8.    forward according to the S1 segment of the SRv6 Policy
+9. ELSE
+10.    Drop the packet
+         ]]></artwork></figure>
+
+       <t>Ref1: The NH is set based on the SID parameter. There is one
+         instantiation of the End.M.GTP6.D.Di SID per PDU Session Type,
+         hence the NH is already known in advance. For the IPv4v6 PDU
+         Session Type, in addition we inspect the first nibble of the
+         PDU to know the NH value.</t>
+
+       <t>The prefix of last segment(S3 in above example) SHOULD be
+       followed by an Arg.Mob.Session argument space which is used to
+       provide the session identifiers.</t>
+
+       <t> The prefix of A SHOULD be an End.M.GTP6.E SID instantiated
+       at an SR gateway.</t>
+
+     </section> <!-- End section "End.M.GTP6.D.Di" -->
+
 
       <section title="End.M.GTP6.E">
         <t>The "Endpoint function with encapsulation for IPv6/GTP tunnel"
