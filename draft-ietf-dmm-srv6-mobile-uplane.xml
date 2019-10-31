@@ -5,7 +5,7 @@
   <!ENTITY rfc8402 SYSTEM "http://xml.resource.org/public/rfc/bibxml/reference.RFC.8402.xml">
   <!ENTITY I-D.ietf-spring-segment-routing-policy SYSTEM "http://xml.resource.org/public/rfc/bibxml3/reference.I-D.ietf-spring-segment-routing-policy.xml">
   <!ENTITY I-D.ietf-spring-srv6-network-programming SYSTEM "http://xml.resource.org/public/rfc/bibxml3/reference.I-D.ietf-spring-srv6-network-programming.xml">
-  <!ENTITY I-D.xuclad-spring-sr-service-programming SYSTEM "http://xml.resource.org/public/rfc/bibxml3/reference.I-D.xuclad-spring-sr-service-programming.xml">
+  <!ENTITY I-D.ietf-spring-sr-service-programming SYSTEM "http://xml.resource.org/public/rfc/bibxml3/reference.I-D.ietf-spring-sr-service-programming.xml">
   <!ENTITY I-D.ietf-6man-segment-routing-header SYSTEM "http://xml.resource.org/public/rfc/bibxml3/reference.I-D.ietf-6man-segment-routing-header.xml">
   <!ENTITY I-D.ietf-spring-segment-routing-central-epe SYSTEM "http://xml.resource.org/public/rfc/bibxml3/reference.I-D.ietf-spring-segment-routing-central-epe.xml">
   <!ENTITY I-D.ietf-lsr-flex-algo SYSTEM "http://xml.resource.org/public/rfc/bibxml3/reference.I-D.ietf-lsr-flex-algo.xml">
@@ -134,8 +134,7 @@
         layer path and underlying transport can be beneficial to the mobile
         user-plane, providing flexibility, end-to-end network slicing and
         SLA control for various applications.
-        This document describes the SRv6 mobile user plane behavior and
-        defines the SID functions for that.
+        This document describes the SRv6 mobile user plane.
       </t>
     </abstract>
   </front>
@@ -194,8 +193,7 @@
 	    last one, must be NH-SRH (43 type 4).</t>
         <t> For simplicity, no other extension headers are shown except
 	    the SRH.</t>
-        <t> The SID type used in this document is IPv6 address
-	    (also called SRv6 Segment or SRv6 SID).</t>
+        <t> The SID type used in this document is SRv6 SID.</t>
         <t> gNB::1 is an IPv6 address (SID) assigned to the gNB.</t>
         <t> U1::1 is an IPv6 address (SID) assigned to UPF1.</t>
         <t> U2::1 is an IPv6 address (SID) assigned to UPF2.</t>
@@ -354,7 +352,7 @@
        interfaces are SRv6).</t>
 
     <t>We introduce two mechanisms for interworking with legacy
-    access networks (N3 interface is unmodified). In these document we
+    access networks (N3 interface is unmodified). In this document we
     introduce them applied to the Enhanced mode, although they could be used
     in combination with the Traditional mode as well.</t>
 	   <t>One of these mechanisms is designed to interwork with legacy gNBs
@@ -461,7 +459,7 @@ gNB_out : (Z,A)                  -> End.DX4 or End.DX6
 
       <section anchor="enhanced_mode" title="Enhanced Mode">
         <t> Enhanced mode improves scalability, traffic steering and service
-	    programming <xref target="I-D.xuclad-spring-sr-service-programming"/>,
+	    programming <xref target="I-D.ietf-spring-sr-service-programming"/>,
 	    thanks to the use of multiple SIDs, instead of a single
 	    SID as done in the Traditional mode.</t>
 
@@ -564,7 +562,7 @@ gNB_out : (Z,A)                              -> End.DX4 or End.DX6
 	    gNB supports GTP encapsulation over IPv4 or IPv6.  To achieve
 	    interworking, a SR Gateway (SRGW-UPF1) entity is added.  The SRGW
 	    maps the GTP traffic into SRv6.</t>
-        <t> The SRGW is not an anchor point, and maintains very little state.
+        <t> The SRGW is not an anchor point and maintains very little state.
 	    For this reason,
 	    both IPv4 and IPv6 methods scale to millions of UEs.</t>
         <figure anchor="fig_interworking"
@@ -641,7 +639,7 @@ UPF2_out: (A,Z)                            -> End.DT4 or End.DT6
 	        encapsulates the packet into IPv6, UDP and GTP headers.
 	        The IPv6 DA B, and the GTP TEID T are the ones received in the
 	        N2 interface.</t>
-            <t> The IPv6 address that was signalled over the N2 interface for
+            <t> The IPv6 address that was signaled over the N2 interface for
 	        that UE PDU Session, B, is now the IPv6 DA. B is an SRv6 Binding
 	        SID at the SRGW.  Hence the packet is routed to the SRGW.</t>
             <t> When the packet arrives at the SRGW, the SRGW identifies
@@ -816,8 +814,7 @@ gNB_out : (Z,A)
 		this UE-base state anyway (since it is its anchor point).</t>
             <t>For the uplink traffic, the state at the SRGW is dedicated on a
 		per UE/session basis according to an Uplink Classifier.
-		There is state for steering the different sessions on a SR
-		policies.  However, SR policies are shared
+		There is state for steering the different sessions in the form of a SR Policy. However, SR policies are shared
 		among several UE/sessions.</t>
           </section>	<!-- End section "Scalability" -->
         </section>	<!-- End section "Interworking with IPv4 GTP" -->
@@ -827,9 +824,8 @@ gNB_out : (Z,A)
           GTP-U tunnel endpoints. This mode employs two SRGWs to do GTP-U
           traffic to SRv6 mapping on one SRGW, and vice versa.</t>
 
-          <t>Unlike other interworking modes, each uplink and downlink has both
-          of GTP-U to SRv6 and SRv6 to GTP-U in this mode. The SRGWs may be
-          deployed in both between gNB and UPF, or between UPFs.</t>
+          <t>Unlike other interworking modes, both of the mobility overlay endpoints use GTP-U.
+            Two SRGWs are deployed in either N3 or N9 interface to realize an intermediate SR policy.</t>
 
           <t>The SRGW behaviors for this mode are equivalent with other modes
           except in IPv6 GTP case on the GTP-U to SRv6 direction. Due to that
@@ -910,8 +906,8 @@ UPF2b_out    : (A,Z)
 
         <section title="Extensions to the interworking mechanisms">
           <t>In this section we presented three mechanisms for interworking
-	      with gNBs and UPFs that do not support SRv6. These mechanism are done
-	      to support GTP over IPv4 and GTP over IPv6.</t>
+	      with gNBs and UPFs that do not support SRv6. These mechanisms are used
+	      to support GTP over IPv4 and IPv6.</t>
           <t>Even though we have presented these methods as an extension to
 	      the "Enhanced mode", it is straightforward in its
 	      applicability to the "Traditional mode".</t>
@@ -1143,7 +1139,7 @@ UPF2b_out    : (A,Z)
       <section title="T.M.GTP4.D">
         <t>The "Transit with tunnel decapsulation and map to an SRv6
         policy" function (T.M.GTP4.D for short) is used in the direction
-        from legacy user-plane to SRv6 user-plane network.</t>
+        from legacy IPv4 user-plane to SRv6 user-plane network.</t>
 
         <t>When the SR Gateway node N receives a packet destined to a
         IW-IPv4-Prefix, N does:</t>
@@ -1217,11 +1213,12 @@ UPF2b_out    : (A,Z)
         <t>Ethernet</t>
         <t>Unstructured</t>
       </list></t>
-      <t> SRv6 supports all the 3GPP PDU session types without any protocol
+      <t> SRv6 supports the 3GPP PDU session types without any protocol
 	    overhead by using the corresponding SRv6 functions (End.DX4,
 	    End.DT4 for IPv4 PDU sessions; End.DX6, End.DT6, End.T for IPv6
 	    PDU sessions; End.DT46 for IPv4v6 PDU sessions; End.DX2
-	    for L2 PDU sessions; End.DX2 for Unstructured PDU sessions).</t>
+	    for L2 PDU sessions).
+      Unstructured PDUs are not supported.</t>
     </section>	<!-- End section "SRv6 supported PDU session types" -->
 
     <section anchor="netslice" title="Network Slicing Considerations">
@@ -1351,7 +1348,7 @@ UPF2b_out    : (A,Z)
         &I-D.ietf-lsr-flex-algo;
         &I-D.gundavelli-dmm-mfa;
         &I-D.ietf-spring-segment-routing-central-epe;
-        &I-D.xuclad-spring-sr-service-programming;
+        &I-D.ietf-spring-sr-service-programming;
         &I-D.auge-dmm-hicn-mobility-deployment-options;
         &I-D.camarillo-dmm-srv6-mobile-pocs;
         &I-D.rodrigueznatal-lisp-srv6;
