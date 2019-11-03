@@ -173,7 +173,7 @@
             <t>NH: The IPv6 next-header field.</t>
             <t>NFV: Network Function Virtualization </t>
             <t>PDU: Packet Data Unit</t>
-            <t>Session: TBD...</t>
+            <t>Session: Context of an UE connects to a mobile network.</t>
             <t>SID: A Segment Identifier which represents a specific
 		segment in a segment routing domain.</t>
             <t>SRH: The Segment Routing Header. <xref target="I-D.ietf-6man-segment-routing-header"/></t>
