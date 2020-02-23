@@ -17,5 +17,5 @@ jobs:
         echo test, and deploy your project.
     - name: Install python3 and xml2rfc
       run: |
-        apt-get install python3 pip3,
-        pip3 install xml2rfc.
+        sudo apt-get install python3 pip3
+        pip3 install xml2rfc
