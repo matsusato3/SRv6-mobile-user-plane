@@ -19,4 +19,4 @@ jobs:
     - name: Test with xml2rfc
       run: |
         pip install xml2rfc
-        xml2rfc draft-ietf-dmm-srv6-mobile-uplane.xml -b draft && cat draft.txt
+        xml2rfc draft-ietf-dmm-srv6-mobile-uplane.xml && cat draft-ietf-dmm-srv6-mobile-uplane.txt
