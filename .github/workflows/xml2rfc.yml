@@ -20,5 +20,12 @@ jobs:
       run: |
         pip install xml2rfc
         xml2rfc draft-ietf-dmm-srv6-mobile-uplane.xml && cat draft-ietf-dmm-srv6-mobile-uplane.txt
-    - name: push I-D file
-      run: git add draft-ietf-dmm-srv6-mobile-uplane.txt && git commit -m "Update this I-D." && git push origin HEAD
+    - name: Commit updated file
+      run: |
+        git config --local user.name "GitHub Action"
+        git config --local user.email "action@github.com"
+        git add draft-ietf-dmm-srv6-mobile-uplane.txt && git commit -m "Update this I-D."
+    - name: Push I-D file
+      uses: ad-m/github-push-action@master
+      with:
+        github_token: ${{ secrets.GITHUB_TOKEN }}
