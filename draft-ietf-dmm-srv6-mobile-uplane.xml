@@ -664,7 +664,7 @@ UPF2_out: (A,Z)                            -> End.DT4 or End.DT6
 UPF2_in : (Z,A)                           -> UPF2 maps the flow with
                                              <C1, S1, SRGW::TEID,gNB>
 UPF2_out: (U2::1, C1)(gNB, SRGW::TEID, S1; SL=3)(Z,A) -> T.Encaps.Red
-C1_out  : (U2::1, S1)(gNB, S1; SL=2)(Z,A)
+C1_out  : (U2::1, S1)(gNB, SRGW::TEID, S1; SL=2)(Z,A)
 S1_out  : (U2::1, SRGW::TEID)(gNB, SRGW::TEID, S1, SL=1)(Z,A)
 SRGW_out: (SRGW, gNB)(GTP: TEID=T)(Z,A)   -> SRGW/96 is End.M.GTP6.E
 gNB_out : (Z,A)
