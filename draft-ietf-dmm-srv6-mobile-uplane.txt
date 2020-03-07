@@ -16,7 +16,7 @@ Expires: September 8, 2020                                      M. Kohno
 
 
                Segment Routing IPv6 for Mobile User Plane
-                  draft-ietf-dmm-srv6-mobile-uplane-07
+                  draft-ietf-dmm-srv6-mobile-uplane-08
 
 Abstract
 
