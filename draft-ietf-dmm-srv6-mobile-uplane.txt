@@ -5,18 +5,18 @@
 DMM Working Group                                          S. Matsushima
 Internet-Draft                                                  SoftBank
 Intended status: Standards Track                             C. Filsfils
-Expires: September 8, 2020                                      M. Kohno
+Expires: December 25, 2020                                      M. Kohno
                                                             P. Camarillo
                                                      Cisco Systems, Inc.
                                                                 D. Voyer
                                                              Bell Canada
                                                               C. Perkins
                                                                Futurewei
-                                                           March 7, 2019
+                                                           June 23, 2020
 
 
                Segment Routing IPv6 for Mobile User Plane
-                  draft-ietf-dmm-srv6-mobile-uplane-08
+                  draft-ietf-dmm-srv6-mobile-uplane-09
 
 Abstract
 
@@ -44,7 +44,7 @@ Status of This Memo
    time.  It is inappropriate to use Internet-Drafts as reference
    material or to cite them other than as "work in progress."
 
-   This Internet-Draft will expire on September 8, 2020.
+   This Internet-Draft will expire on December 25, 2020.
 
 
 
@@ -53,14 +53,14 @@ Status of This Memo
 
 
 
-Matsushima, et al.      Expires September 8, 2020               [Page 1]
+Matsushima, et al.      Expires December 25, 2020               [Page 1]
 
-Internet-Draft             SRv6-mobile-uplane                 March 2019
+Internet-Draft             SRv6-mobile-uplane                  June 2020
 
 
 Copyright Notice
 
-   Copyright (c) 2019 IETF Trust and the persons identified as the
+   Copyright (c) 2020 IETF Trust and the persons identified as the
    document authors.  All rights reserved.
 
    This document is subject to BCP 78 and the IETF Trust's Legal
@@ -109,9 +109,9 @@ Table of Contents
 
 
 
-Matsushima, et al.      Expires September 8, 2020               [Page 2]
+Matsushima, et al.      Expires December 25, 2020               [Page 2]
 
-Internet-Draft             SRv6-mobile-uplane                 March 2019
+Internet-Draft             SRv6-mobile-uplane                  June 2020
 
 
    10. Security Considerations . . . . . . . . . . . . . . . . . . .  25
@@ -122,7 +122,7 @@ Internet-Draft             SRv6-mobile-uplane                 March 2019
      14.1.  Normative References . . . . . . . . . . . . . . . . . .  26
      14.2.  Informative References . . . . . . . . . . . . . . . . .  27
    Appendix A.  Implementations  . . . . . . . . . . . . . . . . . .  28
-   Authors' Addresses  . . . . . . . . . . . . . . . . . . . . . . .  28
+   Authors' Addresses  . . . . . . . . . . . . . . . . . . . . . . .  29
 
 1.  Introduction
 
@@ -159,18 +159,17 @@ Internet-Draft             SRv6-mobile-uplane                 March 2019
    o  Session: Context of an UE connects to a mobile network.
    o  SID: A Segment Identifier which represents a specific segment in a
       segment routing domain.
-   o  SRH: The Segment Routing Header.
-      [I-D.ietf-6man-segment-routing-header]
+   o  SRH: The Segment Routing Header.  [RFC8754]
    o  TEID: Tunnel Endpoint Identifier
-
-
-
-Matsushima, et al.      Expires September 8, 2020               [Page 3]
-
-Internet-Draft             SRv6-mobile-uplane                 March 2019
-
-
    o  UE: User Equipment
+
+
+
+Matsushima, et al.      Expires December 25, 2020               [Page 3]
+
+Internet-Draft             SRv6-mobile-uplane                  June 2020
+
+
    o  UPF: User Plane Function
    o  VNF: Virtual Network Function
 
@@ -217,17 +216,16 @@ Internet-Draft             SRv6-mobile-uplane                 March 2019
 
    o  End.DT4 means to decapsulate and forward using a specific IPv4
       table lookup.
-
-
-
-
-Matsushima, et al.      Expires September 8, 2020               [Page 4]
-
-Internet-Draft             SRv6-mobile-uplane                 March 2019
-
-
    o  End.DT6 means to decapsulate and forward using a specific IPv6
       table lookup.
+
+
+
+Matsushima, et al.      Expires December 25, 2020               [Page 4]
+
+Internet-Draft             SRv6-mobile-uplane                  June 2020
+
+
    o  End.DX4 means to decapsulate the packet and forward through a
       particular outgoing interface -or set of OIFs- configured with the
       SID.
@@ -277,9 +275,11 @@ Internet-Draft             SRv6-mobile-uplane                 March 2019
 
 
 
-Matsushima, et al.      Expires September 8, 2020               [Page 5]
+
+
+Matsushima, et al.      Expires December 25, 2020               [Page 5]
 
-Internet-Draft             SRv6-mobile-uplane                 March 2019
+Internet-Draft             SRv6-mobile-uplane                  June 2020
 
 
    The use-cases for SRv6 mobility are discussed in
@@ -333,9 +333,9 @@ Internet-Draft             SRv6-mobile-uplane                 March 2019
 
 
 
-Matsushima, et al.      Expires September 8, 2020               [Page 6]
+Matsushima, et al.      Expires December 25, 2020               [Page 6]
 
-Internet-Draft             SRv6-mobile-uplane                 March 2019
+Internet-Draft             SRv6-mobile-uplane                  June 2020
 
 
    IP address block toward the Internet, ensuring that return traffic is
@@ -389,9 +389,9 @@ Internet-Draft             SRv6-mobile-uplane                 March 2019
 
 
 
-Matsushima, et al.      Expires September 8, 2020               [Page 7]
+Matsushima, et al.      Expires December 25, 2020               [Page 7]
 
-Internet-Draft             SRv6-mobile-uplane                 March 2019
+Internet-Draft             SRv6-mobile-uplane                  June 2020
 
 
    The traditional mode minimizes the changes required to the mobile
@@ -445,9 +445,9 @@ Internet-Draft             SRv6-mobile-uplane                 March 2019
 
 
 
-Matsushima, et al.      Expires September 8, 2020               [Page 8]
+Matsushima, et al.      Expires December 25, 2020               [Page 8]
 
-Internet-Draft             SRv6-mobile-uplane                 March 2019
+Internet-Draft             SRv6-mobile-uplane                  June 2020
 
 
          UPF2_in : (Z,A)
@@ -501,9 +501,9 @@ Internet-Draft             SRv6-mobile-uplane                 March 2019
 
 
 
-Matsushima, et al.      Expires September 8, 2020               [Page 9]
+Matsushima, et al.      Expires December 25, 2020               [Page 9]
 
-Internet-Draft             SRv6-mobile-uplane                 March 2019
+Internet-Draft             SRv6-mobile-uplane                  June 2020
 
 
                                     +----+  SRv6               _______
@@ -557,9 +557,9 @@ Internet-Draft             SRv6-mobile-uplane                 March 2019
 
 
 
-Matsushima, et al.      Expires September 8, 2020              [Page 10]
+Matsushima, et al.      Expires December 25, 2020              [Page 10]
 
-Internet-Draft             SRv6-mobile-uplane                 March 2019
+Internet-Draft             SRv6-mobile-uplane                  June 2020
 
 
    UPF2_in : (Z,A)                              -> UPF2 maps the flow w/
@@ -613,9 +613,9 @@ Internet-Draft             SRv6-mobile-uplane                 March 2019
 
 
 
-Matsushima, et al.      Expires September 8, 2020              [Page 11]
+Matsushima, et al.      Expires December 25, 2020              [Page 11]
 
-Internet-Draft             SRv6-mobile-uplane                 March 2019
+Internet-Draft             SRv6-mobile-uplane                  June 2020
 
 
    o  The gNB is unchanged (control-plane or user-plane) and
@@ -669,9 +669,9 @@ Internet-Draft             SRv6-mobile-uplane                 March 2019
 
 
 
-Matsushima, et al.      Expires September 8, 2020              [Page 12]
+Matsushima, et al.      Expires December 25, 2020              [Page 12]
 
-Internet-Draft             SRv6-mobile-uplane                 March 2019
+Internet-Draft             SRv6-mobile-uplane                  June 2020
 
 
    The UE sends a packet destined to Z toward the gNB on a specific
@@ -725,9 +725,9 @@ Internet-Draft             SRv6-mobile-uplane                 March 2019
 
 
 
-Matsushima, et al.      Expires September 8, 2020              [Page 13]
+Matsushima, et al.      Expires December 25, 2020              [Page 13]
 
-Internet-Draft             SRv6-mobile-uplane                 March 2019
+Internet-Draft             SRv6-mobile-uplane                  June 2020
 
 
    received SRH.  The TEID in the generated GTP header is an argument of
@@ -781,9 +781,9 @@ Internet-Draft             SRv6-mobile-uplane                 March 2019
 
 
 
-Matsushima, et al.      Expires September 8, 2020              [Page 14]
+Matsushima, et al.      Expires December 25, 2020              [Page 14]
 
-Internet-Draft             SRv6-mobile-uplane                 March 2019
+Internet-Draft             SRv6-mobile-uplane                  June 2020
 
 
                                   +----+
@@ -837,9 +837,9 @@ Internet-Draft             SRv6-mobile-uplane                 March 2019
 
 
 
-Matsushima, et al.      Expires September 8, 2020              [Page 15]
+Matsushima, et al.      Expires December 25, 2020              [Page 15]
 
-Internet-Draft             SRv6-mobile-uplane                 March 2019
+Internet-Draft             SRv6-mobile-uplane                  June 2020
 
 
    UPF2_in : (Z,A)                            -> UPF2 maps flow with SID
@@ -893,9 +893,9 @@ Internet-Draft             SRv6-mobile-uplane                 March 2019
 
 
 
-Matsushima, et al.      Expires September 8, 2020              [Page 16]
+Matsushima, et al.      Expires December 25, 2020              [Page 16]
 
-Internet-Draft             SRv6-mobile-uplane                 March 2019
+Internet-Draft             SRv6-mobile-uplane                  June 2020
 
 
    Unlike other interworking modes, both of the mobility overlay
@@ -949,9 +949,9 @@ UPF2b_out    : (A,Z)
 
 
 
-Matsushima, et al.      Expires September 8, 2020              [Page 17]
+Matsushima, et al.      Expires December 25, 2020              [Page 17]
 
-Internet-Draft             SRv6-mobile-uplane                 March 2019
+Internet-Draft             SRv6-mobile-uplane                  June 2020
 
 
    When the packet arrives at SRGW-A, the SRGW identifies U2b:: as an
@@ -1005,9 +1005,9 @@ Internet-Draft             SRv6-mobile-uplane                 March 2019
 
 
 
-Matsushima, et al.      Expires September 8, 2020              [Page 18]
+Matsushima, et al.      Expires December 25, 2020              [Page 18]
 
-Internet-Draft             SRv6-mobile-uplane                 March 2019
+Internet-Draft             SRv6-mobile-uplane                  June 2020
 
 
    is applicable for 5G networks, while similar formats could be
@@ -1061,9 +1061,9 @@ Internet-Draft             SRv6-mobile-uplane                 March 2019
 
 
 
-Matsushima, et al.      Expires September 8, 2020              [Page 19]
+Matsushima, et al.      Expires December 25, 2020              [Page 19]
 
-Internet-Draft             SRv6-mobile-uplane                 March 2019
+Internet-Draft             SRv6-mobile-uplane                  June 2020
 
 
 6.3.  End.M.GTP6.D
@@ -1117,9 +1117,9 @@ Internet-Draft             SRv6-mobile-uplane                 March 2019
 
 
 
-Matsushima, et al.      Expires September 8, 2020              [Page 20]
+Matsushima, et al.      Expires December 25, 2020              [Page 20]
 
-Internet-Draft             SRv6-mobile-uplane                 March 2019
+Internet-Draft             SRv6-mobile-uplane                  June 2020
 
 
    1. IF NH=UDP & UDP_DST_PORT = GTP THEN
@@ -1173,9 +1173,9 @@ Internet-Draft             SRv6-mobile-uplane                 March 2019
 
 
 
-Matsushima, et al.      Expires September 8, 2020              [Page 21]
+Matsushima, et al.      Expires December 25, 2020              [Page 21]
 
-Internet-Draft             SRv6-mobile-uplane                 March 2019
+Internet-Draft             SRv6-mobile-uplane                  June 2020
 
 
    Ref1: An End.M.GTP6.E SID MUST always be the penultimate SID.
@@ -1229,9 +1229,9 @@ Internet-Draft             SRv6-mobile-uplane                 March 2019
 
 
 
-Matsushima, et al.      Expires September 8, 2020              [Page 22]
+Matsushima, et al.      Expires December 25, 2020              [Page 22]
 
-Internet-Draft             SRv6-mobile-uplane                 March 2019
+Internet-Draft             SRv6-mobile-uplane                  June 2020
 
 
 6.7.  T.M.GTP4.D
@@ -1285,9 +1285,9 @@ Internet-Draft             SRv6-mobile-uplane                 March 2019
 
 
 
-Matsushima, et al.      Expires September 8, 2020              [Page 23]
+Matsushima, et al.      Expires December 25, 2020              [Page 23]
 
-Internet-Draft             SRv6-mobile-uplane                 March 2019
+Internet-Draft             SRv6-mobile-uplane                  June 2020
 
 
    same AMBR group.  The encoding format of the rate limit segment SID
@@ -1341,9 +1341,9 @@ Internet-Draft             SRv6-mobile-uplane                 March 2019
 
 
 
-Matsushima, et al.      Expires September 8, 2020              [Page 24]
+Matsushima, et al.      Expires December 25, 2020              [Page 24]
 
-Internet-Draft             SRv6-mobile-uplane                 March 2019
+Internet-Draft             SRv6-mobile-uplane                  June 2020
 
 
    Further details on how these tools can be used to create end to end
@@ -1397,9 +1397,9 @@ Internet-Draft             SRv6-mobile-uplane                 March 2019
 
 
 
-Matsushima, et al.      Expires September 8, 2020              [Page 25]
+Matsushima, et al.      Expires December 25, 2020              [Page 25]
 
-Internet-Draft             SRv6-mobile-uplane                 March 2019
+Internet-Draft             SRv6-mobile-uplane                  June 2020
 
 
 12.  Acknowledgements
@@ -1417,26 +1417,26 @@ Internet-Draft             SRv6-mobile-uplane                 March 2019
 
    Email: ebisawa@toyota-tokyo.tech
 
+   Tetsuya Murakami
+   Arrcus, Inc.
+   United States of America
+
+   Email: tetsuya.ietf@gmail.com
+
 14.  References
 
 14.1.  Normative References
 
-   [I-D.ietf-6man-segment-routing-header]
-              Filsfils, C., Dukes, D., Previdi, S., Leddy, J.,
-              Matsushima, S., and D. Voyer, "IPv6 Segment Routing Header
-              (SRH)", draft-ietf-6man-segment-routing-header-26 (work in
-              progress), October 2019.
-
    [I-D.ietf-spring-segment-routing-policy]
               Filsfils, C., Sivabalan, S., Voyer, D., Bogdanov, A., and
               P. Mattes, "Segment Routing Policy Architecture", draft-
-              ietf-spring-segment-routing-policy-06 (work in progress),
-              December 2019.
+              ietf-spring-segment-routing-policy-07 (work in progress),
+              May 2020.
 
    [I-D.ietf-spring-srv6-network-programming]
               Filsfils, C., Camarillo, P., Leddy, J., Voyer, D.,
               Matsushima, S., and Z. Li, "SRv6 Network Programming",
-              draft-ietf-spring-srv6-network-programming-12 (work in
+              draft-ietf-spring-srv6-network-programming-15 (work in
               progress), March 2020.
 
    [RFC2119]  Bradner, S., "Key words for use in RFCs to Indicate
@@ -1453,10 +1453,15 @@ Internet-Draft             SRv6-mobile-uplane                 March 2019
 
 
 
-Matsushima, et al.      Expires September 8, 2020              [Page 26]
+Matsushima, et al.      Expires December 25, 2020              [Page 26]
 
-Internet-Draft             SRv6-mobile-uplane                 March 2019
+Internet-Draft             SRv6-mobile-uplane                  June 2020
 
+
+   [RFC8754]  Filsfils, C., Ed., Dukes, D., Ed., Previdi, S., Leddy, J.,
+              Matsushima, S., and D. Voyer, "IPv6 Segment Routing Header
+              (SRH)", RFC 8754, DOI 10.17487/RFC8754, March 2020,
+              <https://www.rfc-editor.org/info/rfc8754>.
 
 14.2.  Informative References
 
@@ -1473,12 +1478,6 @@ Internet-Draft             SRv6-mobile-uplane                 March 2019
               mobility-deployment-options-03 (work in progress), January
               2020.
 
-   [I-D.camarillo-dmm-srv6-mobile-pocs]
-              Camarillo, P., Filsfils, C., Bertz, L., Akhavain, A.,
-              Matsushima, S., and d. daniel.voyer@bell.ca, "Segment
-              Routing IPv6 for mobile user-plane PoCs", draft-camarillo-
-              dmm-srv6-mobile-pocs-02 (work in progress), April 2019.
-
    [I-D.camarilloelmalky-springdmm-srv6-mob-usecases]
               Camarillo, P., Filsfils, C., Elmalky, H., Matsushima, S.,
               Voyer, D., Cui, A., and B. Peirens, "SRv6 Mobility Use-
@@ -1493,13 +1492,13 @@ Internet-Draft             SRv6-mobile-uplane                 March 2019
    [I-D.ietf-dmm-fpc-cpdp]
               Matsushima, S., Bertz, L., Liebsch, M., Gundavelli, S.,
               Moses, D., and C. Perkins, "Protocol for Forwarding Policy
-              Configuration (FPC) in DMM", draft-ietf-dmm-fpc-cpdp-12
-              (work in progress), June 2018.
+              Configuration (FPC) in DMM", draft-ietf-dmm-fpc-cpdp-13
+              (work in progress), March 2020.
 
    [I-D.ietf-lsr-flex-algo]
               Psenak, P., Hegde, S., Filsfils, C., Talaulikar, K., and
               A. Gulko, "IGP Flexible Algorithm", draft-ietf-lsr-flex-
-              algo-06 (work in progress), February 2020.
+              algo-07 (work in progress), April 2020.
 
    [I-D.ietf-spring-segment-routing-central-epe]
               Filsfils, C., Previdi, S., Dawra, G., Aries, E., and D.
@@ -1509,9 +1508,10 @@ Internet-Draft             SRv6-mobile-uplane                 March 2019
 
 
 
-Matsushima, et al.      Expires September 8, 2020              [Page 27]
+
+Matsushima, et al.      Expires December 25, 2020              [Page 27]
 
-Internet-Draft             SRv6-mobile-uplane                 March 2019
+Internet-Draft             SRv6-mobile-uplane                  June 2020
 
 
    [I-D.ietf-spring-sr-service-programming]
@@ -1519,7 +1519,7 @@ Internet-Draft             SRv6-mobile-uplane                 March 2019
               d., Li, C., Decraene, B., Ma, S., Yadlapalli, C.,
               Henderickx, W., and S. Salsano, "Service Programming with
               Segment Routing", draft-ietf-spring-sr-service-
-              programming-01 (work in progress), November 2019.
+              programming-02 (work in progress), March 2020.
 
    [I-D.rodrigueznatal-lisp-srv6]
               Rodriguez-Natal, A., Ermagan, V., Maino, F., Dukes, D.,
@@ -1546,13 +1546,29 @@ Internet-Draft             SRv6-mobile-uplane                 March 2019
 
 Appendix A.  Implementations
 
-   This document introduces new SRv6 functions.  These functions have an
-   open-source P4 implementation available in
+   This document introduces new SRv6 Endpoint Behaviors.  These
+   behaviors have an open-source P4 implementation available in
    <https://github.com/ebiken/p4srv6>.
 
-   There are also implementations in M-CORD NGIC and Open Air Interface
-   (OAI).  Further details can be found in
-   [I-D.camarillo-dmm-srv6-mobile-pocs].
+   Additionally, a full implementation of this document is available in
+   Linux Foundation FD.io VPP project since release 20.05.  More
+   information available here: <https://docs.fd.io/vpp/20.05/d7/d3c/
+   srv6_mobile_plugin_doc.html>.
+
+   There are also experimental implementations in M-CORD NGIC and Open
+   Air Interface (OAI).
+
+
+
+
+
+
+
+
+Matsushima, et al.      Expires December 25, 2020              [Page 28]
+
+Internet-Draft             SRv6-mobile-uplane                  June 2020
+
 
 Authors' Addresses
 
@@ -1562,12 +1578,6 @@ Authors' Addresses
    Japan
 
    Email: satoru.matsushima@g.softbank.co.jp
-
-
-
-Matsushima, et al.      Expires September 8, 2020              [Page 28]
-
-Internet-Draft             SRv6-mobile-uplane                 March 2019
 
 
    Clarence Filsfils
@@ -1611,14 +1621,4 @@ Internet-Draft             SRv6-mobile-uplane                 March 2019
 
 
 
-
-
-
-
-
-
-
-
-
-
-Matsushima, et al.      Expires September 8, 2020              [Page 29]
+Matsushima, et al.      Expires December 25, 2020              [Page 29]
