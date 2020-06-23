@@ -175,7 +175,7 @@
             <t>Session: Context of an UE connects to a mobile network.</t>
             <t>SID: A Segment Identifier which represents a specific
 		segment in a segment routing domain.</t>
-            <t>SRH: The Segment Routing Header. <xref target="rfc8754"/></t>
+            <t>SRH: The Segment Routing Header. <xref target="RFC8754"/></t>
             <t>TEID: Tunnel Endpoint Identifier </t>
             <t>UE: User Equipment </t>
             <t>UPF: User Plane Function </t>
