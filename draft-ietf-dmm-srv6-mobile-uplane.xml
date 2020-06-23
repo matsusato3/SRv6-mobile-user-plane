@@ -6,20 +6,19 @@
   <!ENTITY I-D.ietf-spring-segment-routing-policy SYSTEM "http://xml.resource.org/public/rfc/bibxml3/reference.I-D.ietf-spring-segment-routing-policy.xml">
   <!ENTITY I-D.ietf-spring-srv6-network-programming SYSTEM "http://xml.resource.org/public/rfc/bibxml3/reference.I-D.ietf-spring-srv6-network-programming.xml">
   <!ENTITY I-D.ietf-spring-sr-service-programming SYSTEM "http://xml.resource.org/public/rfc/bibxml3/reference.I-D.ietf-spring-sr-service-programming.xml">
-  <!ENTITY I-D.ietf-6man-segment-routing-header SYSTEM "http://xml.resource.org/public/rfc/bibxml3/reference.I-D.ietf-6man-segment-routing-header.xml">
+  <!ENTITY rfc8754 SYSTEM "http://xml.resource.org/public/rfc/bibxml/reference.RFC.8754.xml">
   <!ENTITY I-D.ietf-spring-segment-routing-central-epe SYSTEM "http://xml.resource.org/public/rfc/bibxml3/reference.I-D.ietf-spring-segment-routing-central-epe.xml">
   <!ENTITY I-D.ietf-lsr-flex-algo SYSTEM "http://xml.resource.org/public/rfc/bibxml3/reference.I-D.ietf-lsr-flex-algo.xml">
   <!ENTITY I-D.ietf-dmm-fpc-cpdp SYSTEM "http://xml.resource.org/public/rfc/bibxml3/reference.I-D.ietf-dmm-fpc-cpdp.xml">
   <!ENTITY I-D.gundavelli-dmm-mfa SYSTEM "http://xml.resource.org/public/rfc/bibxml3/reference.I-D.gundavelli-dmm-mfa.xml">
   <!ENTITY I-D.auge-dmm-hicn-mobility-deployment-options SYSTEM "http://xml.resource.org/public/rfc/bibxml3/reference.I-D.auge-dmm-hicn-mobility-deployment-options.xml">
-  <!ENTITY I-D.camarillo-dmm-srv6-mobile-pocs SYSTEM "http://xml.resource.org/public/rfc/bibxml3/reference.I-D.camarillo-dmm-srv6-mobile-pocs.xml">
   <!ENTITY I-D.rodrigueznatal-lisp-srv6 SYSTEM "http://xml.resource.org/public/rfc/bibxml3/reference.I-D.rodrigueznatal-lisp-srv6.xml">
   <!ENTITY I-D.camarilloelmalky-springdmm-srv6-mob-usecases SYSTEM "http://xml.resource.org/public/rfc/bibxml3/reference.I-D.camarilloelmalky-springdmm-srv6-mob-usecases.xml">
   <!ENTITY I-D.ali-spring-network-slicing-building-blocks SYSTEM "http://xml.resource.org/public/rfc/bibxml3/reference.I-D.ali-spring-network-slicing-building-blocks.xml">
 ]>
 <?xml-stylesheet type='text/xsl' href='rfc2629.xslt' ?>
 
-<rfc category="std" docName="draft-ietf-dmm-srv6-mobile-uplane-08"
+<rfc category="std" docName="draft-ietf-dmm-srv6-mobile-uplane-09"
 	ipr="trust200902">
   <?xml-stylesheet type='text/xsl' href='rfc2629.xslt' ?>
   <?rfc toc="yes" ?>
@@ -122,7 +121,7 @@
        </address>
     </author>
 
-    <date year="2019" />
+    <date year="2020" />
     <workgroup>DMM Working Group</workgroup>
 
     <abstract>
@@ -176,7 +175,7 @@
             <t>Session: Context of an UE connects to a mobile network.</t>
             <t>SID: A Segment Identifier which represents a specific
 		segment in a segment routing domain.</t>
-            <t>SRH: The Segment Routing Header. <xref target="I-D.ietf-6man-segment-routing-header"/></t>
+            <t>SRH: The Segment Routing Header. <xref target="rfc8754"/></t>
             <t>TEID: Tunnel Endpoint Identifier </t>
             <t>UE: User Equipment </t>
             <t>UPF: User Plane Function </t>
@@ -1330,6 +1329,11 @@ UPF2b_out    : (A,Z)
       Toyota Motor Corporation<vspace blankLines="0" />
       Japan</t>
       <t>Email: ebisawa@toyota-tokyo.tech<vspace blankLines="0" /></t>
+
+      <t>Tetsuya Murakami<vspace blankLines="0" />
+      Arrcus, Inc.<vspace blankLines="0" />
+      United States of America</t>
+      <t>Email: tetsuya.ietf@gmail.com<vspace blankLines="0" /></t>
     </section>	<!-- End section "Contributors" -->
 
   </middle>
@@ -1340,7 +1344,7 @@ UPF2b_out    : (A,Z)
         &rfc8402;
         &I-D.ietf-spring-srv6-network-programming;
         &I-D.ietf-spring-segment-routing-policy;
-        &I-D.ietf-6man-segment-routing-header;
+        &rfc8754;
     </references>
 
     <references title="Informative References">
@@ -1350,7 +1354,6 @@ UPF2b_out    : (A,Z)
         &I-D.ietf-spring-segment-routing-central-epe;
         &I-D.ietf-spring-sr-service-programming;
         &I-D.auge-dmm-hicn-mobility-deployment-options;
-        &I-D.camarillo-dmm-srv6-mobile-pocs;
         &I-D.rodrigueznatal-lisp-srv6;
         &I-D.camarilloelmalky-springdmm-srv6-mob-usecases;
         &I-D.ali-spring-network-slicing-building-blocks;
@@ -1395,9 +1398,11 @@ UPF2b_out    : (A,Z)
     </references>
 
     <section anchor="Implementations" title="Implementations">
-      <t> This document introduces new SRv6 functions. These functions have an
+      <t>This document introduces new SRv6 Endpoint Behaviors. These behaviors have an
 	  open-source P4 implementation available in
 	  <eref target="https://github.com/ebiken/p4srv6" />.</t>
+      <t>Additionally, a full implementation of this document is available in Linux Foundation FD.io VPP project since release 20.05. More information available here: 
+    <eref target="https://docs.fd.io/vpp/20.05/d7/d3c/srv6_mobile_plugin_doc.html" />.</t>
       <t>There are also implementations in M-CORD NGIC and Open Air Interface (OAI). Further details can be found in <xref target="I-D.camarillo-dmm-srv6-mobile-pocs"/>.</t>
     </section>	<!-- End section "Implementations" -->
   </back>
