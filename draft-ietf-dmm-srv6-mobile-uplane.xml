@@ -1403,7 +1403,7 @@ UPF2b_out    : (A,Z)
 	  <eref target="https://github.com/ebiken/p4srv6" />.</t>
       <t>Additionally, a full implementation of this document is available in Linux Foundation FD.io VPP project since release 20.05. More information available here: 
     <eref target="https://docs.fd.io/vpp/20.05/d7/d3c/srv6_mobile_plugin_doc.html" />.</t>
-      <t>There are also implementations in M-CORD NGIC and Open Air Interface (OAI). Further details can be found in <xref target="I-D.camarillo-dmm-srv6-mobile-pocs"/>.</t>
+      <t>There are also experimental implementations in M-CORD NGIC and Open Air Interface (OAI).</t>
     </section>	<!-- End section "Implementations" -->
   </back>
 </rfc>
