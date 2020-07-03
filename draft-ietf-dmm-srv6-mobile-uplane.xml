@@ -77,7 +77,7 @@
       </address>
     </author>
 
-    <author fullname="Pablo Camarillo Garvia" initials="P." surname="Camarillo">
+    <author fullname="Pablo Camarillo Garvia" initials="P." surname="Camarillo" role="editor">
       <organization abbrev="Cisco Systems, Inc.">
 			Cisco Systems, Inc.</organization>
       <address>
@@ -165,14 +165,10 @@
 
         <section anchor="terms" title="Terminology">
         <t> <list style="symbols">
-            <t>AMBR: Aggregate Maximum Bit Rate </t>
-            <t>Anchor: A topological endpoint of an UE</t>
             <t>CNF: Cloud-native Network Function</t>
-            <t>gNB: gNodeB </t>
             <t>NFV: Network Function Virtualization </t>
             <t>PDU: Packet Data Unit</t>
             <t>PDU Session: Context of an UE connects to a mobile network.</t>
-            <t>TEID: Tunnel Endpoint Identifier </t>
             <t>UE: User Equipment </t>
             <t>UPF: User Plane Function </t>
             <t>VNF: Virtual Network Function </t>
@@ -1161,7 +1157,7 @@ UPF2b_out    : (A,Z)
           The "End.Limit" behavior encodes in its arguments the
           rate limiting parameter that should be applied to this packet.
           Multiple flows of packets should have the same group identifier
-           in the SID when those flows are in an same AMBR group.
+           in the SID when those flows are in an same AMBR (Aggregate Maximum Bit Rate) group.
           The encoding format of the rate limit
 	    segment SID is as follows:</t>
         <figure title="End.Limit: Rate limiting behavior argument format">
@@ -1240,8 +1236,7 @@ UPF2b_out    : (A,Z)
 
         <t> <xref target="IANA"/> allocates SRv6
 	    Segment Endpoint Behavior codepoints for the new behaviors defined in this
-	    document.  Control-plane protocols are expected to use
-	    these behavior codepoints to signal each SID.</t>
+	    document.</t>
 
     </section>	<!-- End section "Control Plane Considerations" -->
 
@@ -1270,7 +1265,7 @@ UPF2b_out    : (A,Z)
 
       <texttable anchor="endpoint_opcodes"
 			title="SRv6 Mobile User-plane Endpoint Behavior Types">
-          <ttcol align="left">Value/Range</ttcol>
+          <ttcol align="left">Value</ttcol>
           <ttcol align="center">Hex</ttcol>
           <ttcol align="center">Endpoint behavior</ttcol>
           <ttcol align="center">Reference</ttcol>
@@ -1336,6 +1331,15 @@ UPF2b_out    : (A,Z)
         &I-D.ietf-spring-srv6-network-programming;
         &I-D.ietf-spring-segment-routing-policy;
         &rfc8754;
+        <reference anchor="TS.23501">
+            <front>
+                <title>System Architecture for the 5G System</title>
+                <author surname="3GPP" fullname="3GPP">
+                </author>
+                <date month="November" year="2017" />
+            </front>
+            <seriesInfo name="3GPP TS 23.501" value="15.0.0" />
+        </reference>
     </references>
 
     <references title="Informative References">
@@ -1347,15 +1351,6 @@ UPF2b_out    : (A,Z)
         &I-D.rodrigueznatal-lisp-srv6;
         &I-D.camarilloelmalky-springdmm-srv6-mob-usecases;
         &I-D.ali-spring-network-slicing-building-blocks;
-        <reference anchor="TS.23501">
-            <front>
-                <title>System Architecture for the 5G System</title>
-                <author surname="3GPP" fullname="3GPP">
-                </author>
-                <date month="November" year="2017" />
-            </front>
-            <seriesInfo name="3GPP TS 23.501" value="15.0.0" />
-        </reference>
         <reference anchor="TS.29244">
             <front>
                 <title>Interface between the Control Plane
