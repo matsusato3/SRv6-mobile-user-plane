@@ -141,16 +141,19 @@
   <middle>
   <section title="Introduction">
     <t> In mobile networks, mobility management systems provide
-        connectivity while mobile nodes move.  While the
-        control-plane of the system signals movements of a mobile node, the
-        user-plane establishes a tunnel between the mobile node and its anchor
+        connectivity over a wireless link to stationary and non-stationary nodes.
+        The user-plane establishes a tunnel between the mobile node and its anchor
         node over IP-based backhaul and core networks. </t>
 
     <t> This document shows the applicability of SRv6 (Segment
-        Routing IPv6) to those mobile networks. SRv6 provides source
-        routing to networks so that operators can explicitly indicate a route
-        for the packets to and from the mobile node.  SRv6 endpoint nodes
-        serve as the anchors of mobile user-plane. </t>
+        Routing IPv6) to mobile networks. </t>
+
+        <t>Segment Routing <xref target="RFC8402"> is a source routing architecture: a node steers a packet through an ordered list of instructions called “segments”. A segment can represent any instruction, topological or service based.</t>
+
+        SRv6 applied to mobile networks enables a source-routing based
+        mobile architecture, where operators can explicitly indicate a route
+        for the packets to and from the mobile node.  The SRv6 Endpoint nodes
+        serve as mobile user-plane anchors.</t>
   </section>	<!-- End section "Introduction" -->
 
   <section title="Conventions and Terminology">
@@ -163,102 +166,82 @@
         <section anchor="terms" title="Terminology">
         <t> <list style="symbols">
             <t>AMBR: Aggregate Maximum Bit Rate </t>
-            <t>Anchor: An topological endpoint of an UE</t>
-            <t>APN: Access Point Name (commonly used to identify a
-			network or class of service)</t>
-            <t>BSID: SR Binding SID <xref target="RFC8402"/></t>
+            <t>Anchor: A topological endpoint of an UE</t>
             <t>CNF: Cloud-native Network Function</t>
             <t>gNB: gNodeB </t>
-            <t>NH: The IPv6 next-header field.</t>
             <t>NFV: Network Function Virtualization </t>
             <t>PDU: Packet Data Unit</t>
-            <t>Session: Context of an UE connects to a mobile network.</t>
-            <t>SID: A Segment Identifier which represents a specific
-		segment in a segment routing domain.</t>
-            <t>SRH: The Segment Routing Header. <xref target="RFC8754"/></t>
+            <t>PDU Session: Context of an UE connects to a mobile network.</t>
             <t>TEID: Tunnel Endpoint Identifier </t>
             <t>UE: User Equipment </t>
             <t>UPF: User Plane Function </t>
             <t>VNF: Virtual Network Function </t>
             </list>
-	</t>
+	      </t>
+        <t>The following terms used within this document are defined in
+            [RFC8402]: Segment Routing, SR Domain, Segment ID (SID), SRv6, SRv6
+            SID, Active Segment, SR Policy, Prefix SID, Adjacency SID and Binding SID.</t>
+  
+        <t> The following terms used within this document are defined in
+            [RFC8754]: SRH, SR Source Node, Transit Node, SR Segment Endpoint
+            Node and Reduced SRH.</t>
+
+        <t>The following terms used within this document are defined in [NET-PGM]: NH, SL, FIB, SA, DA, SRv6 SID function, SRv6 Segment Endpoint Behavior.</t>
+
     	</section>	<!-- End subsection "Terminology" -->
 
         <section anchor="conventions" title="Conventions">
+          <t>An SR Policy is resolved to a SID list. A SID list is represented as &lt;S1, S2, S3&gt; where S1 is the first SID to visit, S2 is the second SID to visit and S3 is the last SID to visit along the SR path.</t>
+
+            <t>(SA,DA) (S3, S2, S1; SL) represents an IPv6 packet with:<list style="format - ">
+                <t>Source Address is SA, Destination Address is DA, and next-header is SRH</t>
+                <t>SRH with SID list &lt;S1, S2, S3&gt; with Segments Left = SL</t>
+                <t>Note the difference between the &lt;&gt; and () symbols: &lt;S1, S2, S3&gt; represents a SID list where S1 is the first SID and S3 is the last SID to traverse. (S3, S2, S1; SL) represents the same SID list but encoded in the SRH format where the rightmost SID in the SRH is the first SID and the leftmost SID in the SRH is the last SID. When referring to an SR policy in a high-level use-case, it is simpler to use the &lt;S1, S2, S3&gt; notation. When referring to an illustration of the detailed packet behavior, the (S3, S2, S1; SL) notation is more convenient.</t>
+                <t>The payload of the packet is omitted.</t>
+            </list></t>
+
+            <t>SRH[n]: A shorter representation of Segment List[n], as defined in <xref target="RFC8754" />. SRH[SL] can be different from the DA of the IPv6 header.</t>
+
 	<t> <list style="symbols">
-        <t> NH=SRH means that NH is 43 with routing type 4.</t>
-        <t> Multiple SRHs may be present inside each packet, but they must
-	    follow each other.  The next-header field of each SRH, except the
-	    last one, must be NH-SRH (43 type 4).</t>
-        <t> For simplicity, no other extension headers are shown except
-	    the SRH.</t>
-        <t> The SID type used in this document is SRv6 SID.</t>
         <t> gNB::1 is an IPv6 address (SID) assigned to the gNB.</t>
         <t> U1::1 is an IPv6 address (SID) assigned to UPF1.</t>
         <t> U2::1 is an IPv6 address (SID) assigned to UPF2.</t>
         <t> U2:: is some other IPv6 address (SID) assigned to UPF2.</t>
-        <t> A SID list is represented as &lt;S1, S2, S3&gt; where S1 is the
-	    first SID to visit, S2 is the second SID to visit and S3 is the
-	    last SID to visit along the SR path.</t>
-        <t> (SA,DA) (S3, S2, S1; SL) represents an IPv6 packet with:
-	    <list style="symbols">
-            <t> IPv6 header with source and destination addresses SA and DA
-		respectively, and next-header SRH, with SID list
-		&lt;S1, S2, S3&gt; with SegmentsLeft = SL</t>
-            <t>The payload of the packet is not represented.</t>
-            </list></t>
-        <t> Note the difference between the &lt;&gt; and () symbols:
-	    &lt;S1, S2, S3&gt; represents a SID list where S1 is the
-	    first SID and S3 is the last SID. (S3, S2, S1; SL) represents
-	    the same SID list but encoded in the SRH format where the
-	    rightmost SID in the SRH is the first SID and the leftmost
-	    SID in the SRH is the last SID. When referring to an SR
-	    policy in a high-level use-case, it is simpler to use the
-	    &lt;S1, S2, S3&gt; notation. When referring to an illustration
-	    of the detailed behavior, the (S3, S2, S1; SL) notation is
-	    more convenient.</t>
-        <t> SRH[SL] represents the SID pointed by the SL field in the first
-	    SRH. In our example, SRH[2] represents S1, SRH[1] represents S2
-	    and SRH[0] represents S3.</t>
-        <t> SRH[SL] can be different from the DA of the IPv6 header.</t>
         </list></t>
     	</section>	<!-- End subsection  "Conventions" -->
 
-        <section anchor="srv6-funcs" title="Predefined SRv6 Functions">
+        <section anchor="srv6-funcs" title="Predefined SRv6 Endpoint Behaviors">
         <t>
-	    The following functions are defined in
+	    The following SRv6 Endpoint Behaviors are defined in
 	    <xref target="I-D.ietf-spring-srv6-network-programming"/>.
 	    <list style="symbols">
-            <t> End.DT4 means to decapsulate and forward using
+            <t> End.DT4: decapsulate and forward using
 		a specific IPv4 table lookup.</t>
-            <t> End.DT6 means to decapsulate and forward using
+            <t> End.DT6: decapsulate and forward using
 		a specific IPv6 table lookup.</t>
-            <t> End.DX4 means to decapsulate the packet and forward through
+            <t> End.DX4: decapsulate the packet and forward through
     a particular outgoing interface -or set of OIFs- configured with the SID.</t>
-            <t> End.DX6 means to decapsulate and forward through
+            <t> End.DX6: decapsulate and forward through
     a particular outgoing interface -or set of OIFs- configured with the SID.</t>
-            <t> End.DX2 means to decapsulate the L2 frame and forward through a
+            <t> End.DX2: decapsulate the L2 frame and forward through a
             particular outgoing interface -or set of OIFs- configured with the SID.</t>
-            <t> End.T means to forward using a specific IPv6 table lookup.</t>
-            <t> End.X means to forward through a link configured
+            <t> End.T: forward through the shortest path using a specific IPv6 table.</t>
+            <t> End.X: forward through an L3 adjacency
 		with the SID.</t>
-            <t> T.Encaps.Red means encapsulation without pushing SRH
-		(resulting in "Reduced" packet size).</t>
-            <t> PSP means Penultimate Segment Pop.  The packet is
-		subsequently forwarded without the popped SRH.</t>
+
             </list>
-	    New SRv6 functions are defined in <xref target="srv6_functions"/>
-	    to support the needs of the mobile user plane.
+	    New SRv6 behaviors are defined in <xref target="srv6_functions"/>
+	    of this document to mechanisms described in this document.
 	</t>
     	</section>	<!-- End section "Predefined SRv6 Functions" -->
 
     </section>	<!-- End section "Conventions and Terminology" -->
 
     <section anchor="motivations" title="Motivation">
-    <t> Mobility networks are becoming more challenging to operate.
+    <t> Mobile networks are becoming more challenging to operate.
 	On one hand, traffic is constantly growing, and latency requirements
-	are more strict; on the other-hand, there are new use-cases like
-	NFV that are also challenging network management.</t>
+	are tighter; on the other-hand, there are new use-cases like
+	distributed NFVi that are also challenging network operations.</t>
     <t> The current architecture of mobile networks does not take into account
 	the underlying transport.  The user-plane is rigidly fragmented into
 	radio access, core and service networks, connected by tunneling
@@ -274,12 +257,11 @@
 	the application data-path and the underlying transport layer into
 	a single protocol, allowing operators to optimize the network in a
 	simplified manner and removing forwarding state from the network. It is also
-  suitable for virtualized environments, VNF/CNF to VNF/CNF networking.</t>
-    <t> SRv6 specifies network-programming (see
-  <xref target="I-D.ietf-spring-srv6-network-programming"/>).
+  suitable for virtualized environments, like VNF/CNF to VNF/CNF networking.</t>
+    <t> SRv6 defines the network-programming concept <xref target="I-D.ietf-spring-srv6-network-programming"/>.
   Applied to mobility, SRv6 can provide the user-plane functions needed
-  for mobility management.  SRv6 takes advantage of underlying transport
-  awareness and flexibility to improve mobility user-plane functions.</t>
+  for mobility management.  SRv6 takes advantage of the underlying transport
+  awareness and flexibility together with the ability to also include services to optimize the end-to-end mobile dataplane.</t>
     <t>The use-cases for SRv6 mobility are discussed in <xref target="I-D.camarilloelmalky-springdmm-srv6-mob-usecases"/>.</t>
     </section>	<!-- End section "Motivation" -->
 
@@ -291,9 +273,7 @@
         the 5G packet core architecture <xref target="TS.23501"/>.</t>
     <t> The user plane described in this document does not depend on any
 	specific architecture.  The 5G packet core architecture as shown is
-	based on the latest 3GPP standards at the time of writing this draft.
-	Other architectures can be seen in
-	<xref target="I-D.gundavelli-dmm-mfa"/> and [WHITEPAPER-5G-UP].</t>
+	based on the latest 3GPP standards at the time of writing this draft.</t>
     <figure anchor="fig_5g-ref-arch" title="3GPP 5G Reference Architecture">
           <artwork align="center"><![CDATA[
                                +-----+
@@ -314,9 +294,9 @@
     </figure>
     <t>
           <list style="symbols">
-            <t>gNB: gNodeB </t>
-            <t>UPF1: UPF with Interfaces N3 and N9</t>
-            <t>UPF2: UPF with Interfaces N9 and N6</t>
+            <t>gNB: gNodeB with N3 interface towards packet core (and N2 for control plane)</t>
+            <t>UPF1: UPF with Interfaces N3 and N9 (and N4 for control plane)</t>
+            <t>UPF2: UPF with Interfaces N9 and N6 (and N4 for control plane)</t>
             <t>SMF: Session Management Function </t>
             <t>AMF: Access and Mobility Management Function </t>
             <t>DN: Data Network e.g. operator services, Internet access </t>
@@ -326,7 +306,7 @@
     <t> This reference diagram does not depict a UPF that is only connected
 	to N9 interfaces, although the description in this document
 	also work for such UPFs.</t>
-    <t> Each session from an UE gets assigned to a UPF. Sometimes multiple
+    <t> Each session from a UE gets assigned to a UPF. Sometimes multiple
         UPFs may be used, providing richer service functions.  A UE gets its
 	IP address from the DHCP block of its UPF.
         The UPF advertises that IP address block toward the Internet,
@@ -334,51 +314,49 @@
     </section>	<!-- End section "A 3GPP Reference Architecture" -->
 
     <section anchor="uplane-functions" title="User-plane behaviors">
-    <t>This section describes some mobile user-plane behaviors using SRv6.</t>
+    <t>This section introduces an SRv6 based mobile user-plane.</t>
 
     <t> In order to simplify the adoption of SRv6, we present two different
 	"modes" that vary with respect to the use of SRv6.
 	The first one is the "Traditional mode", which inherits the
-	current 3GPP mobile user-plane. In this mode there is no change to
-	mobility networks architecture, except that
-	<xref target="TS.29281">GTP-U</xref> is replaced by SRv6.</t>
-    <t> The second mode is the "Enhanced mode". In this mode
-      the SR policy contains SIDs for Traffic Engineering
-	    and VNFs, which results in effective end-to-end network slices.</t>
+	current 3GPP mobile user-plane. In this mode 
+	<xref target="TS.29281">GTP-U</xref> is replaced by SRv6, however the N3, N9 and N6 interfaces are still point-to-point interfaces with no intermediate waypoints as in the current mobile network architecture.</t>
+
+    <t> The second mode is the "Enhanced mode". 
+      This is an evolution from the “Traditional mode”. In this mode the N3, N9 or N6 interfaces have intermediate waypoints -SIDs- that are used for Traffic Engineering or VNF purposes. This results in optimal end-to-end policies across the mobile network with transport and services awareness.</t>
 
     <t>In both, the Traditional and the Enhanced modes, we assume that the
       gNB as well as the UPFs are SR-aware (N3, N9 and -potentially- N6
        interfaces are SRv6).</t>
 
-    <t>We introduce two mechanisms for interworking with legacy
-    access networks (N3 interface is unmodified). In this document we
-    introduce them applied to the Enhanced mode, although they could be used
-    in combination with the Traditional mode as well.</t>
+    <t>In addition to those two modes, we introduce two mechanisms for interworking with legacy
+    access networks (those where the N3 interface is unmodified). In this document we
+    introduce them as a variant to the Enhanced mode, however they are equally applicable to the Traditional mode.</t>
+
 	   <t>One of these mechanisms is designed to interwork with legacy gNBs
-	using GTP/IPv4. The second method is designed to interwork with
+	using GTP/IPv4. The second mechanism is designed to interwork with
 	legacy gNBs using GTP/IPv6.</t>
 
-    <t> This document uses SRv6 functions defined in
+    <t> This document uses SRv6 Segment Endpoint Behaviors defined in
 	<xref target="I-D.ietf-spring-srv6-network-programming"/> as well
-	as new SRv6 functions designed for the mobile user plane. The new SRv6
-	functions are detailed in <xref target="srv6_functions"/>.
+	as new SRv6 Segment Endpoint Behaviors designed for the mobile user plane that are defined in this document <xref target="srv6_functions"/>.
     </t>
 
         <section anchor="traditional_mode"
 			title="Traditional mode">
         <t> In the traditional mode, the existing mobile UPFs remain unchanged
 	    except for the use of SRv6 as the data
-	    plane instead of GTP-U.  There is no impact to the rest of
+	    plane instead of GTP-U.  There is no impact to the rest of the
 	    mobile system.</t>
 
-        <t> In existing 3GPP mobile networks, an UE PDU Session is mapped 1-for-1
+        <t> In existing 3GPP mobile networks, a PDU Session is mapped 1-for-1
 	    with a specific GTP tunnel (TEID). This 1-for-1 mapping is
 	    mirrored here to replace GTP encapsulation with the SRv6
 	    encapsulation, while not changing anything else. There will be a unique SRv6 SID
-	    associated with each UE PDU Session.</t>
+	    associated with each PDU Session.</t>
 
         <t> The traditional mode minimizes the changes required to the mobile
-	    system; it is a good starting point for forming a common basis.</t>
+	    system; hence it is a good starting point for forming a common ground.</t>
 
         <t> Our example topology is shown in <xref target="fig_traditional"/>.
 	    In traditional mode the gNB and the UPFs are SR-aware.
@@ -404,13 +382,13 @@
           <figure>
             <artwork align="center"><![CDATA[
 UE_out  : (A,Z)
-gNB_out : (gNB, U1::1) (A,Z)     -> T.Encaps.Red <U1::1>
+gNB_out : (gNB, U1::1) (A,Z)     -> H.Encaps.Red <U1::1>
 UPF1_out: (gNB, U2::1) (A,Z)     -> End.MAP
 UPF2_out: (A,Z)                  -> End.DT4 or End.DT6]]></artwork>
           </figure>
 
           <t> When the UE packet arrives at the gNB, the gNB performs a
-	      T.Encaps.Red operation. Since there is only one SID,
+	      H.Encaps.Red operation. Since there is only one SID,
 	      there is no need to push an SRH. gNB only adds an outer IPv6
 	      header with IPv6 DA U1::1. U1::1 represents an anchoring
 	      SID specific for that session at UPF1. gNB obtains the SID
@@ -432,25 +410,25 @@ UPF2_out: (A,Z)                  -> End.DT4 or End.DT6]]></artwork>
           <figure>
             <artwork align="center"><![CDATA[
 UPF2_in : (Z,A)
-UPF2_out: (U2::, U1::1) (Z,A)    -> T.Encaps.Red <U1::1>
+UPF2_out: (U2::, U1::2) (Z,A)    -> H.Encaps.Red <U1::2>
 UPF1_out: (U2::, gNB::1) (Z,A)   -> End.MAP
 gNB_out : (Z,A)                  -> End.DX4 or End.DX6
             ]]></artwork>
           </figure>
 
           <t> When the packet arrives at the UPF2, the UPF2 maps that flow into
-	      a UE PDU Session. This UE PDU Session is associated with the segment
-	      endpoint &lt;U1::1&gt;.  UPF2 performs
-	      a T.Encaps.Red operation, encapsulating the packet into
+	      a PDU Session. This PDU Session is associated with the segment
+	      endpoint &lt;U1::2&gt;.  UPF2 performs
+	      a H.Encaps.Red operation, encapsulating the packet into
 	      a new IPv6 header with no SRH since there is only one SID.</t>
 
-          <t> Upon packet arrival on UPF1, the SID U1::1 is a local End.MAP
+          <t> Upon packet arrival on UPF1, the SID U1::2 is a local End.MAP
 	      function. This function maps the SID to the next anchoring
-	      point and replaces U1::1 by gNB::1, that belongs to the next
+	      point and replaces U1::2 by gNB::1, that belongs to the next
 	      hop.</t>
 
           <t> Upon packet arrival on gNB, the SID gNB::1 corresponds to an
-	      End.DX4 or End.DX6 function. The gNB decapsulates the packet,
+	      End.DX4, End.DX6 or End.DX2 behavior (depending on PDU Session Type). The gNB decapsulates the packet,
 	      removing the IPv6 header and all its extensions headers, and
 	      forwards the traffic toward the UE.</t>
         </section>	<!-- End section "Packet flow - Downlink" -->
