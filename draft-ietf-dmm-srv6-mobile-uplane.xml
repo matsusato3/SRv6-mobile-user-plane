@@ -834,7 +834,6 @@ gNB_out : (Z,A)
                 ]]></artwork>
           </figure>
 
-          <section title="Packet flow">
             <t>The packet flow of <xref target="fig_drop_in"/> is as
             follows:</t>
 
@@ -886,7 +885,6 @@ UPF_out : (A,Z)
           the packet. This UPF behavior is not modified from current and
           previous generations.</t>
 
-          </section> <!-- End section "Packet flow" -->
         </section> <!-- End section "SRv6 Drop-in Interworking" -->
     </section>	<!-- End section "User-plane behaviors" -->
 
