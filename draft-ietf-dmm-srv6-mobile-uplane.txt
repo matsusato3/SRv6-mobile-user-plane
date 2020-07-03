@@ -6,7 +6,7 @@ DMM Working Group                                          S. Matsushima
 Internet-Draft                                                  SoftBank
 Intended status: Standards Track                             C. Filsfils
 Expires: January 4, 2021                                        M. Kohno
-                                                            P. Camarillo
+                                                       P. Camarillo, Ed.
                                                      Cisco Systems, Inc.
                                                                 D. Voyer
                                                              Bell Canada
@@ -79,11 +79,11 @@ Table of Contents
    2.  Conventions and Terminology . . . . . . . . . . . . . . . . .   3
      2.1.  Terminology . . . . . . . . . . . . . . . . . . . . . . .   3
      2.2.  Conventions . . . . . . . . . . . . . . . . . . . . . . .   4
-     2.3.  Predefined SRv6 Endpoint Behaviors  . . . . . . . . . . .   5
+     2.3.  Predefined SRv6 Endpoint Behaviors  . . . . . . . . . . .   4
    3.  Motivation  . . . . . . . . . . . . . . . . . . . . . . . . .   5
    4.  A 3GPP Reference Architecture . . . . . . . . . . . . . . . .   6
    5.  User-plane behaviors  . . . . . . . . . . . . . . . . . . . .   7
-     5.1.  Traditional mode  . . . . . . . . . . . . . . . . . . . .   8
+     5.1.  Traditional mode  . . . . . . . . . . . . . . . . . . . .   7
        5.1.1.  Packet flow - Uplink  . . . . . . . . . . . . . . . .   8
        5.1.2.  Packet flow - Downlink  . . . . . . . . . . . . . . .   9
      5.2.  Enhanced Mode . . . . . . . . . . . . . . . . . . . . . .   9
@@ -91,20 +91,20 @@ Table of Contents
        5.2.2.  Packet flow - Downlink  . . . . . . . . . . . . . . .  11
      5.3.  Enhanced mode with unchanged gNB GTP behavior . . . . . .  11
        5.3.1.  Interworking with IPv6 GTP  . . . . . . . . . . . . .  12
-       5.3.2.  Interworking with IPv4 GTP  . . . . . . . . . . . . .  15
+       5.3.2.  Interworking with IPv4 GTP  . . . . . . . . . . . . .  14
        5.3.3.  SRv6 Drop-in Interworking . . . . . . . . . . . . . .  17
-       5.3.4.  Extensions to the interworking mechanisms . . . . . .  19
-   6.  SRv6 Segment Endpoint Mobility Behaviors  . . . . . . . . . .  19
+       5.3.4.  Extensions to the interworking mechanisms . . . . . .  18
+   6.  SRv6 Segment Endpoint Mobility Behaviors  . . . . . . . . . .  18
      6.1.  Args.Mob.Session  . . . . . . . . . . . . . . . . . . . .  19
-     6.2.  End.MAP . . . . . . . . . . . . . . . . . . . . . . . . .  20
+     6.2.  End.MAP . . . . . . . . . . . . . . . . . . . . . . . . .  19
      6.3.  End.M.GTP6.D  . . . . . . . . . . . . . . . . . . . . . .  20
-     6.4.  End.M.GTP6.D.Di . . . . . . . . . . . . . . . . . . . . .  21
-     6.5.  End.M.GTP6.E  . . . . . . . . . . . . . . . . . . . . . .  22
+     6.4.  End.M.GTP6.D.Di . . . . . . . . . . . . . . . . . . . . .  20
+     6.5.  End.M.GTP6.E  . . . . . . . . . . . . . . . . . . . . . .  21
      6.6.  End.M.GTP4.E  . . . . . . . . . . . . . . . . . . . . . .  22
      6.7.  H.M.GTP4.D  . . . . . . . . . . . . . . . . . . . . . . .  23
      6.8.  End.Limit: Rate Limiting behavior . . . . . . . . . . . .  24
-   7.  SRv6 supported 3GPP PDU session types . . . . . . . . . . . .  25
-   8.  Network Slicing Considerations  . . . . . . . . . . . . . . .  25
+   7.  SRv6 supported 3GPP PDU session types . . . . . . . . . . . .  24
+   8.  Network Slicing Considerations  . . . . . . . . . . . . . . .  24
    9.  Control Plane Considerations  . . . . . . . . . . . . . . . .  25
 
 
@@ -114,15 +114,15 @@ Matsushima, et al.       Expires January 4, 2021                [Page 2]
 Internet-Draft             SRv6-mobile-uplane                  July 2020
 
 
-   10. Security Considerations . . . . . . . . . . . . . . . . . . .  26
+   10. Security Considerations . . . . . . . . . . . . . . . . . . .  25
    11. IANA Considerations . . . . . . . . . . . . . . . . . . . . .  26
-   12. Acknowledgements  . . . . . . . . . . . . . . . . . . . . . .  27
-   13. Contributors  . . . . . . . . . . . . . . . . . . . . . . . .  27
+   12. Acknowledgements  . . . . . . . . . . . . . . . . . . . . . .  26
+   13. Contributors  . . . . . . . . . . . . . . . . . . . . . . . .  26
    14. References  . . . . . . . . . . . . . . . . . . . . . . . . .  27
      14.1.  Normative References . . . . . . . . . . . . . . . . . .  27
-     14.2.  Informative References . . . . . . . . . . . . . . . . .  28
+     14.2.  Informative References . . . . . . . . . . . . . . . . .  27
    Appendix A.  Implementations  . . . . . . . . . . . . . . . . . .  29
-   Authors' Addresses  . . . . . . . . . . . . . . . . . . . . . . .  30
+   Authors' Addresses  . . . . . . . . . . . . . . . . . . . . . . .  29
 
 1.  Introduction
 
@@ -152,16 +152,16 @@ Internet-Draft             SRv6-mobile-uplane                  July 2020
 
 2.1.  Terminology
 
-   o  AMBR: Aggregate Maximum Bit Rate
-   o  Anchor: A topological endpoint of an UE
    o  CNF: Cloud-native Network Function
-   o  gNB: gNodeB
    o  NFV: Network Function Virtualization
    o  PDU: Packet Data Unit
    o  PDU Session: Context of an UE connects to a mobile network.
-   o  TEID: Tunnel Endpoint Identifier
    o  UE: User Equipment
    o  UPF: User Plane Function
+   o  VNF: Virtual Network Function
+
+   The following terms used within this document are defined in
+   [RFC8402]: Segment Routing, SR Domain, Segment ID (SID), SRv6, SRv6
 
 
 
@@ -170,10 +170,6 @@ Matsushima, et al.       Expires January 4, 2021                [Page 3]
 Internet-Draft             SRv6-mobile-uplane                  July 2020
 
 
-   o  VNF: Virtual Network Function
-
-   The following terms used within this document are defined in
-   [RFC8402]: Segment Routing, SR Domain, Segment ID (SID), SRv6, SRv6
    SID, Active Segment, SR Policy, Prefix SID, Adjacency SID and Binding
    SID.
 
@@ -215,9 +211,13 @@ Internet-Draft             SRv6-mobile-uplane                  July 2020
    o  U2::1 is an IPv6 address (SID) assigned to UPF2.
    o  U2:: is some other IPv6 address (SID) assigned to UPF2.
 
+2.3.  Predefined SRv6 Endpoint Behaviors
 
+   The following SRv6 Endpoint Behaviors are defined in
+   [I-D.ietf-spring-srv6-network-programming].
 
-
+   o  End.DT4: decapsulate and forward using a specific IPv4 table
+      lookup.
 
 
 
@@ -226,13 +226,6 @@ Matsushima, et al.       Expires January 4, 2021                [Page 4]
 Internet-Draft             SRv6-mobile-uplane                  July 2020
 
 
-2.3.  Predefined SRv6 Endpoint Behaviors
-
-   The following SRv6 Endpoint Behaviors are defined in
-   [I-D.ietf-spring-srv6-network-programming].
-
-   o  End.DT4: decapsulate and forward using a specific IPv4 table
-      lookup.
    o  End.DT6: decapsulate and forward using a specific IPv6 table
       lookup.
    o  End.DX4: decapsulate the packet and forward through a particular
@@ -274,6 +267,13 @@ Internet-Draft             SRv6-mobile-uplane                  July 2020
    SRv6 defines the network-programming concept
    [I-D.ietf-spring-srv6-network-programming].  Applied to mobility,
    SRv6 can provide the user-plane behaviors needed for mobility
+   management.  SRv6 takes advantage of the underlying transport
+   awareness and flexibility together with the ability to also include
+   services to optimize the end-to-end mobile dataplane.
+
+   The use-cases for SRv6 mobility are discussed in
+   [I-D.camarilloelmalky-springdmm-srv6-mob-usecases].
+
 
 
 
@@ -281,13 +281,6 @@ Matsushima, et al.       Expires January 4, 2021                [Page 5]
 
 Internet-Draft             SRv6-mobile-uplane                  July 2020
 
-
-   management.  SRv6 takes advantage of the underlying transport
-   awareness and flexibility together with the ability to also include
-   services to optimize the end-to-end mobile dataplane.
-
-   The use-cases for SRv6 mobility are discussed in
-   [I-D.camarilloelmalky-springdmm-srv6-mob-usecases].
 
 4.  A 3GPP Reference Architecture
 
@@ -330,6 +323,13 @@ Internet-Draft             SRv6-mobile-uplane                  July 2020
    to N9 interfaces, although the description in this document also work
    for such UPFs.
 
+   Each session from a UE gets assigned to a UPF.  Sometimes multiple
+   UPFs may be used, providing richer service functions.  A UE gets its
+   IP address from the DHCP block of its UPF.  The UPF advertises that
+   IP address block toward the Internet, ensuring that return traffic is
+   routed to the right UPF.
+
+
 
 
 
@@ -337,12 +337,6 @@ Matsushima, et al.       Expires January 4, 2021                [Page 6]
 
 Internet-Draft             SRv6-mobile-uplane                  July 2020
 
-
-   Each session from a UE gets assigned to a UPF.  Sometimes multiple
-   UPFs may be used, providing richer service functions.  A UE gets its
-   IP address from the DHCP block of its UPF.  The UPF advertises that
-   IP address block toward the Internet, ensuring that return traffic is
-   routed to the right UPF.
 
 5.  User-plane behaviors
 
@@ -382,18 +376,6 @@ Internet-Draft             SRv6-mobile-uplane                  July 2020
    Segment Endpoint Behaviors designed for the mobile user plane that
    are defined in this document Section 6.
 
-
-
-
-
-
-
-
-Matsushima, et al.       Expires January 4, 2021                [Page 7]
-
-Internet-Draft             SRv6-mobile-uplane                  July 2020
-
-
 5.1.  Traditional mode
 
    In the traditional mode, the existing mobile UPFs remain unchanged
@@ -403,6 +385,15 @@ Internet-Draft             SRv6-mobile-uplane                  July 2020
    In existing 3GPP mobile networks, a PDU Session is mapped 1-for-1
    with a specific GTP tunnel (TEID).  This 1-for-1 mapping is mirrored
    here to replace GTP encapsulation with the SRv6 encapsulation, while
+
+
+
+
+Matsushima, et al.       Expires January 4, 2021                [Page 7]
+
+Internet-Draft             SRv6-mobile-uplane                  July 2020
+
+
    not changing anything else.  There will be a unique SRv6 SID
    associated with each PDU Session.
 
@@ -441,15 +432,6 @@ Internet-Draft             SRv6-mobile-uplane                  July 2020
    at UPF1. gNB obtains the SID U1::1 from the existing control plane
    (N2 interface).
 
-
-
-
-
-Matsushima, et al.       Expires January 4, 2021                [Page 8]
-
-Internet-Draft             SRv6-mobile-uplane                  July 2020
-
-
    When the packet arrives at UPF1, the SID U1::1 identifies a local
    End.MAP function.  End.MAP replaces U1::1 by U2::1, that belongs to
    the next UPF (U2).
@@ -458,6 +440,15 @@ Internet-Draft             SRv6-mobile-uplane                  July 2020
    End.DT function.  UPF2 decapsulates the packet, performs a lookup in
    a specific table associated with that mobile network and forwards the
    packet toward the data network (DN).
+
+
+
+
+
+Matsushima, et al.       Expires January 4, 2021                [Page 8]
+
+Internet-Draft             SRv6-mobile-uplane                  July 2020
+
 
 5.1.2.  Packet flow - Downlink
 
@@ -498,14 +489,6 @@ Internet-Draft             SRv6-mobile-uplane                  July 2020
    The gNB control-plane (N2 interface) is unchanged, specifically a
    single IPv6 address is given to the gNB.
 
-
-
-
-Matsushima, et al.       Expires January 4, 2021                [Page 9]
-
-Internet-Draft             SRv6-mobile-uplane                  July 2020
-
-
    The gNB MAY resolve the IP address received via the control plane
    into a SID list using a mechanism like PCEP, DNS-lookup, LISP
    control-plane or others.
@@ -515,6 +498,14 @@ Internet-Draft             SRv6-mobile-uplane                  July 2020
 
    Figure 3 shows an Enhanced mode topology.  In the Enhanced mode, the
    gNB and the UPF are SR-aware.  The Figure shows two service segments,
+
+
+
+Matsushima, et al.       Expires January 4, 2021                [Page 9]
+
+Internet-Draft             SRv6-mobile-uplane                  July 2020
+
+
    S1 and C1.  S1 represents a VNF in the network, and C1 represents an
    intermediate router used for Traffic Engineering purposes to enforce
    a low-latency path in the network.  Note that both S1 and C1 are not
@@ -555,17 +546,21 @@ Internet-Draft             SRv6-mobile-uplane                  July 2020
    Nodes S1 and C1 perform their related Endpoint functionality and
    forward the packet.
 
+   When the packet arrives at UPF2, the active segment (U2::1) is an
+   End.DT4/End.DT6/End.DT2U which performs the decapsulation (removing
+   the IPv6 header with all its extension headers) and forwards toward
+   the data network.
+
+
+
+
+
 
 
 Matsushima, et al.       Expires January 4, 2021               [Page 10]
 
 Internet-Draft             SRv6-mobile-uplane                  July 2020
 
-
-   When the packet arrives at UPF2, the active segment (U2::1) is an
-   End.DT4/End.DT6/End.DT2U which performs the decapsulation (removing
-   the IPv6 header with all its extension headers) and forwards toward
-   the data network.
 
 5.2.2.  Packet flow - Downlink
 
@@ -604,20 +599,6 @@ Internet-Draft             SRv6-mobile-uplane                  July 2020
    The SRGW is not an anchor point and maintains very little state.  For
    this reason, both IPv4 and IPv6 methods scale to millions of UEs.
 
-
-
-
-
-
-
-
-
-
-Matsushima, et al.       Expires January 4, 2021               [Page 11]
-
-Internet-Draft             SRv6-mobile-uplane                  July 2020
-
-
                                                               _______
                      IP GTP          SRv6                    /       \
     +--+      +-----+ [N3] +------+  [N9]  +------+  [N6]   /         \
@@ -629,6 +610,13 @@ Internet-Draft             SRv6-mobile-uplane                  July 2020
 
    Both of the mechanisms described in this section are applicable to
    either the Traditional Mode or the Enhanced Mode.
+
+
+
+Matsushima, et al.       Expires January 4, 2021               [Page 11]
+
+Internet-Draft             SRv6-mobile-uplane                  July 2020
+
 
 5.3.1.  Interworking with IPv6 GTP
 
@@ -658,22 +646,6 @@ Internet-Draft             SRv6-mobile-uplane                  July 2020
    network, and C1 represents a router configured for Traffic
    Engineering.
 
-
-
-
-
-
-
-
-
-
-
-
-Matsushima, et al.       Expires January 4, 2021               [Page 12]
-
-Internet-Draft             SRv6-mobile-uplane                  July 2020
-
-
                                   +----+
                 IPv6/GTP         -| S1 |-                            ___
    +--+  +-----+ [N3]           / +----+ \                          /
@@ -689,6 +661,18 @@ Internet-Draft             SRv6-mobile-uplane                  July 2020
 5.3.1.1.  Packet flow - Uplink
 
    The uplink packet flow is as follows:
+
+
+
+
+
+
+
+
+Matsushima, et al.       Expires January 4, 2021               [Page 12]
+
+Internet-Draft             SRv6-mobile-uplane                  July 2020
+
 
    UE_out  : (A,Z)
    gNB_out : (gNB, B)(GTP: TEID T)(A,Z)       -> Interface N3 unmodified
@@ -723,13 +707,6 @@ Internet-Draft             SRv6-mobile-uplane                  July 2020
    IPv6 header with all its extension headers) and forwards the packet
    toward the data network.
 
-
-
-Matsushima, et al.       Expires January 4, 2021               [Page 13]
-
-Internet-Draft             SRv6-mobile-uplane                  July 2020
-
-
 5.3.1.2.  Packet flow - Downlink
 
    The downlink packet flow is as follows:
@@ -745,6 +722,14 @@ Internet-Draft             SRv6-mobile-uplane                  July 2020
    When a packet destined to A arrives at the UPF2, the UPF2 performs a
    lookup in the table associated to A and finds the SID list <C1, S1,
    SRGW::TEID, gNB>.  The UPF2 performs an H.Encaps.Red operation,
+
+
+
+Matsushima, et al.       Expires January 4, 2021               [Page 13]
+
+Internet-Draft             SRv6-mobile-uplane                  July 2020
+
+
    encapsulating the packet into a new IPv6 header with its
    corresponding SRH.
 
@@ -775,17 +760,6 @@ Internet-Draft             SRv6-mobile-uplane                  July 2020
    UEs.  This enables more scalable SRGW deployments compared to a
    solution holding millions of states, one or more per UE.
 
-
-
-
-
-
-
-Matsushima, et al.       Expires January 4, 2021               [Page 14]
-
-Internet-Draft             SRv6-mobile-uplane                  July 2020
-
-
 5.3.2.  Interworking with IPv4 GTP
 
    In this interworking mode the gNB uses GTP over IPv4 in the N3
@@ -804,6 +778,13 @@ Internet-Draft             SRv6-mobile-uplane                  July 2020
    An example topology is shown in Figure 6.  In this mode the gNB is an
    unmodified gNB using IPv4/GTP.  The UPFs are SR-aware.  As before,
    the SRGW maps the IPv4/GTP traffic to SRv6.
+
+
+
+Matsushima, et al.       Expires January 4, 2021               [Page 14]
+
+Internet-Draft             SRv6-mobile-uplane                  July 2020
+
 
    S1 and C1 are two service segment endpoints.  S1 represents a VNF in
    the network, and C1 represents a router configured for Traffic
@@ -834,14 +815,6 @@ Internet-Draft             SRv6-mobile-uplane                  July 2020
 
    The UE sends a packet destined to Z toward the gNB on a specific
    bearer for that session.  The gNB, which is unmodified, encapsulates
-
-
-
-Matsushima, et al.       Expires January 4, 2021               [Page 15]
-
-Internet-Draft             SRv6-mobile-uplane                  July 2020
-
-
    the packet into a new IPv4, UDP and GTP headers.  The IPv4 DA, B, and
    the GTP TEID are the ones received at the N2 interface.
 
@@ -859,6 +832,15 @@ Internet-Draft             SRv6-mobile-uplane                  July 2020
    is bound to End.DT4/6 which performs the decapsulation (removing the
    outer IPv6 header with all its extension headers) and forwards toward
    the data network.
+
+
+
+
+
+Matsushima, et al.       Expires January 4, 2021               [Page 15]
+
+Internet-Draft             SRv6-mobile-uplane                  July 2020
+
 
 5.3.2.2.  Packet flow - Downlink
 
@@ -890,14 +872,6 @@ Internet-Draft             SRv6-mobile-uplane                  July 2020
 
    When the packet arrives at the gNB, the packet is a regular IPv4/GTP
    packet.  The gNB looks for the specific radio bearer for that TEID
-
-
-
-Matsushima, et al.       Expires January 4, 2021               [Page 16]
-
-Internet-Draft             SRv6-mobile-uplane                  July 2020
-
-
    and forward it on the bearer.  This gNB behavior is not modified from
    current and previous generations.
 
@@ -911,6 +885,18 @@ Internet-Draft             SRv6-mobile-uplane                  July 2020
    UE/session basis according to an Uplink Classifier.  There is state
    for steering the different sessions in the form of a SR Policy.
    However, SR policies are shared among several UE/sessions.
+
+
+
+
+
+
+
+
+Matsushima, et al.       Expires January 4, 2021               [Page 16]
+
+Internet-Draft             SRv6-mobile-uplane                  July 2020
+
 
 5.3.3.  SRv6 Drop-in Interworking
 
@@ -945,15 +931,6 @@ Internet-Draft             SRv6-mobile-uplane                  July 2020
 
    The packet flow of Figure 7 is as follows:
 
-
-
-
-
-Matsushima, et al.       Expires January 4, 2021               [Page 17]
-
-Internet-Draft             SRv6-mobile-uplane                  July 2020
-
-
 UPF2a/gNB_out: (UPF2a/gNB, U2b::)(GTP: TEID T)(A,Z)
 SRGW-A_out   : (SRGW-A, S1)(U2b::, U1b::TEID, C1; SL=3)(A,Z) -> U2b:: is an
                                                                 End.M.GTP6.D.Di
@@ -969,6 +946,13 @@ UPF2b_out    : (A,Z)
    unmodified, performs encapsulates the packet into a new IPv6, UDP and
    GTP headers.  The IPv6 DA, U2b::, and the GTP TEID are the ones
    received at the N2 interface.
+
+
+
+Matsushima, et al.       Expires January 4, 2021               [Page 17]
+
+Internet-Draft             SRv6-mobile-uplane                  July 2020
+
 
    The IPv6 address that was signaled over the N2 interface for that UE
    PDU Session, U2b::, is now the IPv6 DA.  U2b:: is an SRv6 Binding SID
@@ -998,18 +982,6 @@ UPF2b_out    : (A,Z)
    the packet.  This UPF behavior is not modified from current and
    previous generations.
 
-
-
-
-
-
-
-
-Matsushima, et al.       Expires January 4, 2021               [Page 18]
-
-Internet-Draft             SRv6-mobile-uplane                  July 2020
-
-
 5.3.4.  Extensions to the interworking mechanisms
 
    In this section we presented three mechanisms for interworking with
@@ -1026,6 +998,17 @@ Internet-Draft             SRv6-mobile-uplane                  July 2020
    interface (e.g.  L3-anchor is SRv6 capable but L2-anchor is not).
 
 6.  SRv6 Segment Endpoint Mobility Behaviors
+
+
+
+
+
+
+
+Matsushima, et al.       Expires January 4, 2021               [Page 18]
+
+Internet-Draft             SRv6-mobile-uplane                  July 2020
+
 
 6.1.  Args.Mob.Session
 
@@ -1058,14 +1041,6 @@ Internet-Draft             SRv6-mobile-uplane                  July 2020
 
    Arg.Mob.Session is required in case that one SID aggregates multiple
    PDU Sessions.  Since the SRv6 SID is likely NOT to be instantiated
-
-
-
-Matsushima, et al.       Expires January 4, 2021               [Page 19]
-
-Internet-Draft             SRv6-mobile-uplane                  July 2020
-
-
    per PDU session, Args.Mob.Session helps the UPF to perform the
    behaviors which require per QFI and/or per PDU Session granularity.
 
@@ -1083,6 +1058,13 @@ Internet-Draft             SRv6-mobile-uplane                  July 2020
    3.    IF segment_list > 1
    4.       insert a new SRH
    5.    forward according to the new mapped SID
+
+
+
+Matsushima, et al.       Expires January 4, 2021               [Page 19]
+
+Internet-Draft             SRv6-mobile-uplane                  July 2020
+
 
    Ref1: The SIDs in the SRH are NOT modified.
 
@@ -1113,15 +1095,6 @@ Internet-Draft             SRv6-mobile-uplane                  July 2020
    NH is already known in advance.  For the IPv4v6 PDU Session Type, in
    addition we inspect the first nibble of the PDU to know the NH value.
 
-
-
-
-
-Matsushima, et al.       Expires January 4, 2021               [Page 20]
-
-Internet-Draft             SRv6-mobile-uplane                  July 2020
-
-
    The prefix of last segment (S3 in above example) SHOULD be followed
    by an Arg.Mob.Session argument space which is used to provide the
    session identifiers.
@@ -1139,6 +1112,15 @@ Internet-Draft             SRv6-mobile-uplane                  July 2020
    preserved as the last SID in SRH.  Suppose, for example, this SID is
    associated with an SR policy <S1, S2, S3> and an IPv6 Source Address
    A.
+
+
+
+
+
+Matsushima, et al.       Expires January 4, 2021               [Page 20]
+
+Internet-Draft             SRv6-mobile-uplane                  July 2020
+
 
    When the SR Gateway node N receives a packet destined to S and S is a
    local End.M.GTP6.D.Di SID, N does:
@@ -1167,17 +1149,6 @@ Internet-Draft             SRv6-mobile-uplane                  July 2020
    The prefix of A SHOULD be an End.M.GTP6.E SID instantiated at an SR
    gateway.
 
-
-
-
-
-
-
-Matsushima, et al.       Expires January 4, 2021               [Page 21]
-
-Internet-Draft             SRv6-mobile-uplane                  July 2020
-
-
 6.5.  End.M.GTP6.E
 
    The "Endpoint behavior with encapsulation for IPv6/GTP tunnel"
@@ -1190,6 +1161,22 @@ Internet-Draft             SRv6-mobile-uplane                  July 2020
 
    When the SR Gateway node N receives a packet destined to S, and S is
    a local End.M.GTP6.E SID, N does the following:
+
+
+
+
+
+
+
+
+
+
+
+
+Matsushima, et al.       Expires January 4, 2021               [Page 21]
+
+Internet-Draft             SRv6-mobile-uplane                  July 2020
+
 
     1. IF NH=SRH & SL = 1  THEN                                ;; Ref1
     2.    store SRH[0] in variable new_DA
@@ -1219,21 +1206,6 @@ Internet-Draft             SRv6-mobile-uplane                  July 2020
    When the SR Gateway node N receives a packet destined to S and S is a
    local End.M.GTP4.E SID, N does:
 
-
-
-
-
-
-
-
-
-
-
-Matsushima, et al.       Expires January 4, 2021               [Page 22]
-
-Internet-Draft             SRv6-mobile-uplane                  July 2020
-
-
    1. IF (NH=SRH and SL = 0) or ENH=4 THEN
    2.    store IPv6 DA in buffer S
    3.    store IPv6 SA in buffer S'
@@ -1254,6 +1226,14 @@ Internet-Draft             SRv6-mobile-uplane                  July 2020
 
                          End.M.GTP4.E SID Encoding
 
+
+
+
+Matsushima, et al.       Expires January 4, 2021               [Page 22]
+
+Internet-Draft             SRv6-mobile-uplane                  July 2020
+
+
    S' has the following format:
 
        0                                                         127
@@ -1273,22 +1253,6 @@ Internet-Draft             SRv6-mobile-uplane                  July 2020
 
    When the SR Gateway node N receives a packet destined to a IW-
    IPv4-Prefix, N does:
-
-
-
-
-
-
-
-
-
-
-
-
-Matsushima, et al.       Expires January 4, 2021               [Page 23]
-
-Internet-Draft             SRv6-mobile-uplane                  July 2020
-
 
    1. IF Payload == UDP/GTP THEN
    2.    pop the outer IPv4 header and UDP/GTP headers
@@ -1317,6 +1281,15 @@ Internet-Draft             SRv6-mobile-uplane                  July 2020
    The SID B MAY be an SRv6 Binding SID instantiated at the first UPF
    (U1) to bind a SR policy [I-D.ietf-spring-segment-routing-policy].
 
+
+
+
+
+Matsushima, et al.       Expires January 4, 2021               [Page 23]
+
+Internet-Draft             SRv6-mobile-uplane                  July 2020
+
+
    The prefix of B' SHOULD be an End.M.GTP4.E SID with its format
    instantiated at an SR gateway with the IPv4 SA of the receiving
    packet.
@@ -1328,8 +1301,8 @@ Internet-Draft             SRv6-mobile-uplane                  July 2020
    behavior encodes in its arguments the rate limiting parameter that
    should be applied to this packet.  Multiple flows of packets should
    have the same group identifier in the SID when those flows are in an
-   same AMBR group.  The encoding format of the rate limit segment SID
-   is as follows:
+   same AMBR (Aggregate Maximum Bit Rate) group.  The encoding format of
+   the rate limit segment SID is as follows:
 
               +----------------------+----------+-----------+
               | LOC+FUNC rate-limit  | group-id | limit-rate|
@@ -1337,14 +1310,6 @@ Internet-Draft             SRv6-mobile-uplane                  July 2020
                     128-i-j                i          j
 
              End.Limit: Rate limiting behavior argument format
-
-
-
-
-Matsushima, et al.       Expires January 4, 2021               [Page 24]
-
-Internet-Draft             SRv6-mobile-uplane                  July 2020
-
 
    If the limit-rate bits are set to zero, the node should not do rate
    limiting unless static configuration or control-plane sets the limit
@@ -1372,6 +1337,15 @@ Internet-Draft             SRv6-mobile-uplane                  July 2020
    logically separate network resources.  User-plane behaviors
    represented as SRv6 segments would be part of a slice.
 
+
+
+
+
+Matsushima, et al.       Expires January 4, 2021               [Page 24]
+
+Internet-Draft             SRv6-mobile-uplane                  July 2020
+
+
    [I-D.ietf-spring-segment-routing-policy] describes a solution to
    build basic network slices with SR.  Depending on the requirements,
    these slices can be further refined by adopting the mechanisms from:
@@ -1393,15 +1367,6 @@ Internet-Draft             SRv6-mobile-uplane                  July 2020
    This document focuses on user-plane behavior and its independence
    from the control plane.
 
-
-
-
-
-Matsushima, et al.       Expires January 4, 2021               [Page 25]
-
-Internet-Draft             SRv6-mobile-uplane                  July 2020
-
-
    The control plane could be the current 3GPP-defined control plane
    with slight modifications to the N4 interface [TS.29244].
 
@@ -1413,8 +1378,7 @@ Internet-Draft             SRv6-mobile-uplane                  July 2020
    is out of the scope of this document.
 
    Section 11 allocates SRv6 Segment Endpoint Behavior codepoints for
-   the new behaviors defined in this document.  Control-plane protocols
-   are expected to use these behavior codepoints to signal each SID.
+   the new behaviors defined in this document.
 
 10.  Security Considerations
 
@@ -1430,6 +1394,14 @@ Internet-Draft             SRv6-mobile-uplane                  July 2020
    The technology described in this document is applied to a mobile
    network that is within the SR Domain.
 
+
+
+
+Matsushima, et al.       Expires January 4, 2021               [Page 25]
+
+Internet-Draft             SRv6-mobile-uplane                  July 2020
+
+
    This document introduces new SRv6 Endpoint Behaviors.  Those
    behaviors do not need any especial security consideration given that
    it is deployed within that SR Domain.
@@ -1441,33 +1413,16 @@ Internet-Draft             SRv6-mobile-uplane                  July 2020
    registry [I-D.ietf-spring-srv6-network-programming], the following
    values:
 
-
-
-
-
-
-
-
-
-
-
-
-
-Matsushima, et al.       Expires January 4, 2021               [Page 26]
-
-Internet-Draft             SRv6-mobile-uplane                  July 2020
-
-
-           +-------------+-----+-------------------+-----------+
-           | Value/Range | Hex | Endpoint behavior | Reference |
-           +-------------+-----+-------------------+-----------+
-           | TBA         | TBA |      End.MAP      | [This.ID] |
-           | TBA         | TBA |    End.M.GTP6.D   | [This.ID] |
-           | TBA         | TBA |   End.M.GTP6.Di   | [This.ID] |
-           | TBA         | TBA |    End.M.GTP6.E   | [This.ID] |
-           | TBA         | TBA |    End.M.GTP4.E   | [This.ID] |
-           | TBA         | TBA |     End.Limit     | [This.ID] |
-           +-------------+-----+-------------------+-----------+
+              +-------+-----+-------------------+-----------+
+              | Value | Hex | Endpoint behavior | Reference |
+              +-------+-----+-------------------+-----------+
+              | TBA   | TBA |      End.MAP      | [This.ID] |
+              | TBA   | TBA |    End.M.GTP6.D   | [This.ID] |
+              | TBA   | TBA |   End.M.GTP6.Di   | [This.ID] |
+              | TBA   | TBA |    End.M.GTP6.E   | [This.ID] |
+              | TBA   | TBA |    End.M.GTP4.E   | [This.ID] |
+              | TBA   | TBA |     End.Limit     | [This.ID] |
+              +-------+-----+-------------------+-----------+
 
           Table 1: SRv6 Mobile User-plane Endpoint Behavior Types
 
@@ -1493,6 +1448,16 @@ Internet-Draft             SRv6-mobile-uplane                  July 2020
 
    Email: tetsuya.ietf@gmail.com
 
+
+
+
+
+
+Matsushima, et al.       Expires January 4, 2021               [Page 26]
+
+Internet-Draft             SRv6-mobile-uplane                  July 2020
+
+
 14.  References
 
 14.1.  Normative References
@@ -1502,17 +1467,6 @@ Internet-Draft             SRv6-mobile-uplane                  July 2020
               P. Mattes, "Segment Routing Policy Architecture", draft-
               ietf-spring-segment-routing-policy-07 (work in progress),
               May 2020.
-
-
-
-
-
-
-
-Matsushima, et al.       Expires January 4, 2021               [Page 27]
-
-Internet-Draft             SRv6-mobile-uplane                  July 2020
-
 
    [I-D.ietf-spring-srv6-network-programming]
               Filsfils, C., Camarillo, P., Leddy, J., Voyer, D.,
@@ -1535,6 +1489,10 @@ Internet-Draft             SRv6-mobile-uplane                  July 2020
               (SRH)", RFC 8754, DOI 10.17487/RFC8754, March 2020,
               <https://www.rfc-editor.org/info/rfc8754>.
 
+   [TS.23501]
+              3GPP, "System Architecture for the 5G System", 3GPP TS
+              23.501 15.0.0, November 2017.
+
 14.2.  Informative References
 
    [I-D.ali-spring-network-slicing-building-blocks]
@@ -1542,6 +1500,19 @@ Internet-Draft             SRv6-mobile-uplane                  July 2020
               "Building blocks for Slicing in Segment Routing Network",
               draft-ali-spring-network-slicing-building-blocks-02 (work
               in progress), November 2019.
+
+
+
+
+
+
+
+
+
+Matsushima, et al.       Expires January 4, 2021               [Page 27]
+
+Internet-Draft             SRv6-mobile-uplane                  July 2020
+
 
    [I-D.auge-dmm-hicn-mobility-deployment-options]
               Auge, J., Carofiglio, G., Muscariello, L., and M.
@@ -1561,14 +1532,6 @@ Internet-Draft             SRv6-mobile-uplane                  July 2020
               Moses, D., and C. Perkins, "Protocol for Forwarding Policy
               Configuration (FPC) in DMM", draft-ietf-dmm-fpc-cpdp-13
               (work in progress), March 2020.
-
-
-
-
-Matsushima, et al.       Expires January 4, 2021               [Page 28]
-
-Internet-Draft             SRv6-mobile-uplane                  July 2020
-
 
    [I-D.ietf-lsr-flex-algo]
               Psenak, P., Hegde, S., Filsfils, C., Talaulikar, K., and
@@ -1594,13 +1557,18 @@ Internet-Draft             SRv6-mobile-uplane                  July 2020
               SRv6 Endpoint Mobility", draft-rodrigueznatal-lisp-srv6-03
               (work in progress), January 2020.
 
-   [TS.23501]
-              3GPP, "System Architecture for the 5G System", 3GPP TS
-              23.501 15.0.0, November 2017.
-
    [TS.29244]
               3GPP, "Interface between the Control Plane and the User
               Plane Nodes", 3GPP TS 29.244 15.0.0, December 2017.
+
+
+
+
+
+Matsushima, et al.       Expires January 4, 2021               [Page 28]
+
+Internet-Draft             SRv6-mobile-uplane                  July 2020
+
 
    [TS.29281]
               3GPP, "General Packet Radio System (GPRS) Tunnelling
@@ -1616,15 +1584,6 @@ Appendix A.  Implementations
    This document introduces new SRv6 Endpoint Behaviors.  These
    behaviors have an open-source P4 implementation available in
    <https://github.com/ebiken/p4srv6>.
-
-
-
-
-
-Matsushima, et al.       Expires January 4, 2021               [Page 29]
-
-Internet-Draft             SRv6-mobile-uplane                  July 2020
-
 
    Additionally, a full implementation of this document is available in
    Linux Foundation FD.io VPP project since release 20.05.  More
@@ -1658,7 +1617,16 @@ Authors' Addresses
    Email: mkohno@cisco.com
 
 
-   Pablo Camarillo Garvia
+
+
+
+
+Matsushima, et al.       Expires January 4, 2021               [Page 29]
+
+Internet-Draft             SRv6-mobile-uplane                  July 2020
+
+
+   Pablo Camarillo Garvia (editor)
    Cisco Systems, Inc.
    Spain
 
@@ -1670,16 +1638,6 @@ Authors' Addresses
    Canada
 
    Email: daniel.voyer@bell.ca
-
-
-
-
-
-
-
-Matsushima, et al.       Expires January 4, 2021               [Page 30]
-
-Internet-Draft             SRv6-mobile-uplane                  July 2020
 
 
    Charles E. Perkins
@@ -1719,18 +1677,4 @@ Internet-Draft             SRv6-mobile-uplane                  July 2020
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-Matsushima, et al.       Expires January 4, 2021               [Page 31]
+Matsushima, et al.       Expires January 4, 2021               [Page 30]
