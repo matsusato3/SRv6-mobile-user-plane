@@ -186,7 +186,7 @@
             <xref target="RFC8754" />: SRH, SR Source Node, Transit Node, SR Segment Endpoint
             Node and Reduced SRH.</t>
 
-        <t>The following terms used within this document are defined in [NET-PGM]: NH, SL, FIB, SA, DA, SRv6 SID function, SRv6 Segment Endpoint Behavior.</t>
+        <t>The following terms used within this document are defined in [NET-PGM]: NH, SL, FIB, SA, DA, SRv6 SID behavior, SRv6 Segment Endpoint Behavior.</t>
 
     	</section>	<!-- End subsection "Terminology" -->
 
@@ -259,7 +259,7 @@
 	simplified manner and removing forwarding state from the network. It is also
   suitable for virtualized environments, like VNF/CNF to VNF/CNF networking.</t>
     <t> SRv6 defines the network-programming concept <xref target="I-D.ietf-spring-srv6-network-programming"/>.
-  Applied to mobility, SRv6 can provide the user-plane functions needed
+  Applied to mobility, SRv6 can provide the user-plane behaviors needed
   for mobility management.  SRv6 takes advantage of the underlying transport
   awareness and flexibility together with the ability to also include services to optimize the end-to-end mobile dataplane.</t>
     <t>The use-cases for SRv6 mobility are discussed in <xref target="I-D.camarilloelmalky-springdmm-srv6-mob-usecases"/>.</t>
@@ -897,13 +897,13 @@ UPF2b_out    : (A,Z)
       </section>  <!-- End "Enhanced mode with unchanged gNB GTP ..." -->
     </section>	<!-- End section "User-plane behaviors" -->
 
-    <section anchor="srv6_functions" title="SRv6 SID Mobility Functions">
+    <section anchor="srv6_functions" title="SRv6 Segment Endpoint Mobility Behaviors">
       <!-- Add text on functions used on UPF1, UPF2,... -->
       <section anchor="arguments-for-mobility" title="Args.Mob.Session">
         <t>Args.Mob.Session provide per-session information for charging, buffering and
           lawful intercept (among others) required by some mobile nodes.
           The Args.Mob.Session argument format is used in combination with End.Map,
-          End.DT and End.DX functions. Note that proposed format is applicable for
+          End.DT and End.DX behaviors. Note that proposed format is applicable for
           5G networks, while similar formats could be proposed for legacy networks.
         <figure title="Args.Mob.Session format">
           <artwork align="center"><![CDATA[
@@ -929,14 +929,14 @@ UPF2b_out    : (A,Z)
         </list>
       </t>
       <t>Arg.Mob.Session is required in case that one SID aggregates
-      multiple PDU Sessions. Since the SRv6 function is likely NOT to be
+      multiple PDU Sessions. Since the SRv6 SID is likely NOT to be
       instantiated per PDU session, Args.Mob.Session helps the UPF to
-      perform the functions which require per QFI and/or per PDU Session
+      perform the behaviors which require per QFI and/or per PDU Session
       granularity.</t>
       </section>
 
       <section anchor="end-map-function" title="End.MAP">
-        <t>The "Endpoint function with SID mapping" function (End.MAP for
+        <t>The "Endpoint behavior with SID mapping" behavior (End.MAP for
 	    short) is used in several scenarios. Particularly in mobility,
       End.MAP is used in the UPFs for the PDU Session anchor functionality.</t>
 
@@ -955,8 +955,8 @@ UPF2b_out    : (A,Z)
       </section>	<!-- End section "End.MAP" -->
 
       <section anchor="End-M-GTP6-D" title="End.M.GTP6.D">
-        <t>The "Endpoint function with IPv6/GTP decapsulation into SR policy"
-	    function (End.M.GTP6.D for short) is used in interworking scenario
+        <t>The "Endpoint behavior with IPv6/GTP decapsulation into SR policy"
+	    behavior (End.M.GTP6.D for short) is used in interworking scenario
 	    for the uplink toward from the legacy gNB using IPv6/GTP.
 	    Suppose, for example, this SID is associated with an SR
 	    policy &lt;S1, S2, S3&gt;
@@ -993,8 +993,8 @@ UPF2b_out    : (A,Z)
      </section>	<!-- End section "End.M.GTP6.D" -->
 
      <section anchor="End-M-GTP6-D-Di" title="End.M.GTP6.D.Di">
-        <t>The "Endpoint function with IPv6/GTP decapsulation into SR policy for
-        Drop-in Mode" function (End.M.GTP6.D.Di for short) is used in SRv6
+        <t>The "Endpoint behavior with IPv6/GTP decapsulation into SR policy for
+        Drop-in Mode" behavior (End.M.GTP6.D.Di for short) is used in SRv6
         drop-in interworking scenario described in <xref target="drop_in"/>. The
         difference between End.M.GTP6.D as another variant of IPv6/GTP
         decapsulation function is that the original IPv6 DA of GTP packet is
@@ -1035,8 +1035,8 @@ UPF2b_out    : (A,Z)
 
 
       <section title="End.M.GTP6.E">
-        <t>The "Endpoint function with encapsulation for IPv6/GTP tunnel"
-        function (End.M.GTP6.E for short) is used in interworking scenario
+        <t>The "Endpoint behavior with encapsulation for IPv6/GTP tunnel"
+        behavior (End.M.GTP6.E for short) is used in interworking scenario
         for the downlink toward the legacy gNB using IPv6/GTP.</t>
 
         <t>The prefix of End.M.GTP6.E SID MUST be followed by the
@@ -1070,8 +1070,8 @@ UPF2b_out    : (A,Z)
       </section>	<!-- End section "End.M.GTP6.E" -->
 
       <section title="End.M.GTP4.E">
-        <t>The "Endpoint function with encapsulation for IPv4/GTP tunnel"
-	    function (End.M.GTP4.E for short) is used in the downlink when
+        <t>The "Endpoint behavior with encapsulation for IPv4/GTP tunnel"
+	    behavior (End.M.GTP4.E for short) is used in the downlink when
 	    doing interworking with legacy gNB using IPv4/GTP.</t>
 
         <t>When the SR Gateway node N receives a packet destined to S and S
@@ -1115,7 +1115,7 @@ UPF2b_out    : (A,Z)
 
       <section title="H.M.GTP4.D">
         <t>The "SR Policy Headend with tunnel decapsulation and map to an SRv6
-        policy" function (H.M.GTP4.D for short) is used in the direction
+        policy" behavior (H.M.GTP4.D for short) is used in the direction
         from legacy IPv4 user-plane to SRv6 user-plane network.</t>
 
         <t>When the SR Gateway node N receives a packet destined to a
@@ -1155,16 +1155,16 @@ UPF2b_out    : (A,Z)
 
       </section>	<!-- End section "T.M.Tmap" -->
 
-      <section title="End.Limit: Rate Limiting function">
+      <section title="End.Limit: Rate Limiting behavior">
         <t> The mobile user-plane requires a rate-limit feature. For this
-          purpose, we define a new function "End.Limit".
-          The "End.Limit" function encodes in its arguments the
+          purpose, we define a new behavior "End.Limit".
+          The "End.Limit" behavior encodes in its arguments the
           rate limiting parameter that should be applied to this packet.
           Multiple flows of packets should have the same group identifier
            in the SID when those flows are in an same AMBR group.
           The encoding format of the rate limit
 	    segment SID is as follows:</t>
-        <figure title="End.Limit: Rate limiting function argument format">
+        <figure title="End.Limit: Rate limiting behavior argument format">
           <artwork align="center"><![CDATA[
 +----------------------+----------+-----------+
 | LOC+FUNC rate-limit  | group-id | limit-rate|
@@ -1191,7 +1191,7 @@ UPF2b_out    : (A,Z)
         <t>Unstructured</t>
       </list></t>
       <t> SRv6 supports the 3GPP PDU session types without any protocol
-	    overhead by using the corresponding SRv6 functions (End.DX4,
+	    overhead by using the corresponding SRv6 behaviors (End.DX4,
 	    End.DT4 for IPv4 PDU sessions; End.DX6, End.DT6, End.T for IPv6
 	    PDU sessions; End.DT46 for IPv4v6 PDU sessions; End.DX2
 	    for L2 and Unstructured PDU sessions).</t>
@@ -1199,7 +1199,7 @@ UPF2b_out    : (A,Z)
 
     <section anchor="netslice" title="Network Slicing Considerations">
         <t>A mobile network may be required to implement "network slices",
-	    which logically separate network resources. User-plane functions
+	    which logically separate network resources. User-plane behaviors
 	    represented as SRv6 segments would be part of a slice.</t>
 
         <t><xref target="I-D.ietf-spring-segment-routing-policy" />
@@ -1272,7 +1272,7 @@ UPF2b_out    : (A,Z)
 			title="SRv6 Mobile User-plane Endpoint Behavior Types">
           <ttcol align="left">Value/Range</ttcol>
           <ttcol align="center">Hex</ttcol>
-          <ttcol align="center">Endpoint function</ttcol>
+          <ttcol align="center">Endpoint behavior</ttcol>
           <ttcol align="center">Reference</ttcol>
 
           <c>TBA</c>
