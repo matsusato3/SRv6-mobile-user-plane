@@ -94,7 +94,7 @@ Table of Contents
        5.3.2.  Interworking with IPv4 GTP  . . . . . . . . . . . . .  15
        5.3.3.  SRv6 Drop-in Interworking . . . . . . . . . . . . . .  17
        5.3.4.  Extensions to the interworking mechanisms . . . . . .  19
-   6.  SRv6 SID Mobility Functions . . . . . . . . . . . . . . . . .  19
+   6.  SRv6 Segment Endpoint Mobility Behaviors  . . . . . . . . . .  19
      6.1.  Args.Mob.Session  . . . . . . . . . . . . . . . . . . . .  19
      6.2.  End.MAP . . . . . . . . . . . . . . . . . . . . . . . . .  20
      6.3.  End.M.GTP6.D  . . . . . . . . . . . . . . . . . . . . . .  20
@@ -102,7 +102,7 @@ Table of Contents
      6.5.  End.M.GTP6.E  . . . . . . . . . . . . . . . . . . . . . .  22
      6.6.  End.M.GTP4.E  . . . . . . . . . . . . . . . . . . . . . .  22
      6.7.  H.M.GTP4.D  . . . . . . . . . . . . . . . . . . . . . . .  23
-     6.8.  End.Limit: Rate Limiting function . . . . . . . . . . . .  24
+     6.8.  End.Limit: Rate Limiting behavior . . . . . . . . . . . .  24
    7.  SRv6 supported 3GPP PDU session types . . . . . . . . . . . .  25
    8.  Network Slicing Considerations  . . . . . . . . . . . . . . .  25
    9.  Control Plane Considerations  . . . . . . . . . . . . . . . .  25
@@ -182,7 +182,7 @@ Internet-Draft             SRv6-mobile-uplane                  July 2020
    Node and Reduced SRH.
 
    The following terms used within this document are defined in [NET-
-   PGM]: NH, SL, FIB, SA, DA, SRv6 SID function, SRv6 Segment Endpoint
+   PGM]: NH, SL, FIB, SA, DA, SRv6 SID behavior, SRv6 Segment Endpoint
    Behavior.
 
 2.2.  Conventions
@@ -273,7 +273,7 @@ Internet-Draft             SRv6-mobile-uplane                  July 2020
 
    SRv6 defines the network-programming concept
    [I-D.ietf-spring-srv6-network-programming].  Applied to mobility,
-   SRv6 can provide the user-plane functions needed for mobility
+   SRv6 can provide the user-plane behaviors needed for mobility
 
 
 
@@ -1025,14 +1025,14 @@ Internet-Draft             SRv6-mobile-uplane                  July 2020
    applied for interworking with a non-SRv6 capable UPF at the N9
    interface (e.g.  L3-anchor is SRv6 capable but L2-anchor is not).
 
-6.  SRv6 SID Mobility Functions
+6.  SRv6 Segment Endpoint Mobility Behaviors
 
 6.1.  Args.Mob.Session
 
    Args.Mob.Session provide per-session information for charging,
    buffering and lawful intercept (among others) required by some mobile
    nodes.  The Args.Mob.Session argument format is used in combination
-   with End.Map, End.DT and End.DX functions.  Note that proposed format
+   with End.Map, End.DT and End.DX behaviors.  Note that proposed format
    is applicable for 5G networks, while similar formats could be
    proposed for legacy networks.
 
@@ -1057,7 +1057,7 @@ Internet-Draft             SRv6-mobile-uplane                  July 2020
       is TEID.
 
    Arg.Mob.Session is required in case that one SID aggregates multiple
-   PDU Sessions.  Since the SRv6 function is likely NOT to be
+   PDU Sessions.  Since the SRv6 SID is likely NOT to be instantiated
 
 
 
@@ -1066,13 +1066,12 @@ Matsushima, et al.       Expires January 4, 2021               [Page 19]
 Internet-Draft             SRv6-mobile-uplane                  July 2020
 
 
-   instantiated per PDU session, Args.Mob.Session helps the UPF to
-   perform the functions which require per QFI and/or per PDU Session
-   granularity.
+   per PDU session, Args.Mob.Session helps the UPF to perform the
+   behaviors which require per QFI and/or per PDU Session granularity.
 
 6.2.  End.MAP
 
-   The "Endpoint function with SID mapping" function (End.MAP for short)
+   The "Endpoint behavior with SID mapping" behavior (End.MAP for short)
    is used in several scenarios.  Particularly in mobility, End.MAP is
    used in the UPFs for the PDU Session anchor functionality.
 
@@ -1089,8 +1088,8 @@ Internet-Draft             SRv6-mobile-uplane                  July 2020
 
 6.3.  End.M.GTP6.D
 
-   The "Endpoint function with IPv6/GTP decapsulation into SR policy"
-   function (End.M.GTP6.D for short) is used in interworking scenario
+   The "Endpoint behavior with IPv6/GTP decapsulation into SR policy"
+   behavior (End.M.GTP6.D for short) is used in interworking scenario
    for the uplink toward from the legacy gNB using IPv6/GTP.  Suppose,
    for example, this SID is associated with an SR policy <S1, S2, S3>
    and an IPv6 Source Address A.
@@ -1117,6 +1116,7 @@ Internet-Draft             SRv6-mobile-uplane                  July 2020
 
 
 
+
 Matsushima, et al.       Expires January 4, 2021               [Page 20]
 
 Internet-Draft             SRv6-mobile-uplane                  July 2020
@@ -1131,8 +1131,8 @@ Internet-Draft             SRv6-mobile-uplane                  July 2020
 
 6.4.  End.M.GTP6.D.Di
 
-   The "Endpoint function with IPv6/GTP decapsulation into SR policy for
-   Drop-in Mode" function (End.M.GTP6.D.Di for short) is used in SRv6
+   The "Endpoint behavior with IPv6/GTP decapsulation into SR policy for
+   Drop-in Mode" behavior (End.M.GTP6.D.Di for short) is used in SRv6
    drop-in interworking scenario described in Section 5.3.3.  The
    difference between End.M.GTP6.D as another variant of IPv6/GTP
    decapsulation function is that the original IPv6 DA of GTP packet is
@@ -1180,8 +1180,8 @@ Internet-Draft             SRv6-mobile-uplane                  July 2020
 
 6.5.  End.M.GTP6.E
 
-   The "Endpoint function with encapsulation for IPv6/GTP tunnel"
-   function (End.M.GTP6.E for short) is used in interworking scenario
+   The "Endpoint behavior with encapsulation for IPv6/GTP tunnel"
+   behavior (End.M.GTP6.E for short) is used in interworking scenario
    for the downlink toward the legacy gNB using IPv6/GTP.
 
    The prefix of End.M.GTP6.E SID MUST be followed by the
@@ -1212,8 +1212,8 @@ Internet-Draft             SRv6-mobile-uplane                  July 2020
 
 6.6.  End.M.GTP4.E
 
-   The "Endpoint function with encapsulation for IPv4/GTP tunnel"
-   function (End.M.GTP4.E for short) is used in the downlink when doing
+   The "Endpoint behavior with encapsulation for IPv4/GTP tunnel"
+   behavior (End.M.GTP4.E for short) is used in the downlink when doing
    interworking with legacy gNB using IPv4/GTP.
 
    When the SR Gateway node N receives a packet destined to S and S is a
@@ -1268,7 +1268,7 @@ Internet-Draft             SRv6-mobile-uplane                  July 2020
 6.7.  H.M.GTP4.D
 
    The "SR Policy Headend with tunnel decapsulation and map to an SRv6
-   policy" function (H.M.GTP4.D for short) is used in the direction from
+   policy" behavior (H.M.GTP4.D for short) is used in the direction from
    legacy IPv4 user-plane to SRv6 user-plane network.
 
    When the SR Gateway node N receives a packet destined to a IW-
@@ -1321,11 +1321,11 @@ Internet-Draft             SRv6-mobile-uplane                  July 2020
    instantiated at an SR gateway with the IPv4 SA of the receiving
    packet.
 
-6.8.  End.Limit: Rate Limiting function
+6.8.  End.Limit: Rate Limiting behavior
 
    The mobile user-plane requires a rate-limit feature.  For this
-   purpose, we define a new function "End.Limit".  The "End.Limit"
-   function encodes in its arguments the rate limiting parameter that
+   purpose, we define a new behavior "End.Limit".  The "End.Limit"
+   behavior encodes in its arguments the rate limiting parameter that
    should be applied to this packet.  Multiple flows of packets should
    have the same group identifier in the SID when those flows are in an
    same AMBR group.  The encoding format of the rate limit segment SID
@@ -1336,7 +1336,7 @@ Internet-Draft             SRv6-mobile-uplane                  July 2020
               +----------------------+----------+-----------+
                     128-i-j                i          j
 
-             End.Limit: Rate limiting function argument format
+             End.Limit: Rate limiting behavior argument format
 
 
 
@@ -1361,7 +1361,7 @@ Internet-Draft             SRv6-mobile-uplane                  July 2020
    o  Unstructured
 
    SRv6 supports the 3GPP PDU session types without any protocol
-   overhead by using the corresponding SRv6 functions (End.DX4, End.DT4
+   overhead by using the corresponding SRv6 behaviors (End.DX4, End.DT4
    for IPv4 PDU sessions; End.DX6, End.DT6, End.T for IPv6 PDU sessions;
    End.DT46 for IPv4v6 PDU sessions; End.DX2 for L2 and Unstructured PDU
    sessions).
@@ -1369,7 +1369,7 @@ Internet-Draft             SRv6-mobile-uplane                  July 2020
 8.  Network Slicing Considerations
 
    A mobile network may be required to implement "network slices", which
-   logically separate network resources.  User-plane functions
+   logically separate network resources.  User-plane behaviors
    represented as SRv6 segments would be part of a slice.
 
    [I-D.ietf-spring-segment-routing-policy] describes a solution to
@@ -1459,7 +1459,7 @@ Internet-Draft             SRv6-mobile-uplane                  July 2020
 
 
            +-------------+-----+-------------------+-----------+
-           | Value/Range | Hex | Endpoint function | Reference |
+           | Value/Range | Hex | Endpoint behavior | Reference |
            +-------------+-----+-------------------+-----------+
            | TBA         | TBA |      End.MAP      | [This.ID] |
            | TBA         | TBA |    End.M.GTP6.D   | [This.ID] |
