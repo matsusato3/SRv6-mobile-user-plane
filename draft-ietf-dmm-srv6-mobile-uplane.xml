@@ -171,7 +171,7 @@
             <t>PDU Session: Context of an UE connects to a mobile network.</t>
             <t>UE: User Equipment </t>
             <t>UPF: User Plane Function </t>
-            <t>VNF: Virtual Network Function </t>
+            <t>VNF: Virtual Network Function (including CNFs)</t>
             </list>
 	      </t>
         <t>The following terms used within this document are defined in
@@ -439,12 +439,12 @@ gNB_out : (Z,A)                  -> End.DX4, End.DX6, End.DX2
           include SIDs for traffic engineering and service programming
            in addition to the anchoring SIDs at UPFs.</t>
 
-        <t> The gNB control-plane (N2 interface) is unchanged, specifically
-	    a single IPv6 address is given to the gNB.</t>
+       <t>Additionally in this mode the operator may choose to aggregate several devices under the same SID list (e.g. stationary residential meters connected to the same cell) to improve scalability.</t>
 
-              <t> The gNB MAY resolve the IP address received via the control plane  into a SID list using
-	          a mechanism like PCEP, DNS-lookup, LISP
-	          control-plane or others.</t>
+       <t> The gNB control-plane (N2 interface) is unchanged, specifically
+	    a single IPv6 address is provided to the gNB.</t>
+
+        <t> The gNB MAY resolve the IP address received via the control plane  into a SID list using a mechanism like PCEP, DNS-lookup, LISP control-plane or others.</t>
 
         <t> Note that the SIDs MAY use the arguments Args.Mob.Session if
         required by the UPFs.</t>
@@ -467,7 +467,7 @@ gNB_out : (Z,A)                  -> End.DX4, End.DX6, End.DX2
                    -| S1 |-
                     +----+
                    SRv6 node
-                     CNF
+                     VNF
                 ]]></artwork>
         </figure>
 
@@ -667,7 +667,7 @@ gNB_out : (Z,A)
           <section title="Scalability">
             <t> For the downlink traffic, the SRGW is stateless. All the state
 		is in the SRH inserted by the UPF2.  The UPF2 must have the UE
-		statessince it is the UE's session anchor point.</t>
+		states since it is the UE's session anchor point.</t>
             <t> For the uplink traffic, the state at the SRGW does not
 		necessarily need to be unique per PDU Session; the SR policy
      can be shared among UEs.  This enables more
