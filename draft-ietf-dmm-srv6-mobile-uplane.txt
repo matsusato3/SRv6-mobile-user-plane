@@ -5,14 +5,14 @@
 DMM Working Group                                     S. Matsushima, Ed.
 Internet-Draft                                                  SoftBank
 Intended status: Standards Track                             C. Filsfils
-Expires: January 4, 2021                                        M. Kohno
+Expires: January 14, 2021                                       M. Kohno
                                                        P. Camarillo, Ed.
                                                      Cisco Systems, Inc.
                                                                 D. Voyer
                                                              Bell Canada
                                                               C. Perkins
                                                                Futurewei
-                                                            July 3, 2020
+                                                           July 13, 2020
 
 
                Segment Routing IPv6 for Mobile User Plane
@@ -44,7 +44,7 @@ Status of This Memo
    time.  It is inappropriate to use Internet-Drafts as reference
    material or to cite them other than as "work in progress."
 
-   This Internet-Draft will expire on January 4, 2021.
+   This Internet-Draft will expire on January 14, 2021.
 
 
 
@@ -53,7 +53,7 @@ Status of This Memo
 
 
 
-Matsushima, et al.       Expires January 4, 2021                [Page 1]
+Matsushima, et al.      Expires January 14, 2021                [Page 1]
 
 Internet-Draft           SRv6 Mobile User-Plane                July 2020
 
@@ -109,7 +109,7 @@ Table of Contents
 
 
 
-Matsushima, et al.       Expires January 4, 2021                [Page 2]
+Matsushima, et al.      Expires January 14, 2021                [Page 2]
 
 Internet-Draft           SRv6 Mobile User-Plane                July 2020
 
@@ -158,14 +158,14 @@ Internet-Draft           SRv6 Mobile User-Plane                July 2020
    o  PDU Session: Context of an UE connects to a mobile network.
    o  UE: User Equipment
    o  UPF: User Plane Function
-   o  VNF: Virtual Network Function
+   o  VNF: Virtual Network Function (including CNFs)
 
    The following terms used within this document are defined in
    [RFC8402]: Segment Routing, SR Domain, Segment ID (SID), SRv6, SRv6
 
 
 
-Matsushima, et al.       Expires January 4, 2021                [Page 3]
+Matsushima, et al.      Expires January 14, 2021                [Page 3]
 
 Internet-Draft           SRv6 Mobile User-Plane                July 2020
 
@@ -221,7 +221,7 @@ Internet-Draft           SRv6 Mobile User-Plane                July 2020
 
 
 
-Matsushima, et al.       Expires January 4, 2021                [Page 4]
+Matsushima, et al.      Expires January 14, 2021                [Page 4]
 
 Internet-Draft           SRv6 Mobile User-Plane                July 2020
 
@@ -277,7 +277,7 @@ Internet-Draft           SRv6 Mobile User-Plane                July 2020
 
 
 
-Matsushima, et al.       Expires January 4, 2021                [Page 5]
+Matsushima, et al.      Expires January 14, 2021                [Page 5]
 
 Internet-Draft           SRv6 Mobile User-Plane                July 2020
 
@@ -333,7 +333,7 @@ Internet-Draft           SRv6 Mobile User-Plane                July 2020
 
 
 
-Matsushima, et al.       Expires January 4, 2021                [Page 6]
+Matsushima, et al.      Expires January 14, 2021                [Page 6]
 
 Internet-Draft           SRv6 Mobile User-Plane                July 2020
 
@@ -389,7 +389,7 @@ Internet-Draft           SRv6 Mobile User-Plane                July 2020
 
 
 
-Matsushima, et al.       Expires January 4, 2021                [Page 7]
+Matsushima, et al.      Expires January 14, 2021                [Page 7]
 
 Internet-Draft           SRv6 Mobile User-Plane                July 2020
 
@@ -445,7 +445,7 @@ Internet-Draft           SRv6 Mobile User-Plane                July 2020
 
 
 
-Matsushima, et al.       Expires January 4, 2021                [Page 8]
+Matsushima, et al.      Expires January 14, 2021                [Page 8]
 
 Internet-Draft           SRv6 Mobile User-Plane                July 2020
 
@@ -486,26 +486,31 @@ Internet-Draft           SRv6 Mobile User-Plane                July 2020
    traffic engineering and service programming in addition to the
    anchoring SIDs at UPFs.
 
+   Additionally in this mode the operator may choose to aggregate
+   several devices under the same SID list (e.g. stationary residential
+   meters connected to the same cell) to improve scalability.
+
    The gNB control-plane (N2 interface) is unchanged, specifically a
-   single IPv6 address is given to the gNB.
+   single IPv6 address is provided to the gNB.
 
    The gNB MAY resolve the IP address received via the control plane
    into a SID list using a mechanism like PCEP, DNS-lookup, LISP
    control-plane or others.
+
+
+
+
+
+Matsushima, et al.      Expires January 14, 2021                [Page 9]
+
+Internet-Draft           SRv6 Mobile User-Plane                July 2020
+
 
    Note that the SIDs MAY use the arguments Args.Mob.Session if required
    by the UPFs.
 
    Figure 3 shows an Enhanced mode topology.  In the Enhanced mode, the
    gNB and the UPF are SR-aware.  The Figure shows two service segments,
-
-
-
-Matsushima, et al.       Expires January 4, 2021                [Page 9]
-
-Internet-Draft           SRv6 Mobile User-Plane                July 2020
-
-
    S1 and C1.  S1 represents a VNF in the network, and C1 represents an
    intermediate router used for Traffic Engineering purposes to enforce
    a low-latency path in the network.  Note that both S1 and C1 are not
@@ -520,7 +525,7 @@ Internet-Draft           SRv6 Mobile User-Plane                July 2020
                       -| S1 |-
                        +----+
                       SRv6 node
-                        CNF
+                        VNF
 
                 Figure 3: Enhanced mode - Example topology
 
@@ -548,19 +553,17 @@ Internet-Draft           SRv6 Mobile User-Plane                July 2020
 
    When the packet arrives at UPF2, the active segment (U2::1) is an
    End.DT4/End.DT6/End.DT2U which performs the decapsulation (removing
-   the IPv6 header with all its extension headers) and forwards toward
-   the data network.
 
 
 
 
-
-
-
-Matsushima, et al.       Expires January 4, 2021               [Page 10]
+Matsushima, et al.      Expires January 14, 2021               [Page 10]
 
 Internet-Draft           SRv6 Mobile User-Plane                July 2020
 
+
+   the IPv6 header with all its extension headers) and forwards toward
+   the data network.
 
 5.2.2.  Packet flow - Downlink
 
@@ -608,15 +611,15 @@ Internet-Draft           SRv6 Mobile User-Plane                July 2020
 
                 Figure 4: Example topology for interworking
 
-   Both of the mechanisms described in this section are applicable to
-   either the Traditional Mode or the Enhanced Mode.
 
 
-
-Matsushima, et al.       Expires January 4, 2021               [Page 11]
+Matsushima, et al.      Expires January 14, 2021               [Page 11]
 
 Internet-Draft           SRv6 Mobile User-Plane                July 2020
 
+
+   Both of the mechanisms described in this section are applicable to
+   either the Traditional Mode or the Enhanced Mode.
 
 5.3.1.  Interworking with IPv6 GTP
 
@@ -666,10 +669,7 @@ Internet-Draft           SRv6 Mobile User-Plane                July 2020
 
 
 
-
-
-
-Matsushima, et al.       Expires January 4, 2021               [Page 12]
+Matsushima, et al.      Expires January 14, 2021               [Page 12]
 
 Internet-Draft           SRv6 Mobile User-Plane                July 2020
 
@@ -725,7 +725,7 @@ Internet-Draft           SRv6 Mobile User-Plane                July 2020
 
 
 
-Matsushima, et al.       Expires January 4, 2021               [Page 13]
+Matsushima, et al.      Expires January 14, 2021               [Page 13]
 
 Internet-Draft           SRv6 Mobile User-Plane                July 2020
 
@@ -752,7 +752,7 @@ Internet-Draft           SRv6 Mobile User-Plane                July 2020
 5.3.1.3.  Scalability
 
    For the downlink traffic, the SRGW is stateless.  All the state is in
-   the SRH inserted by the UPF2.  The UPF2 must have the UE statessince
+   the SRH inserted by the UPF2.  The UPF2 must have the UE states since
    it is the UE's session anchor point.
 
    For the uplink traffic, the state at the SRGW does not necessarily
@@ -781,7 +781,7 @@ Internet-Draft           SRv6 Mobile User-Plane                July 2020
 
 
 
-Matsushima, et al.       Expires January 4, 2021               [Page 14]
+Matsushima, et al.      Expires January 14, 2021               [Page 14]
 
 Internet-Draft           SRv6 Mobile User-Plane                July 2020
 
@@ -837,7 +837,7 @@ Internet-Draft           SRv6 Mobile User-Plane                July 2020
 
 
 
-Matsushima, et al.       Expires January 4, 2021               [Page 15]
+Matsushima, et al.      Expires January 14, 2021               [Page 15]
 
 Internet-Draft           SRv6 Mobile User-Plane                July 2020
 
@@ -893,7 +893,7 @@ Internet-Draft           SRv6 Mobile User-Plane                July 2020
 
 
 
-Matsushima, et al.       Expires January 4, 2021               [Page 16]
+Matsushima, et al.      Expires January 14, 2021               [Page 16]
 
 Internet-Draft           SRv6 Mobile User-Plane                July 2020
 
@@ -949,7 +949,7 @@ Internet-Draft           SRv6 Mobile User-Plane                July 2020
 
 
 
-Matsushima, et al.       Expires January 4, 2021               [Page 17]
+Matsushima, et al.      Expires January 14, 2021               [Page 17]
 
 Internet-Draft           SRv6 Mobile User-Plane                July 2020
 
@@ -1005,7 +1005,7 @@ UPF_out : (A,Z)
 
 
 
-Matsushima, et al.       Expires January 4, 2021               [Page 18]
+Matsushima, et al.      Expires January 14, 2021               [Page 18]
 
 Internet-Draft           SRv6 Mobile User-Plane                July 2020
 
@@ -1061,7 +1061,7 @@ Internet-Draft           SRv6 Mobile User-Plane                July 2020
 
 
 
-Matsushima, et al.       Expires January 4, 2021               [Page 19]
+Matsushima, et al.      Expires January 14, 2021               [Page 19]
 
 Internet-Draft           SRv6 Mobile User-Plane                July 2020
 
@@ -1117,7 +1117,7 @@ Internet-Draft           SRv6 Mobile User-Plane                July 2020
 
 
 
-Matsushima, et al.       Expires January 4, 2021               [Page 20]
+Matsushima, et al.      Expires January 14, 2021               [Page 20]
 
 Internet-Draft           SRv6 Mobile User-Plane                July 2020
 
@@ -1173,7 +1173,7 @@ Internet-Draft           SRv6 Mobile User-Plane                July 2020
 
 
 
-Matsushima, et al.       Expires January 4, 2021               [Page 21]
+Matsushima, et al.      Expires January 14, 2021               [Page 21]
 
 Internet-Draft           SRv6 Mobile User-Plane                July 2020
 
@@ -1229,7 +1229,7 @@ Internet-Draft           SRv6 Mobile User-Plane                July 2020
 
 
 
-Matsushima, et al.       Expires January 4, 2021               [Page 22]
+Matsushima, et al.      Expires January 14, 2021               [Page 22]
 
 Internet-Draft           SRv6 Mobile User-Plane                July 2020
 
@@ -1285,7 +1285,7 @@ Internet-Draft           SRv6 Mobile User-Plane                July 2020
 
 
 
-Matsushima, et al.       Expires January 4, 2021               [Page 23]
+Matsushima, et al.      Expires January 14, 2021               [Page 23]
 
 Internet-Draft           SRv6 Mobile User-Plane                July 2020
 
@@ -1341,7 +1341,7 @@ Internet-Draft           SRv6 Mobile User-Plane                July 2020
 
 
 
-Matsushima, et al.       Expires January 4, 2021               [Page 24]
+Matsushima, et al.      Expires January 14, 2021               [Page 24]
 
 Internet-Draft           SRv6 Mobile User-Plane                July 2020
 
@@ -1397,7 +1397,7 @@ Internet-Draft           SRv6 Mobile User-Plane                July 2020
 
 
 
-Matsushima, et al.       Expires January 4, 2021               [Page 25]
+Matsushima, et al.      Expires January 14, 2021               [Page 25]
 
 Internet-Draft           SRv6 Mobile User-Plane                July 2020
 
@@ -1453,7 +1453,7 @@ Internet-Draft           SRv6 Mobile User-Plane                July 2020
 
 
 
-Matsushima, et al.       Expires January 4, 2021               [Page 26]
+Matsushima, et al.      Expires January 14, 2021               [Page 26]
 
 Internet-Draft           SRv6 Mobile User-Plane                July 2020
 
@@ -1463,10 +1463,10 @@ Internet-Draft           SRv6 Mobile User-Plane                July 2020
 14.1.  Normative References
 
    [I-D.ietf-spring-segment-routing-policy]
-              Filsfils, C., Sivabalan, S., Voyer, D., Bogdanov, A., and
+              Filsfils, C., Talaulikar, K., Voyer, D., Bogdanov, A., and
               P. Mattes, "Segment Routing Policy Architecture", draft-
-              ietf-spring-segment-routing-policy-07 (work in progress),
-              May 2020.
+              ietf-spring-segment-routing-policy-08 (work in progress),
+              July 2020.
 
    [I-D.ietf-spring-srv6-network-programming]
               Filsfils, C., Camarillo, P., Leddy, J., Voyer, D.,
@@ -1509,7 +1509,7 @@ Internet-Draft           SRv6 Mobile User-Plane                July 2020
 
 
 
-Matsushima, et al.       Expires January 4, 2021               [Page 27]
+Matsushima, et al.      Expires January 14, 2021               [Page 27]
 
 Internet-Draft           SRv6 Mobile User-Plane                July 2020
 
@@ -1518,7 +1518,7 @@ Internet-Draft           SRv6 Mobile User-Plane                July 2020
               Auge, J., Carofiglio, G., Muscariello, L., and M.
               Papalini, "Anchorless mobility management through hICN
               (hICN-AMM): Deployment options", draft-auge-dmm-hicn-
-              mobility-deployment-options-03 (work in progress), January
+              mobility-deployment-options-04 (work in progress), July
               2020.
 
    [I-D.camarilloelmalky-springdmm-srv6-mob-usecases]
@@ -1536,7 +1536,7 @@ Internet-Draft           SRv6 Mobile User-Plane                July 2020
    [I-D.ietf-lsr-flex-algo]
               Psenak, P., Hegde, S., Filsfils, C., Talaulikar, K., and
               A. Gulko, "IGP Flexible Algorithm", draft-ietf-lsr-flex-
-              algo-07 (work in progress), April 2020.
+              algo-08 (work in progress), July 2020.
 
    [I-D.ietf-spring-segment-routing-central-epe]
               Filsfils, C., Previdi, S., Dawra, G., Aries, E., and D.
@@ -1565,7 +1565,7 @@ Internet-Draft           SRv6 Mobile User-Plane                July 2020
 
 
 
-Matsushima, et al.       Expires January 4, 2021               [Page 28]
+Matsushima, et al.      Expires January 14, 2021               [Page 28]
 
 Internet-Draft           SRv6 Mobile User-Plane                July 2020
 
@@ -1621,7 +1621,7 @@ Authors' Addresses
 
 
 
-Matsushima, et al.       Expires January 4, 2021               [Page 29]
+Matsushima, et al.      Expires January 14, 2021               [Page 29]
 
 Internet-Draft           SRv6 Mobile User-Plane                July 2020
 
@@ -1677,4 +1677,4 @@ Internet-Draft           SRv6 Mobile User-Plane                July 2020
 
 
 
-Matsushima, et al.       Expires January 4, 2021               [Page 30]
+Matsushima, et al.      Expires January 14, 2021               [Page 30]
