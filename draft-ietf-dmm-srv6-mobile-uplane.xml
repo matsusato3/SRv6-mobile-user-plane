@@ -1332,33 +1332,33 @@ S09.    Drop the packet
           <ttcol align="center">Endpoint behavior</ttcol>
           <ttcol align="center">Reference</ttcol>
 
-          <c>TBA</c>
-          <c>TBA</c>
+          <c>40</c>
+          <c>0x0028</c>
           <c>End.MAP</c>
           <c>[This.ID]</c>
 
-          <c>TBA</c>
-          <c>TBA</c>
+          <c>69</c>
+          <c>0x0045</c>
           <c>End.M.GTP6.D</c>
           <c>[This.ID]</c>
 
-          <c>TBA</c>
-          <c>TBA</c>
+          <c>70</c>
+          <c>0x0046</c>
           <c>End.M.GTP6.Di</c>
           <c>[This.ID]</c>
 
-          <c>TBA</c>
-          <c>TBA</c>
+          <c>71</c>
+          <c>0x0047</c>
           <c>End.M.GTP6.E</c>
           <c>[This.ID]</c>
 
-          <c>TBA</c>
-          <c>TBA</c>
+          <c>72</c>
+          <c>0x0048</c>
           <c>End.M.GTP4.E</c>
           <c>[This.ID]</c>
 
-          <c>TBA</c>
-          <c>TBA</c>
+          <c>41</c>
+          <c>0x0029</c>
           <c>End.Limit</c>
           <c>[This.ID]</c>
       </texttable>
