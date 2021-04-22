@@ -3,8 +3,8 @@
   <!ENTITY rfc2119 SYSTEM "http://xml.resource.org/public/rfc/bibxml/reference.RFC.2119.xml">
   <!ENTITY rfc5213 SYSTEM "http://xml.resource.org/public/rfc/bibxml/reference.RFC.5213.xml">
   <!ENTITY rfc8402 SYSTEM "http://xml.resource.org/public/rfc/bibxml/reference.RFC.8402.xml">
+  <!ENTITY rfc8986 SYSTEM "http://xml.resource.org/public/rfc/bibxml/reference.RFC.8986.xml">
   <!ENTITY I-D.ietf-spring-segment-routing-policy SYSTEM "http://xml.resource.org/public/rfc/bibxml3/reference.I-D.ietf-spring-segment-routing-policy.xml">
-  <!ENTITY I-D.ietf-spring-srv6-network-programming SYSTEM "http://xml.resource.org/public/rfc/bibxml3/reference.I-D.ietf-spring-srv6-network-programming.xml">
   <!ENTITY I-D.ietf-spring-sr-service-programming SYSTEM "http://xml.resource.org/public/rfc/bibxml3/reference.I-D.ietf-spring-sr-service-programming.xml">
   <!ENTITY rfc8754 SYSTEM "http://xml.resource.org/public/rfc/bibxml/reference.RFC.8754.xml">
   <!ENTITY I-D.ietf-spring-segment-routing-central-epe SYSTEM "http://xml.resource.org/public/rfc/bibxml3/reference.I-D.ietf-spring-segment-routing-central-epe.xml">
@@ -19,7 +19,7 @@
 ]>
 <?xml-stylesheet type='text/xsl' href='rfc2629.xslt' ?>
 
-<rfc category="std" docName="draft-ietf-dmm-srv6-mobile-uplane-10"
+<rfc category="std" docName="draft-ietf-dmm-srv6-mobile-uplane-11"
 	ipr="trust200902">
   <?xml-stylesheet type='text/xsl' href='rfc2629.xslt' ?>
   <?rfc toc="yes" ?>
@@ -183,7 +183,7 @@
             <xref target="RFC8754" />: SRH, SR Source Node, Transit Node, SR Segment Endpoint
             Node and Reduced SRH.</t>
 
-        <t>The following terms used within this document are defined in <xref target="I-D.ietf-spring-srv6-network-programming" />: NH, SL, FIB, SA, DA, SRv6 SID behavior, SRv6 Segment Endpoint Behavior.</t>
+        <t>The following terms used within this document are defined in <xref target="RFC8986" />: NH, SL, FIB, SA, DA, SRv6 SID behavior, SRv6 Segment Endpoint Behavior.</t>
 
     	</section>	<!-- End subsection "Terminology" -->
 
@@ -210,7 +210,7 @@
         <section anchor="srv6-funcs" title="Predefined SRv6 Endpoint Behaviors">
         <t>
 	    The following SRv6 Endpoint Behaviors are defined in
-	    <xref target="I-D.ietf-spring-srv6-network-programming"/>.
+	    <xref target="RFC8986" />.
 	    <list style="symbols">
             <t> End.DT4: Decapsulation and Specific IPv4 Table Lookup</t>
             <t> End.DT6: Decapsulation and Specific IPv6 Table Lookup</t>
@@ -246,7 +246,7 @@
 	a single protocol, allowing operators to optimize the network in a
 	simplified manner and removing forwarding state from the network. It is also
   suitable for virtualized environments, like VNF/CNF to VNF/CNF networking. SRv6 has been deployed in dozens of networks <xref target="I-D.matsushima-spring-srv6-deployment-status" />.</t>
-    <t> SRv6 defines the network-programming concept <xref target="I-D.ietf-spring-srv6-network-programming"/>.
+    <t> SRv6 defines the network-programming concept <xref target="RFC8986" />.
   Applied to mobility, SRv6 can provide the user-plane behaviors needed
   for mobility management.  SRv6 takes advantage of the underlying transport
   awareness and flexibility together with the ability to also include services to optimize the end-to-end mobile dataplane.</t>
@@ -327,7 +327,7 @@
 	legacy gNBs using GTP/IPv6.</t>
 
     <t> This document uses SRv6 Segment Endpoint Behaviors defined in
-	<xref target="I-D.ietf-spring-srv6-network-programming"/> as well
+	<xref target="RFC8986" /> as well
 	as new SRv6 Segment Endpoint Behaviors designed for the mobile user plane that are defined in this document in <xref target="srv6_functions"/>.
     </t>
 
@@ -1319,11 +1319,9 @@ S09.    Drop the packet
     </section>	<!-- End section "Security Considerations" -->
 
     <section anchor="IANA" title="IANA Considerations">
-      <t> IANA is requested to allocate, within the "SRv6 Endpoint Behaviors"
+      <t> The following values have been allocated within the "SRv6 Endpoint Behaviors" <xref target="RFC8986" />
 	  sub-registry belonging to the top-level
-	  "Segment Routing Parameters" registry
-	  <xref target="I-D.ietf-spring-srv6-network-programming"/>,
-	  the following values:</t>
+	  "Segment Routing Parameters" registry:</t>
 
       <texttable anchor="endpoint_opcodes"
 			title="SRv6 Mobile User-plane Endpoint Behavior Types">
@@ -1335,6 +1333,11 @@ S09.    Drop the packet
           <c>40</c>
           <c>0x0028</c>
           <c>End.MAP</c>
+          <c>[This.ID]</c>
+
+          <c>41</c>
+          <c>0x0029</c>
+          <c>End.Limit</c>
           <c>[This.ID]</c>
 
           <c>69</c>
@@ -1357,10 +1360,6 @@ S09.    Drop the packet
           <c>End.M.GTP4.E</c>
           <c>[This.ID]</c>
 
-          <c>41</c>
-          <c>0x0029</c>
-          <c>End.Limit</c>
-          <c>[This.ID]</c>
       </texttable>
     </section>	<!-- End section "IANA Considerations" -->
 
@@ -1390,7 +1389,7 @@ S09.    Drop the packet
     <references title="Normative References">
         &rfc2119;
         &rfc8402;
-        &I-D.ietf-spring-srv6-network-programming;
+        &rfc8986;
         &I-D.ietf-spring-segment-routing-policy;
         &rfc8754;
         <reference anchor="TS.23501">
